@@ -1,6 +1,5 @@
-@REM @echo off
-qmake "CONFIG+=debug"
-make
+@echo off
+qmake "CONFIG+=debug" || echo ERROR && exit /b
+make || echo ERROR && exit /b
 cd debug
-export QT_LOGGING_RULES="*.debug=true"
 Hello.exe
