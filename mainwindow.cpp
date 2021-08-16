@@ -18,10 +18,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    []() {
-        qDebug("Hello there");
-    }
-    ();
     qDebug("Hello there");
     QApplication::exit(0);
 }
