@@ -6,3 +6,6 @@ db.json
 __pycache__
 debug/*
 release/*
+Makefile
+Makefile.Debug
+Makefile.Release
