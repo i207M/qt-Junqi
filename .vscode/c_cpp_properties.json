@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/Dev/Program/Qt/6.1.2/mingw81_64/include/**"
+            ],
+            "compilerPath": "E:\\Program Files\\MinGW\\mingw64\\bin\\gcc.exe",
+            "intelliSenseMode": "windows-gcc-x64"
+        }
+    ],
+    "version": 4
+}
