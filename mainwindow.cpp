@@ -18,7 +18,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    std::cerr << "Debug Message";
+    []() {
+        qDebug("Hello there");
+    }
+    ();
     qDebug("Hello there");
     QApplication::exit(0);
 }
