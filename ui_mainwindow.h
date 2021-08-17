@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -29,7 +28,6 @@ public:
     QAction *actionPlay;
     QAction *actionAdmit_defeat;
     QWidget *centralwidget;
-    QLabel *label;
     QMenuBar *menubar;
     QMenu *menu;
     QMenu *menuPlay;
@@ -39,7 +37,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1231, 1586);
+        MainWindow->resize(700, 672);
         actionCreate_a_server = new QAction(MainWindow);
         actionCreate_a_server->setObjectName(QString::fromUtf8("actionCreate_a_server"));
         actionConnect_to_server = new QAction(MainWindow);
@@ -50,20 +48,10 @@ public:
         actionAdmit_defeat->setObjectName(QString::fromUtf8("actionAdmit_defeat"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(0, 0, 1105, 1536));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy);
-        label->setPixmap(QPixmap(QString::fromUtf8(":/chessboard/images/empty.png")));
-        label->setScaledContents(true);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1231, 26));
+        menubar->setGeometry(QRect(0, 0, 700, 26));
         menu = new QMenu(menubar);
         menu->setObjectName(QString::fromUtf8("menu"));
         menuPlay = new QMenu(menubar);
@@ -93,7 +81,6 @@ public:
         actionConnect_to_server->setText(QCoreApplication::translate("MainWindow", "Connect to server", nullptr));
         actionPlay->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         actionAdmit_defeat->setText(QCoreApplication::translate("MainWindow", "Admit defeat", nullptr));
-        label->setText(QString());
         menu->setTitle(QCoreApplication::translate("MainWindow", "Connect", nullptr));
         menuPlay->setTitle(QCoreApplication::translate("MainWindow", "Play", nullptr));
     } // retranslateUi
