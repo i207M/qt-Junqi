@@ -3,6 +3,31 @@
         <file>images/empty.png</file>
     </qresource>
     <qresource prefix="/piece">
-        <file>images/unknown_piece.png</file>
+        <file>images/dilei_blue.png</file>
+        <file>images/dilei_red.png</file>
+        <file>images/gongbing_blue.png</file>
+        <file>images/gongbing_red.png</file>
+        <file>images/junqi_blue.png</file>
+        <file>images/junqi_red.png</file>
+        <file>images/junzhang_blue.png</file>
+        <file>images/junzhang_red.png</file>
+        <file>images/lianzhang_blue.png</file>
+        <file>images/lianzhang_red.png</file>
+        <file>images/lvzhang_blue.png</file>
+        <file>images/lvzhang_red.png</file>
+        <file>images/paizhang_blue.png</file>
+        <file>images/paizhang_red.png</file>
+        <file>images/rename.py</file>
+        <file>images/shizhang_blue.png</file>
+        <file>images/shizhang_red.png</file>
+        <file>images/siling_blue.png</file>
+        <file>images/siling_red.png</file>
+        <file>images/tuanzhang_blue.png</file>
+        <file>images/tuanzhang_red.png</file>
+        <file>images/unknown.png</file>
+        <file>images/yingzhang_blue.png</file>
+        <file>images/yingzhang_red.png</file>
+        <file>images/zhadan_blue.png</file>
+        <file>images/zhadan_red.png</file>
     </qresource>
 </RCC>

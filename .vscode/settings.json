@@ -2,5 +2,6 @@
     "files.associations": {
         "qapplication": "cpp",
         "new": "cpp"
-    }
+    },
+    "python.pythonPath": "D:\\Dev\\Program\\Python\\Python38\\python.exe"
 }
