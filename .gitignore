@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+db.json
+*.log
+.vscode
+__pycache__
+debug/*
+release/*
+Makefile
+Makefile.Debug
+Makefile.Release
+Hello.pro.user
