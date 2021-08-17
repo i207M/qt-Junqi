@@ -9,5 +9,5 @@ release/*
 Makefile
 Makefile.Debug
 Makefile.Release
-Hello.pro.user
+*.pro.user
 images/*
