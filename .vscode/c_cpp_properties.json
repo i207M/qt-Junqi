@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/*",
+                "D:/Dev/Program/Qt/6.1.2/mingw81_64/include/**"
+                // "D:/Dev/Course/Hello/build-Hello-Desktop_Qt_6_1_2_MinGW_64_bit-Debug"
+            ],
+            "compilerPath": "E:\\Program Files\\MinGW\\mingw64\\bin\\gcc.exe",
+            "intelliSenseMode": "windows-gcc-x64",
+            "defines": [
+                "M207"
+            ],
+            "cppStandard": "c++11"
+        }
+    ],
+    "version": 4
+}
