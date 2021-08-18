@@ -14,35 +14,6 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_actionCreate_a_server_triggered()
-{
-
-}
-
-
-void MainWindow::on_actionConnect_to_server_triggered()
-{
-
-}
-
-
-void MainWindow::on_actionPlay_triggered()
-{
-
-}
-
-
-void MainWindow::on_actionAdmit_defeat_triggered()
-{
-
-}
-
-
-void MainWindow::on_actionLocal_triggered()
-{
-
-}
-
 void MainWindow::on_pushButton_clicked()
 {
     MainWindow::on_actionPlay_triggered();
@@ -70,5 +41,35 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::on_pushButton_5_clicked()
 {
     MainWindow::on_actionLocal_triggered();
+}
+
+
+void MainWindow::on_actionCreate_a_server_triggered()
+{
+
+}
+
+
+void MainWindow::on_actionConnect_to_server_triggered()
+{
+
+}
+
+
+void MainWindow::on_actionPlay_triggered()
+{
+
+}
+
+
+void MainWindow::on_actionAdmit_defeat_triggered()
+{
+
+}
+
+
+void MainWindow::on_actionLocal_triggered()
+{
+
 }
 
