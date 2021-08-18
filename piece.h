@@ -2,6 +2,7 @@
 #define PIECE_H
 
 #include <QMainWindow>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -10,7 +11,9 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-struct Pos {
+class Pos
+{
+public:
     int row, col;
     Pos() {};
     Pos(int _row, int _col) :  row(_row), col(_col) {}
@@ -30,17 +33,19 @@ enum class Type : int {
     JunQi = 10
 };
 
-class Piece
+class Piece : public Pos
 {
 public:
-    static Ui::MainWindow *ui;
+    static QLabel *label_map[12][5];
     int team;
     bool known, dead;
     Type type;
-    Pos pos;
 
-    Piece() {};
-    Piece(int _team, Type _type): team(_team), type(_type), known(false), dead(false) {}
+    void init(int _team, Type _type)
+    {
+        team = _team, type = _type;
+        known = false, dead = false;
+    }
 
     void display();
     void flip();
