@@ -31,7 +31,7 @@ class Ui_MainWindow
 public:
     QAction *actionCreate_a_server;
     QAction *actionConnect_to_server;
-    QAction *actionPlay;
+    QAction *actionStart;
     QAction *actionAdmit_defeat;
     QAction *actionLocal;
     QWidget *centralwidget;
@@ -42,12 +42,11 @@ public:
     QLCDNumber *lcdNumber;
     QTextBrowser *textBrowser;
     QSpacerItem *verticalSpacer;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
+    QPushButton *buttonStart;
+    QPushButton *buttonDefeat;
     QSpacerItem *verticalSpacer_2;
-    QPushButton *pushButton_5;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_4;
+    QPushButton *buttonCreateServer;
+    QPushButton *buttonConnect;
     QMenuBar *menubar;
     QMenu *menu;
     QMenu *menuPlay;
@@ -62,8 +61,8 @@ public:
         actionCreate_a_server->setObjectName(QString::fromUtf8("actionCreate_a_server"));
         actionConnect_to_server = new QAction(MainWindow);
         actionConnect_to_server->setObjectName(QString::fromUtf8("actionConnect_to_server"));
-        actionPlay = new QAction(MainWindow);
-        actionPlay->setObjectName(QString::fromUtf8("actionPlay"));
+        actionStart = new QAction(MainWindow);
+        actionStart->setObjectName(QString::fromUtf8("actionStart"));
         actionAdmit_defeat = new QAction(MainWindow);
         actionAdmit_defeat->setObjectName(QString::fromUtf8("actionAdmit_defeat"));
         actionLocal = new QAction(MainWindow);
@@ -115,34 +114,29 @@ public:
 
         verticalLayout->addItem(verticalSpacer);
 
-        pushButton = new QPushButton(verticalLayoutWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        buttonStart = new QPushButton(verticalLayoutWidget);
+        buttonStart->setObjectName(QString::fromUtf8("buttonStart"));
 
-        verticalLayout->addWidget(pushButton);
+        verticalLayout->addWidget(buttonStart);
 
-        pushButton_2 = new QPushButton(verticalLayoutWidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        buttonDefeat = new QPushButton(verticalLayoutWidget);
+        buttonDefeat->setObjectName(QString::fromUtf8("buttonDefeat"));
 
-        verticalLayout->addWidget(pushButton_2);
+        verticalLayout->addWidget(buttonDefeat);
 
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout->addItem(verticalSpacer_2);
 
-        pushButton_5 = new QPushButton(verticalLayoutWidget);
-        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
+        buttonCreateServer = new QPushButton(verticalLayoutWidget);
+        buttonCreateServer->setObjectName(QString::fromUtf8("buttonCreateServer"));
 
-        verticalLayout->addWidget(pushButton_5);
+        verticalLayout->addWidget(buttonCreateServer);
 
-        pushButton_3 = new QPushButton(verticalLayoutWidget);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        buttonConnect = new QPushButton(verticalLayoutWidget);
+        buttonConnect->setObjectName(QString::fromUtf8("buttonConnect"));
 
-        verticalLayout->addWidget(pushButton_3);
-
-        pushButton_4 = new QPushButton(verticalLayoutWidget);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-
-        verticalLayout->addWidget(pushButton_4);
+        verticalLayout->addWidget(buttonConnect);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -163,7 +157,7 @@ public:
         menu->addSeparator();
         menu->addAction(actionCreate_a_server);
         menu->addAction(actionConnect_to_server);
-        menuPlay->addAction(actionPlay);
+        menuPlay->addAction(actionStart);
         menuPlay->addAction(actionAdmit_defeat);
 
         retranslateUi(MainWindow);
@@ -176,16 +170,15 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "\345\206\233\346\243\213", nullptr));
         actionCreate_a_server->setText(QCoreApplication::translate("MainWindow", "Create a Server", nullptr));
         actionConnect_to_server->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
-        actionPlay->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
+        actionStart->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         actionAdmit_defeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
         actionLocal->setText(QCoreApplication::translate("MainWindow", "Local Game", nullptr));
         label->setText(QString());
         label_2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Time Remaining:</span></p></body></html>", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
-        pushButton_5->setText(QCoreApplication::translate("MainWindow", "Local Game", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Create a Server", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
+        buttonStart->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
+        buttonDefeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
+        buttonCreateServer->setText(QCoreApplication::translate("MainWindow", "Create a Server", nullptr));
+        buttonConnect->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
         menu->setTitle(QCoreApplication::translate("MainWindow", "Connect", nullptr));
         menuPlay->setTitle(QCoreApplication::translate("MainWindow", "Play", nullptr));
     } // retranslateUi

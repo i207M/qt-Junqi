@@ -4,16 +4,15 @@
 #include <QMainWindow>
 
 #include "chessboard.h"
+#include "server.h"
+#include "client.h"
 
-#ifndef CLASS_MAINWINDOW
-#define CLASS_MAINWINDOW
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class MainWindow;
 }
 QT_END_NAMESPACE
-#endif
 
 class MainWindow : public QMainWindow
 {
@@ -22,24 +21,27 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    bool canAdmitDefeat();
+    void admitDefeat();
 
 private slots:
     void on_actionCreate_a_server_triggered();
     void on_actionConnect_to_server_triggered();
-    void on_actionPlay_triggered();
+    void on_actionStart_triggered();
     void on_actionAdmit_defeat_triggered();
     void on_actionLocal_triggered();
 
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-    void on_pushButton_5_clicked();
+    void on_buttonCreateServer_clicked();
+    void on_buttonConnect_clicked();
+    void on_buttonStart_clicked();
+    void on_buttonDefeat_clicked();
 
 private:
     Ui::MainWindow *ui;
 
     Chessboard board;
+    Server server;
+    Client client;
 
     int gameMode;
 };

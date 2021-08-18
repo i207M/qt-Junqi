@@ -19,56 +19,70 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_clicked()
-{
-    MainWindow::on_actionPlay_triggered();
-}
-void MainWindow::on_pushButton_2_clicked()
-{
-    MainWindow::on_actionAdmit_defeat_triggered();
-}
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_buttonCreateServer_clicked()
 {
     MainWindow::on_actionCreate_a_server_triggered();
 }
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_buttonConnect_clicked()
 {
-    MainWindow::on_actionConnect_to_server_triggered();
+    MainWindow::on_actionCreate_a_server_triggered();
 }
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::on_buttonStart_clicked()
 {
-    MainWindow::on_actionLocal_triggered();
+    MainWindow::on_actionStart_triggered();
+}
+void MainWindow::on_buttonDefeat_clicked()
+{
+    MainWindow::on_actionAdmit_defeat_triggered();
 }
 
 
 void MainWindow::on_actionCreate_a_server_triggered()
 {
-
+    server.create();
+    client.tryConnect("localhost", P1_PORT, false);
+    bool ret = server.waitConnection();
+    if(ret) {
+        gameMode = 2;
+    }
 }
 
 void MainWindow::on_actionConnect_to_server_triggered()
 {
-
+    bool ret = client.showConnectDialog();
+    if(ret) {
+        gameMode = 2;
+    }
 }
 
-void MainWindow::on_actionPlay_triggered()
+void MainWindow::on_actionStart_triggered()
 {
     if(gameMode == 0) {
         QMessageBox::warning(this,
                              tr("Warning"),
                              tr("Please Select Game Mode."));
-    } else if (gameMode == 1) {
+    } else if (gameMode == 2) {
         ;
     }
 }
 
 void MainWindow::on_actionAdmit_defeat_triggered()
 {
-
+    bool _canAdmitDefeat = canAdmitDefeat();
+    if(_canAdmitDefeat) {
+        admitDefeat();
+    } else {
+        QMessageBox::warning(this,
+                             tr("Warning"),
+                             tr("You cannot admit defeat yet."));
+    }
 }
 
 void MainWindow::on_actionLocal_triggered()
 {
-    gameMode = 1;
+    // gameMode = 1;
+    QMessageBox::information(this,
+                             tr("Deprecated"),
+                             tr("Not implemented."));
 }
 
