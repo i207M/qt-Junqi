@@ -33,7 +33,7 @@ public:
     QAction *actionConnect_to_server;
     QAction *actionStart;
     QAction *actionAdmit_defeat;
-    QAction *actionLocal;
+    QAction *actionDisconnect;
     QWidget *centralwidget;
     QLabel *label;
     QWidget *verticalLayoutWidget;
@@ -47,6 +47,7 @@ public:
     QSpacerItem *verticalSpacer_2;
     QPushButton *buttonCreateServer;
     QPushButton *buttonConnect;
+    QPushButton *buttonDisconnect;
     QMenuBar *menubar;
     QMenu *menu;
     QMenu *menuPlay;
@@ -65,8 +66,8 @@ public:
         actionStart->setObjectName(QString::fromUtf8("actionStart"));
         actionAdmit_defeat = new QAction(MainWindow);
         actionAdmit_defeat->setObjectName(QString::fromUtf8("actionAdmit_defeat"));
-        actionLocal = new QAction(MainWindow);
-        actionLocal->setObjectName(QString::fromUtf8("actionLocal"));
+        actionDisconnect = new QAction(MainWindow);
+        actionDisconnect->setObjectName(QString::fromUtf8("actionDisconnect"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         label = new QLabel(centralwidget);
@@ -138,6 +139,11 @@ public:
 
         verticalLayout->addWidget(buttonConnect);
 
+        buttonDisconnect = new QPushButton(verticalLayoutWidget);
+        buttonDisconnect->setObjectName(QString::fromUtf8("buttonDisconnect"));
+
+        verticalLayout->addWidget(buttonDisconnect);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -153,10 +159,10 @@ public:
 
         menubar->addAction(menu->menuAction());
         menubar->addAction(menuPlay->menuAction());
-        menu->addAction(actionLocal);
-        menu->addSeparator();
         menu->addAction(actionCreate_a_server);
         menu->addAction(actionConnect_to_server);
+        menu->addSeparator();
+        menu->addAction(actionDisconnect);
         menuPlay->addAction(actionStart);
         menuPlay->addAction(actionAdmit_defeat);
 
@@ -172,13 +178,14 @@ public:
         actionConnect_to_server->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
         actionStart->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         actionAdmit_defeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
-        actionLocal->setText(QCoreApplication::translate("MainWindow", "Local Game", nullptr));
+        actionDisconnect->setText(QCoreApplication::translate("MainWindow", "Disconnect", nullptr));
         label->setText(QString());
         label_2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Time Remaining:</span></p></body></html>", nullptr));
         buttonStart->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         buttonDefeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
         buttonCreateServer->setText(QCoreApplication::translate("MainWindow", "Create a Server", nullptr));
         buttonConnect->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
+        buttonDisconnect->setText(QCoreApplication::translate("MainWindow", "Disconnect", nullptr));
         menu->setTitle(QCoreApplication::translate("MainWindow", "Connect", nullptr));
         menuPlay->setTitle(QCoreApplication::translate("MainWindow", "Play", nullptr));
     } // retranslateUi

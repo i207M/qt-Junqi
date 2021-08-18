@@ -35,6 +35,10 @@ void MainWindow::on_buttonDefeat_clicked()
 {
     MainWindow::on_actionAdmit_defeat_triggered();
 }
+void MainWindow::on_buttonDisconnect_clicked()
+{
+    MainWindow::on_actionDisconnect_triggered();
+}
 
 
 void MainWindow::on_actionCreate_a_server_triggered()
@@ -43,7 +47,7 @@ void MainWindow::on_actionCreate_a_server_triggered()
     client.tryConnect("localhost", P1_PORT, false);
     bool ret = server.waitConnection();
     if(ret) {
-        gameMode = 2;
+        gameMode = 1;
     }
 }
 
@@ -61,7 +65,7 @@ void MainWindow::on_actionStart_triggered()
         QMessageBox::warning(this,
                              tr("Warning"),
                              tr("Please Select Game Mode."));
-    } else if (gameMode == 2) {
+    } else if (gameMode == 1 or gameMode == 2) {
         ;
     }
 }
@@ -78,11 +82,31 @@ void MainWindow::on_actionAdmit_defeat_triggered()
     }
 }
 
-void MainWindow::on_actionLocal_triggered()
+void MainWindow::on_actionDisconnect_triggered()
 {
-    // gameMode = 1;
-    QMessageBox::information(this,
-                             tr("Deprecated"),
-                             tr("Not implemented."));
+    if (gameMode == 1) {
+        ;
+    } else if (gameMode == 2) {
+        ;
+    } else {
+        throwError("Invalid Game Mode.");
+    }
 }
 
+void MainWindow::throwError(const char *debug_str)
+{
+    QMessageBox::critical(this,
+                          tr("Error"),
+                          tr(debug_str));
+    QApplication::exit(1);
+}
+
+bool MainWindow::canAdmitDefeat()
+{
+    ;
+}
+
+void MainWindow::admitDefeat()
+{
+    ;
+}

@@ -133,6 +133,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="buttonDisconnect">
+       <property name="text">
+        <string>Disconnect</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -149,10 +156,10 @@
     <property name="title">
      <string>Connect</string>
     </property>
-    <addaction name="actionLocal"/>
-    <addaction name="separator"/>
     <addaction name="actionCreate_a_server"/>
     <addaction name="actionConnect_to_server"/>
+    <addaction name="separator"/>
+    <addaction name="actionDisconnect"/>
    </widget>
    <widget class="QMenu" name="menuPlay">
     <property name="title">
@@ -185,9 +192,9 @@
     <string>Admit Defeat</string>
    </property>
   </action>
-  <action name="actionLocal">
+  <action name="actionDisconnect">
    <property name="text">
-    <string>Local Game</string>
+    <string>Disconnect</string>
    </property>
   </action>
  </widget>
