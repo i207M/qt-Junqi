@@ -4,7 +4,10 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui
+{
+class MainWindow;
+}
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -25,8 +28,6 @@ private slots:
     void on_actionAdmit_defeat_triggered();
 
     void on_actionLocal_triggered();
-
-    void on_toolButton_triggered(QAction *arg1);
 
     void on_pushButton_4_clicked();
 
