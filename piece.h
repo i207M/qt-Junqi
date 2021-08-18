@@ -42,10 +42,13 @@ public:
     Piece() {};
     Piece(int _team, Type _type): team(_team), type(_type), known(false), dead(false) {}
 
-    void display()
-    {
-        ;
-    }
+    void display();
+    void flip();
+    void select();
+    void kill();
+
+    void tryAttack(Piece &obj);
+    bool canAttack();
 };
 
 #endif // PIECE_H

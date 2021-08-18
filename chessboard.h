@@ -16,22 +16,14 @@ public:
     explicit Chessboard(MainWindow *_win);
     void init();
     void display();
-    void displayPiece(int id);
-    void clicked(Pos pos);
-    void nextTurn();
 
-    void flipPiece(int id);
-    void selectPiece(int id);
-    void deletePiece(int id);
+    void clickPos(Pos pos);
     void clickPiece(int id);
 
-    void tryAttack(int id, int object);
-    bool canAttack();
+    void nextTurn();
 
     void tryAdmitDefeat();
     bool canAdmitDefeat();
-
-    int getIdByPos();
 
     int canGameOver();
     void gameOver(const char *display_str);
