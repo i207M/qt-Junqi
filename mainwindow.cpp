@@ -67,20 +67,12 @@ void MainWindow::on_buttonLocal_clicked()
 
 void MainWindow::actionCreateServer()
 {
-    server.create();
-    client.tryConnect("localhost", P1_PORT, false);
-    bool _waitConnection = server.waitConnection();
-    if(_waitConnection) {
-        gameMode = 1;
-    }
+    ;
 }
 
 void MainWindow::actionConnectServer()
 {
-    bool _showConnectDialog = client.showConnectDialog();
-    if(_showConnectDialog) {
-        gameMode = 2;
-    }
+    ;
 }
 
 void MainWindow::actionStart()
