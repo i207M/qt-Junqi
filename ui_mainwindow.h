@@ -12,10 +12,16 @@
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLCDNumber>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -27,7 +33,21 @@ public:
     QAction *actionConnect_to_server;
     QAction *actionPlay;
     QAction *actionAdmit_defeat;
+    QAction *actionLocal;
     QWidget *centralwidget;
+    QLabel *label;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QLabel *label_2;
+    QLCDNumber *lcdNumber;
+    QTextBrowser *textBrowser;
+    QSpacerItem *verticalSpacer;
+    QPushButton *pushButton;
+    QPushButton *pushButton_2;
+    QSpacerItem *verticalSpacer_2;
+    QPushButton *pushButton_5;
+    QPushButton *pushButton_3;
+    QPushButton *pushButton_4;
     QMenuBar *menubar;
     QMenu *menu;
     QMenu *menuPlay;
@@ -37,7 +57,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(700, 672);
+        MainWindow->resize(775, 784);
         actionCreate_a_server = new QAction(MainWindow);
         actionCreate_a_server->setObjectName(QString::fromUtf8("actionCreate_a_server"));
         actionConnect_to_server = new QAction(MainWindow);
@@ -46,12 +66,88 @@ public:
         actionPlay->setObjectName(QString::fromUtf8("actionPlay"));
         actionAdmit_defeat = new QAction(MainWindow);
         actionAdmit_defeat->setObjectName(QString::fromUtf8("actionAdmit_defeat"));
+        actionLocal = new QAction(MainWindow);
+        actionLocal->setObjectName(QString::fromUtf8("actionLocal"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        label = new QLabel(centralwidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(0, 0, 521, 731));
+        label->setPixmap(QPixmap(QString::fromUtf8(":/chessboard/images/empty.png")));
+        label->setScaledContents(true);
+        verticalLayoutWidget = new QWidget(centralwidget);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(530, 0, 241, 731));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        label_2 = new QLabel(verticalLayoutWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(5);
+        sizePolicy.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
+        label_2->setSizePolicy(sizePolicy);
+
+        verticalLayout->addWidget(label_2);
+
+        lcdNumber = new QLCDNumber(verticalLayoutWidget);
+        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(15);
+        sizePolicy1.setHeightForWidth(lcdNumber->sizePolicy().hasHeightForWidth());
+        lcdNumber->setSizePolicy(sizePolicy1);
+
+        verticalLayout->addWidget(lcdNumber);
+
+        textBrowser = new QTextBrowser(verticalLayoutWidget);
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(80);
+        sizePolicy2.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
+        textBrowser->setSizePolicy(sizePolicy2);
+
+        verticalLayout->addWidget(textBrowser);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
+        pushButton = new QPushButton(verticalLayoutWidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
+        pushButton_2 = new QPushButton(verticalLayoutWidget);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+
+        verticalLayout->addWidget(pushButton_2);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer_2);
+
+        pushButton_5 = new QPushButton(verticalLayoutWidget);
+        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
+
+        verticalLayout->addWidget(pushButton_5);
+
+        pushButton_3 = new QPushButton(verticalLayoutWidget);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+
+        verticalLayout->addWidget(pushButton_3);
+
+        pushButton_4 = new QPushButton(verticalLayoutWidget);
+        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+
+        verticalLayout->addWidget(pushButton_4);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 700, 26));
+        menubar->setGeometry(QRect(0, 0, 775, 26));
         menu = new QMenu(menubar);
         menu->setObjectName(QString::fromUtf8("menu"));
         menuPlay = new QMenu(menubar);
@@ -63,8 +159,9 @@ public:
 
         menubar->addAction(menu->menuAction());
         menubar->addAction(menuPlay->menuAction());
-        menu->addAction(actionCreate_a_server);
+        menu->addAction(actionLocal);
         menu->addSeparator();
+        menu->addAction(actionCreate_a_server);
         menu->addAction(actionConnect_to_server);
         menuPlay->addAction(actionPlay);
         menuPlay->addAction(actionAdmit_defeat);
@@ -77,10 +174,18 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "\345\206\233\346\243\213", nullptr));
-        actionCreate_a_server->setText(QCoreApplication::translate("MainWindow", "Create server", nullptr));
-        actionConnect_to_server->setText(QCoreApplication::translate("MainWindow", "Connect to server", nullptr));
+        actionCreate_a_server->setText(QCoreApplication::translate("MainWindow", "Create a Server", nullptr));
+        actionConnect_to_server->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
         actionPlay->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
-        actionAdmit_defeat->setText(QCoreApplication::translate("MainWindow", "Admit defeat", nullptr));
+        actionAdmit_defeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
+        actionLocal->setText(QCoreApplication::translate("MainWindow", "Local Game", nullptr));
+        label->setText(QString());
+        label_2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Time Remaining:</span></p></body></html>", nullptr));
+        pushButton->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
+        pushButton_5->setText(QCoreApplication::translate("MainWindow", "Local Game", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("MainWindow", "Create a Server", nullptr));
+        pushButton_4->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
         menu->setTitle(QCoreApplication::translate("MainWindow", "Connect", nullptr));
         menuPlay->setTitle(QCoreApplication::translate("MainWindow", "Play", nullptr));
     } // retranslateUi
