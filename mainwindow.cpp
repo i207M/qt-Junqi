@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     gameMode = 0;
-    board.setMainWindow(this);
 }
 
 MainWindow::~MainWindow()
@@ -87,7 +86,7 @@ void MainWindow::actionStart()
                              tr("Warning"),
                              tr("Please Select Game Mode."));
     } else if(gameMode == 1) {
-        ;
+        board = new Chessboard(this);
     } else if (gameMode == 2 or gameMode == 3) {
         ;
     }

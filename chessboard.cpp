@@ -1,17 +1,18 @@
 #include "chessboard.h"
 #include "mainwindow.h"
 
-Chessboard::Chessboard() {}
+Chessboard::Chessboard(MainWindow *_win)
+{
+    win = _win;
+    ui = win->getUi();
+
+    player_id = 1;
+    select_id = -1;
+}
 
 Chessboard::~Chessboard()
 {
     ;
-}
-
-void Chessboard::setMainWindow(MainWindow *_win)
-{
-    win = _win;
-    ui = _win->getUi();
 }
 
 void Chessboard::init()

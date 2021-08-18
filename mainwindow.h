@@ -51,7 +51,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    Chessboard board;
+    Chessboard *board;
 
     int gameMode;
 };

@@ -23,22 +23,20 @@ class MainWindow;
 class Chessboard
 {
 public:
-    Chessboard();
+    Chessboard() = delete;
     ~Chessboard();
-    void setMainWindow(MainWindow *_win);
+    explicit Chessboard(MainWindow *_win);
     void init();
     void clicked();
+    void nextTurn();
 
     virtual void paintEvent(QPaintEvent *);
     void display();
-    void displayPiece(int id, Pos pos, bool known);
 
     void flipPiece(int id);
     void selectPiece(int id);
     void deletePiece(int id);
-    void move(int id, Pos pre, Pos nxt);
     void clickPiece(int id);
-    void nextTurn();
 
     void tryAttack(int id, int object);
     bool canAttack();

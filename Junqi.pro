@@ -11,7 +11,8 @@ CONFIG += c++11 Console
 SOURCES += \
     chessboard.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    piece.cpp
 
 HEADERS += \
     chessboard.h \

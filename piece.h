@@ -21,7 +21,9 @@ enum class Type : int {
     JunQi = 10
 };
 
-struct Piece {
+class Piece
+{
+public:
     int team;
     Type type;
     bool known, dead;
@@ -29,6 +31,10 @@ struct Piece {
 
     Piece() {};
     Piece(int _team, Type _type): team(_team), type(_type), known(false), dead(false) {}
+
+    void display();
+
+private:
 };
 
 #endif // PIECE_H
