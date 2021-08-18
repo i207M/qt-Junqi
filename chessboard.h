@@ -1,22 +1,11 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
-
-#include <QPainter>
 #include <QTime>
 #include <QTimer>
 
 #include "piece.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-class MainWindow;
-}
-QT_END_NAMESPACE
 class MainWindow;
 
 class Chessboard
@@ -27,7 +16,8 @@ public:
     explicit Chessboard(MainWindow *_win);
     void init();
     void display();
-    void clicked();
+    void displayPiece(int id);
+    void clicked(Pos pos);
     void nextTurn();
 
     void flipPiece(int id);
@@ -37,7 +27,6 @@ public:
 
     void tryAttack(int id, int object);
     bool canAttack();
-    bool canWinAttack();
 
     void tryAdmitDefeat();
     bool canAdmitDefeat();

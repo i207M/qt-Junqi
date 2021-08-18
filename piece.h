@@ -1,6 +1,15 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+#include <QMainWindow>
+
+QT_BEGIN_NAMESPACE
+namespace Ui
+{
+class MainWindow;
+}
+QT_END_NAMESPACE
+
 struct Pos {
     int row, col;
     Pos() {};
@@ -24,15 +33,19 @@ enum class Type : int {
 class Piece
 {
 public:
+    static Ui::MainWindow *ui;
     int team;
-    Type type;
     bool known, dead;
+    Type type;
     Pos pos;
 
     Piece() {};
     Piece(int _team, Type _type): team(_team), type(_type), known(false), dead(false) {}
 
-    void display();
+    void display()
+    {
+        ;
+    }
 };
 
 #endif // PIECE_H

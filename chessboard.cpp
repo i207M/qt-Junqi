@@ -1,6 +1,9 @@
+#include <algorithm>
+
 #include "chessboard.h"
 #include "mainwindow.h"
 
+Ui::MainWindow *Piece::ui = nullptr;
 Chessboard::Chessboard(MainWindow *_win)
 {
     win = _win;
@@ -9,6 +12,7 @@ Chessboard::Chessboard(MainWindow *_win)
     select_id = -1;
 
     init();
+    Piece::ui = win->ui;
 }
 
 Chessboard::~Chessboard()
@@ -54,8 +58,11 @@ void Chessboard::init()
 
 void Chessboard::display()
 {
+    // static bool placed[12][5];
+    // memset(placed, 0, sizeof(placed));
     for(int i = 0; i < 60; ++i) {
-        ;
+        p[i].display();
+        // placed[p[i].pos.row][p[i].pos.col] = true;
     }
 }
 
