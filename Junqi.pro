@@ -10,16 +10,12 @@ CONFIG += c++11 Console
 
 SOURCES += \
     chessboard.cpp \
-    client.cpp \
     main.cpp \
-    mainwindow.cpp \
-    server.cpp
+    mainwindow.cpp
 
 HEADERS += \
     chessboard.h \
-    client.h \
-    mainwindow.h \
-    server.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui

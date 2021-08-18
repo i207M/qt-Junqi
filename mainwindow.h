@@ -4,8 +4,6 @@
 #include <QMainWindow>
 
 #include "chessboard.h"
-#include "server.h"
-#include "client.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -31,8 +29,8 @@ public:
 
     bool canAdmitDefeat();
     void admitDefeat();
-    // void throwError(const char *debug_str);
 
+    // void throwError(const char *debug_str);
     void log();
 
 private slots:
@@ -53,8 +51,6 @@ private:
     Ui::MainWindow *ui;
 
     Chessboard board;
-    Server server;
-    Client client;
 
     int gameMode;
 };
