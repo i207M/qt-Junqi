@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    board = nullptr;
     gameMode = 0;
 }
 
@@ -17,9 +18,67 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-Ui::MainWindow *MainWindow::getUi()
+
+void MainWindow::actionCreateServer()
 {
-    return ui;
+    ;
+}
+
+void MainWindow::actionConnectServer()
+{
+    ;
+}
+
+void MainWindow::actionStart()
+{
+    if(gameMode == 0) {
+        QMessageBox::warning(this,
+                             tr("Warning"),
+                             tr("Please Select Game Mode."));
+    } else if(gameMode == 1) {
+        board = new Chessboard(this);
+        ui->buttonStart->setDisabled(true);
+    } else if (gameMode == 2 or gameMode == 3) {
+        ;
+    }
+}
+
+void MainWindow::actionAdmitDefeat()
+{
+    board->tryAdmitDefeat();
+}
+
+void MainWindow::actionDisconnect()
+{
+    if (gameMode == 1) {
+        ;
+    } else if (gameMode == 2) {
+        ;
+    } else if(gameMode == 3) {
+        ;
+    }
+}
+
+void MainWindow::actionSetLocalGame()
+{
+    gameMode = 1;
+}
+
+void MainWindow::paintEvent(QPaintEvent *)
+{
+    if(board == nullptr) {
+        return;
+    } else {
+        board->display();
+    }
+}
+
+void MainWindow::throwError(const char *debug_str)
+{
+    QMessageBox::critical(this,
+                          tr("Error"),
+                          tr(debug_str));
+    QApplication::exit(1);
 }
 
 
@@ -67,74 +126,3 @@ void MainWindow::on_buttonLocal_clicked()
 {
     actionSetLocalGame();
 }
-
-
-void MainWindow::actionCreateServer()
-{
-    ;
-}
-
-void MainWindow::actionConnectServer()
-{
-    ;
-}
-
-void MainWindow::actionStart()
-{
-    if(gameMode == 0) {
-        QMessageBox::warning(this,
-                             tr("Warning"),
-                             tr("Please Select Game Mode."));
-    } else if(gameMode == 1) {
-        board = new Chessboard(this);
-    } else if (gameMode == 2 or gameMode == 3) {
-        ;
-    }
-}
-
-void MainWindow::actionAdmitDefeat()
-{
-    bool _canAdmitDefeat = canAdmitDefeat();
-    if(_canAdmitDefeat) {
-        admitDefeat();
-    } else {
-        QMessageBox::warning(this,
-                             tr("Warning"),
-                             tr("You cannot admit defeat yet."));
-    }
-}
-
-void MainWindow::actionDisconnect()
-{
-    if (gameMode == 1) {
-        ;
-    } else if (gameMode == 2) {
-        ;
-    } else if(gameMode == 3) {
-        ;
-    }
-}
-
-void MainWindow::actionSetLocalGame()
-{
-    gameMode = 1;
-}
-
-void MainWindow::throwError(const char *debug_str)
-{
-    QMessageBox::critical(this,
-                          tr("Error"),
-                          tr(debug_str));
-    QApplication::exit(1);
-}
-
-bool MainWindow::canAdmitDefeat()
-{
-    ;
-}
-
-void MainWindow::admitDefeat()
-{
-    ;
-}
-

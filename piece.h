@@ -33,8 +33,6 @@ public:
     Piece(int _team, Type _type): team(_team), type(_type), known(false), dead(false) {}
 
     void display();
-
-private:
 };
 
 #endif // PIECE_H

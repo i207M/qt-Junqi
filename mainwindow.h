@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPainter>
 
 #include "chessboard.h"
 
@@ -19,7 +20,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    Ui::MainWindow *getUi();
 
     void actionCreateServer();
     void actionConnectServer();
@@ -28,11 +28,12 @@ public:
     void actionAdmitDefeat();
     void actionSetLocalGame();
 
-    bool canAdmitDefeat();
-    void admitDefeat();
+    virtual void paintEvent(QPaintEvent *);
 
     void throwError(const char *debug_str);
     void log(const char *debug_str);
+
+    Ui::MainWindow *ui;
 
 private slots:
     void on_actionCreate_a_server_triggered();
@@ -49,8 +50,6 @@ private slots:
     void on_buttonLocal_clicked();
 
 private:
-    Ui::MainWindow *ui;
-
     Chessboard *board;
 
     int gameMode;

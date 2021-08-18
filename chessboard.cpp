@@ -4,10 +4,11 @@
 Chessboard::Chessboard(MainWindow *_win)
 {
     win = _win;
-    ui = win->getUi();
 
     player_id = 1;
     select_id = -1;
+
+    init();
 }
 
 Chessboard::~Chessboard()
@@ -51,8 +52,16 @@ void Chessboard::init()
     }
 }
 
-void Chessboard::paintEvent(QPaintEvent *)
+void Chessboard::display()
 {
     QPainter painter(win);
-    painter.drawLine(QPoint(10, 10), QPoint(10, 20));
+    painter.setPen(Qt::black);
+    painter.setBrush(Qt::green);
+    painter.drawRect(10, 30, win->width() - 20, win->height() - 60);
+    painter.drawLine(QPoint(100, 100), QPoint(100, 200));
+}
+
+void Chessboard::tryAdmitDefeat()
+{
+    ;
 }

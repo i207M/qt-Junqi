@@ -5,7 +5,6 @@
 #include <ctime>
 #include <algorithm>
 
-#include <QMainWindow>
 #include <QPainter>
 #include <QTime>
 #include <QTimer>
@@ -27,11 +26,9 @@ public:
     ~Chessboard();
     explicit Chessboard(MainWindow *_win);
     void init();
+    void display();
     void clicked();
     void nextTurn();
-
-    virtual void paintEvent(QPaintEvent *);
-    void display();
 
     void flipPiece(int id);
     void selectPiece(int id);
@@ -42,13 +39,15 @@ public:
     bool canAttack();
     bool canWinAttack();
 
+    void tryAdmitDefeat();
+    bool canAdmitDefeat();
+
     int getIdByPos();
 
     int canGameOver();
     void gameOver(const char *display_str);
 private:
     MainWindow *win;
-    Ui::MainWindow *ui;
 
     int player_id;
     int select_id;
