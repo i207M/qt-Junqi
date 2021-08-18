@@ -10,6 +10,9 @@ public:
     void create();
     bool waitConnection();
     void close();
+
+    void send();
+    void recv();
 };
 
 #endif // SERVER_H

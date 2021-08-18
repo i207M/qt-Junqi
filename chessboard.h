@@ -11,6 +11,12 @@ struct Pos {
     }
 };
 
+struct Piece {
+    int team, type, num, id;
+    bool known, dead;
+    Pos pos;
+};
+
 class MainWindow;
 
 class Chessboard
@@ -19,20 +25,27 @@ public:
     Chessboard();
     ~Chessboard();
     void setMainWindow(MainWindow *_win);
+    void clicked();
+    Pos getClickPos();
+
     void display();
     void displayPiece(int id, Pos pos, bool known);
     void move(int id, Pos pre, Pos nxt);
-    void selectPiece(int id);
     void deletePiece(int id);
+    void selectPiece(int id);
     void flipPiece(int id);
-    void clicked();
+    void tryAttack(int id, int object);
+    void gameOver(bool win);
 
-    bool isKnown();
+    bool canAttack();
+    bool canWinAttack();
+    int canGameOver();
 
     int getIdByPos();
-    Pos getPosById();
 private:
     MainWindow *win;
+
+    int player_id;
 };
 
 #endif // CHESSBOARD_H
