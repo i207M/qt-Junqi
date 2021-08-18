@@ -9,7 +9,7 @@ class Client
 public:
     Client();
     ~Client();
-    bool tryConnect(const char *, int, bool);
+    bool tryConnect(const char *ip, int port, bool show_dialog);
     bool showConnectDialog();
     void disconnect();
 };

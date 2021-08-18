@@ -21,9 +21,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void actionCreateServer();
+    void actionConnectServer();
+    void actionDisconnect();
+    void actionStart();
+    void actionAdmitDefeat();
+
     bool canAdmitDefeat();
     void admitDefeat();
-    void throwError(const char *);
+    void throwError(const char *debug_str);
 
 private slots:
     void on_actionCreate_a_server_triggered();

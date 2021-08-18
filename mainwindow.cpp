@@ -21,45 +21,65 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_buttonCreateServer_clicked()
 {
-    MainWindow::on_actionCreate_a_server_triggered();
+    actionCreateServer();
 }
 void MainWindow::on_buttonConnect_clicked()
 {
-    MainWindow::on_actionCreate_a_server_triggered();
-}
-void MainWindow::on_buttonStart_clicked()
-{
-    MainWindow::on_actionStart_triggered();
-}
-void MainWindow::on_buttonDefeat_clicked()
-{
-    MainWindow::on_actionAdmit_defeat_triggered();
+    actionConnectServer();
 }
 void MainWindow::on_buttonDisconnect_clicked()
 {
-    MainWindow::on_actionDisconnect_triggered();
+    actionDisconnect();
+}
+void MainWindow::on_buttonStart_clicked()
+{
+    actionStart();
+}
+void MainWindow::on_buttonDefeat_clicked()
+{
+    actionAdmitDefeat();
+}
+void MainWindow::on_actionCreate_a_server_triggered()
+{
+    actionCreateServer();
+}
+void MainWindow::on_actionConnect_to_server_triggered()
+{
+    actionConnectServer();
+}
+void MainWindow::on_actionDisconnect_triggered()
+{
+    actionDisconnect();
+}
+void MainWindow::on_actionStart_triggered()
+{
+    actionStart();
+}
+void MainWindow::on_actionAdmit_defeat_triggered()
+{
+    actionAdmitDefeat();
 }
 
 
-void MainWindow::on_actionCreate_a_server_triggered()
+void MainWindow::actionCreateServer()
 {
     server.create();
     client.tryConnect("localhost", P1_PORT, false);
-    bool ret = server.waitConnection();
-    if(ret) {
+    bool _waitConnection = server.waitConnection();
+    if(_waitConnection) {
         gameMode = 1;
     }
 }
 
-void MainWindow::on_actionConnect_to_server_triggered()
+void MainWindow::actionConnectServer()
 {
-    bool ret = client.showConnectDialog();
-    if(ret) {
+    bool _showConnectDialog = client.showConnectDialog();
+    if(_showConnectDialog) {
         gameMode = 2;
     }
 }
 
-void MainWindow::on_actionStart_triggered()
+void MainWindow::actionStart()
 {
     if(gameMode == 0) {
         QMessageBox::warning(this,
@@ -70,7 +90,7 @@ void MainWindow::on_actionStart_triggered()
     }
 }
 
-void MainWindow::on_actionAdmit_defeat_triggered()
+void MainWindow::actionAdmitDefeat()
 {
     bool _canAdmitDefeat = canAdmitDefeat();
     if(_canAdmitDefeat) {
@@ -82,7 +102,7 @@ void MainWindow::on_actionAdmit_defeat_triggered()
     }
 }
 
-void MainWindow::on_actionDisconnect_triggered()
+void MainWindow::actionDisconnect()
 {
     if (gameMode == 1) {
         ;

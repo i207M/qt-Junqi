@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "qapplication": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "streambuf": "cpp"
     },
     "python.pythonPath": "D:\\Dev\\Program\\Python\\Python38\\python.exe"
 }
