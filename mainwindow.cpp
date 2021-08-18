@@ -55,12 +55,6 @@ void MainWindow::on_pushButton_2_clicked()
 }
 
 
-void MainWindow::on_pushButton_5_clicked()
-{
-    MainWindow::on_actionLocal_triggered();
-}
-
-
 void MainWindow::on_pushButton_3_clicked()
 {
     MainWindow::on_actionCreate_a_server_triggered();
@@ -70,5 +64,11 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
     MainWindow::on_actionConnect_to_server_triggered();
+}
+
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    MainWindow::on_actionLocal_triggered();
 }
 
