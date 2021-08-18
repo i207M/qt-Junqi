@@ -59,6 +59,10 @@ void MainWindow::on_actionAdmit_defeat_triggered()
 {
     actionAdmitDefeat();
 }
+void MainWindow::on_buttonLocal_clicked()
+{
+    actionSetLocalGame();
+}
 
 
 void MainWindow::actionCreateServer()
@@ -85,7 +89,9 @@ void MainWindow::actionStart()
         QMessageBox::warning(this,
                              tr("Warning"),
                              tr("Please Select Game Mode."));
-    } else if (gameMode == 1 or gameMode == 2) {
+    } else if(gameMode == 1) {
+        ;
+    } else if (gameMode == 2 or gameMode == 3) {
         ;
     }
 }
@@ -108,18 +114,23 @@ void MainWindow::actionDisconnect()
         ;
     } else if (gameMode == 2) {
         ;
-    } else {
-        throwError("Invalid Game Mode.");
+    } else if(gameMode == 3) {
+        ;
     }
 }
 
-void MainWindow::throwError(const char *debug_str)
+void MainWindow::actionSetLocalGame()
 {
-    QMessageBox::critical(this,
-                          tr("Error"),
-                          tr(debug_str));
-    QApplication::exit(1);
+    gameMode = 1;
 }
+
+// void MainWindow::throwError(const char *debug_str)
+// {
+//     QMessageBox::critical(this,
+//                           tr("Error"),
+//                           tr(debug_str));
+//     QApplication::exit(1);
+// }
 
 bool MainWindow::canAdmitDefeat()
 {
@@ -130,3 +141,4 @@ void MainWindow::admitDefeat()
 {
     ;
 }
+

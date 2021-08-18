@@ -27,10 +27,13 @@ public:
     void actionDisconnect();
     void actionStart();
     void actionAdmitDefeat();
+    void actionSetLocalGame();
 
     bool canAdmitDefeat();
     void admitDefeat();
-    void throwError(const char *debug_str);
+    // void throwError(const char *debug_str);
+
+    void log();
 
 private slots:
     void on_actionCreate_a_server_triggered();
@@ -44,6 +47,7 @@ private slots:
     void on_buttonDisconnect_clicked();
     void on_buttonStart_clicked();
     void on_buttonDefeat_clicked();
+    void on_buttonLocal_clicked();
 
 private:
     Ui::MainWindow *ui;

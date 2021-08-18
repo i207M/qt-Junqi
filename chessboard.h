@@ -27,6 +27,7 @@ public:
     void setMainWindow(MainWindow *_win);
     void clicked();
     Pos getClickPos();
+    void nextTurn();
 
     void display();
     void displayPiece(int id, Pos pos, bool known);

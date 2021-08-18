@@ -120,6 +120,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="buttonLocal">
+       <property name="text">
+        <string>Set Local Game</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonCreateServer">
        <property name="text">
         <string>Create a Server</string>

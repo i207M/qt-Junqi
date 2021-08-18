@@ -45,6 +45,7 @@ public:
     QPushButton *buttonStart;
     QPushButton *buttonDefeat;
     QSpacerItem *verticalSpacer_2;
+    QPushButton *buttonLocal;
     QPushButton *buttonCreateServer;
     QPushButton *buttonConnect;
     QPushButton *buttonDisconnect;
@@ -129,6 +130,11 @@ public:
 
         verticalLayout->addItem(verticalSpacer_2);
 
+        buttonLocal = new QPushButton(verticalLayoutWidget);
+        buttonLocal->setObjectName(QString::fromUtf8("buttonLocal"));
+
+        verticalLayout->addWidget(buttonLocal);
+
         buttonCreateServer = new QPushButton(verticalLayoutWidget);
         buttonCreateServer->setObjectName(QString::fromUtf8("buttonCreateServer"));
 
@@ -183,6 +189,7 @@ public:
         label_2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Time Remaining:</span></p></body></html>", nullptr));
         buttonStart->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         buttonDefeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
+        buttonLocal->setText(QCoreApplication::translate("MainWindow", "Set Local Game", nullptr));
         buttonCreateServer->setText(QCoreApplication::translate("MainWindow", "Create a Server", nullptr));
         buttonConnect->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
         buttonDisconnect->setText(QCoreApplication::translate("MainWindow", "Disconnect", nullptr));
