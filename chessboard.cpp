@@ -54,11 +54,9 @@ void Chessboard::init()
 
 void Chessboard::display()
 {
-    QPainter painter(win);
-    painter.setPen(Qt::black);
-    painter.setBrush(Qt::green);
-    painter.drawRect(10, 30, win->width() - 20, win->height() - 60);
-    painter.drawLine(QPoint(100, 100), QPoint(100, 200));
+    for(int i = 0; i < 60; ++i) {
+        ;
+    }
 }
 
 void Chessboard::tryAdmitDefeat()
