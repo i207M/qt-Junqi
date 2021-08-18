@@ -2,7 +2,7 @@
 
 Chessboard::Chessboard()
 {
-    win = nullptr;
+    ;
 }
 
 Chessboard::~Chessboard()
