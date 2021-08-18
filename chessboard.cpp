@@ -1,5 +1,5 @@
 #include "chessboard.h"
-
+#include "mainwindow.h"
 
 Chessboard::Chessboard() {}
 
@@ -42,7 +42,7 @@ void Chessboard::init()
         }
     }
 
-    srand((unsigned int)new char);
+    srand(time(0));
     std::random_shuffle(_pos, _pos + 60);
 
     for (int i = 0; i < 60; ++i) {

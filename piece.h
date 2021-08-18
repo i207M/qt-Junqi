@@ -3,7 +3,7 @@
 
 struct Pos {
     int row, col;
-    Pos();
+    Pos() {};
     Pos(int _row, int _col) :  row(_row), col(_col) {}
 };
 
@@ -27,7 +27,7 @@ struct Piece {
     bool known, dead;
     Pos pos;
 
-    Piece();
+    Piece() {};
     Piece(int _team, Type _type): team(_team), type(_type), known(false), dead(false) {}
 };
 

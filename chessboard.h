@@ -1,6 +1,8 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
+#include <cstdlib>
+#include <ctime>
 #include <algorithm>
 
 #include <QMainWindow>
