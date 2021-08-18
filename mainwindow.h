@@ -3,12 +3,17 @@
 
 #include <QMainWindow>
 
+#include "chessboard.h"
+
+#ifndef CLASS_MAINWINDOW
+#define CLASS_MAINWINDOW
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
 class MainWindow;
 }
 QT_END_NAMESPACE
+#endif
 
 class MainWindow : public QMainWindow
 {
@@ -33,7 +38,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    
+
+    Chessboard board;
+
     int gameMode;
 };
 #endif // MAINWINDOW_H
