@@ -18,6 +18,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+Ui::MainWindow *MainWindow::getUi()
+{
+    return ui;
+}
+
 
 void MainWindow::on_buttonCreateServer_clicked()
 {

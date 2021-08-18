@@ -15,7 +15,8 @@ SOURCES += \
 
 HEADERS += \
     chessboard.h \
-    mainwindow.h
+    mainwindow.h \
+    piece.h
 
 FORMS += \
     mainwindow.ui

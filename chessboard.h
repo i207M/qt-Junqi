@@ -1,25 +1,21 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
+#include <algorithm>
+
+#include <QMainWindow>
+#include <QPainter>
 #include <QTime>
 #include <QTimer>
 
-struct Pos {
-    int row, col;
-    Pos();
-    ~Pos();
-    Pos(int _row, int _col)
-    {
-        row = _row, col = _col;
-    }
-};
+#include "piece.h"
 
-struct Piece {
-    int team, type, num;
-    bool known, dead;
-    Pos pos;
-};
-
+QT_BEGIN_NAMESPACE
+namespace Ui
+{
+class MainWindow;
+}
+QT_END_NAMESPACE
 class MainWindow;
 
 class Chessboard
@@ -28,11 +24,10 @@ public:
     Chessboard();
     ~Chessboard();
     void setMainWindow(MainWindow *_win);
+    void init();
     void clicked();
 
-    int canGameOver();
-    void gameOver(const char *display_str);
-
+    virtual void paintEvent(QPaintEvent *);
     void display();
     void displayPiece(int id, Pos pos, bool known);
 
@@ -48,11 +43,16 @@ public:
     bool canWinAttack();
 
     int getIdByPos();
+
+    int canGameOver();
+    void gameOver(const char *display_str);
 private:
     MainWindow *win;
+    Ui::MainWindow *ui;
 
     int player_id;
     int select_id;
+    Piece p[60];
 
     QTimer *timer;
     QTime *current_time;
