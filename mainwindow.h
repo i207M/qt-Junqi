@@ -30,8 +30,8 @@ public:
     bool canAdmitDefeat();
     void admitDefeat();
 
-    // void throwError(const char *debug_str);
-    void log();
+    void throwError(const char *debug_str);
+    void log(const char *debug_str);
 
 private slots:
     void on_actionCreate_a_server_triggered();

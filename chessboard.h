@@ -1,6 +1,9 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
+#include <QTime>
+#include <QTimer>
+
 struct Pos {
     int row, col;
     Pos();
@@ -26,18 +29,21 @@ public:
     ~Chessboard();
     void setMainWindow(MainWindow *_win);
     void clicked();
-    void nextTurn();
+
     int canGameOver();
-    void gameOver(bool win);
+    void gameOver(const char *display_str);
 
     void display();
     void displayPiece(int id, Pos pos, bool known);
+
     void flipPiece(int id);
     void selectPiece(int id);
     void deletePiece(int id);
     void move(int id, Pos pre, Pos nxt);
-    void tryAttack(int id, int object);
+    void clickPiece(int id);
+    void nextTurn();
 
+    void tryAttack(int id, int object);
     bool canAttack();
     bool canWinAttack();
 
@@ -46,6 +52,10 @@ private:
     MainWindow *win;
 
     int player_id;
+    int select_id;
+
+    QTimer *timer;
+    QTime *current_time;
 };
 
 #endif // CHESSBOARD_H

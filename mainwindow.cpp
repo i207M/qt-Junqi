@@ -116,13 +116,13 @@ void MainWindow::actionSetLocalGame()
     gameMode = 1;
 }
 
-// void MainWindow::throwError(const char *debug_str)
-// {
-//     QMessageBox::critical(this,
-//                           tr("Error"),
-//                           tr(debug_str));
-//     QApplication::exit(1);
-// }
+void MainWindow::throwError(const char *debug_str)
+{
+    QMessageBox::critical(this,
+                          tr("Error"),
+                          tr(debug_str));
+    QApplication::exit(1);
+}
 
 bool MainWindow::canAdmitDefeat()
 {
