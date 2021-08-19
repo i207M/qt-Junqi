@@ -1,6 +1,7 @@
+#include "chessboard.h"
+
 #include <algorithm>
 
-#include "chessboard.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 

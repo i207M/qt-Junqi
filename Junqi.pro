@@ -10,6 +10,7 @@ CONFIG += c++11 Console
 
 SOURCES += \
     chessboard.cpp \
+    clickablelabel.cpp \
     main.cpp \
     mainwindow.cpp \
     piece.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 HEADERS += \
     Mdebug.h \
     chessboard.h \
+    clickablelabel.h \
     mainwindow.h \
     piece.h \
     piecedisplay.h

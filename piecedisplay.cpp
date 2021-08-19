@@ -1,90 +1,140 @@
+#include "piecedisplay.h"
+
 #include <QImage>
 
-#include "piecedisplay.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include "Mdebug.h"
 
-QLabel *PieceDisplay::Label_Map[12][5] = {};
+ClickableLabel *PieceDisplay::Label_Map[12][5] = {};
 QPixmap *PieceDisplay::Pixmap[50] = {};
 int PieceDisplay::w = 0;
 int PieceDisplay::h = 0;
 
-PieceDisplay::PieceDisplay()
-{
-    ;
-}
-
-PieceDisplay::~PieceDisplay()
-{
-    ;
-}
-
 void PieceDisplay::initDisplay(Ui::MainWindow *ui)
 {
     // init Label_Map
-    PieceDisplay::Label_Map[0][0] = ui->label1;
-    PieceDisplay::Label_Map[0][1] = ui->label2;
-    PieceDisplay::Label_Map[0][2] = ui->label3;
-    PieceDisplay::Label_Map[0][3] = ui->label4;
-    PieceDisplay::Label_Map[0][4] = ui->label5;
-    PieceDisplay::Label_Map[1][0] = ui->label6;
-    PieceDisplay::Label_Map[1][1] = ui->label7;
-    PieceDisplay::Label_Map[1][2] = ui->label8;
-    PieceDisplay::Label_Map[1][3] = ui->label9;
-    PieceDisplay::Label_Map[1][4] = ui->label10;
-    PieceDisplay::Label_Map[2][0] = ui->label11;
-    PieceDisplay::Label_Map[2][1] = ui->label12;
-    PieceDisplay::Label_Map[2][2] = ui->label13;
-    PieceDisplay::Label_Map[2][3] = ui->label14;
-    PieceDisplay::Label_Map[2][4] = ui->label15;
-    PieceDisplay::Label_Map[3][0] = ui->label16;
-    PieceDisplay::Label_Map[3][1] = ui->label17;
-    PieceDisplay::Label_Map[3][2] = ui->label18;
-    PieceDisplay::Label_Map[3][3] = ui->label19;
-    PieceDisplay::Label_Map[3][4] = ui->label20;
-    PieceDisplay::Label_Map[4][0] = ui->label21;
-    PieceDisplay::Label_Map[4][1] = ui->label22;
-    PieceDisplay::Label_Map[4][2] = ui->label23;
-    PieceDisplay::Label_Map[4][3] = ui->label24;
-    PieceDisplay::Label_Map[4][4] = ui->label25;
-    PieceDisplay::Label_Map[5][0] = ui->label26;
-    PieceDisplay::Label_Map[5][1] = ui->label27;
-    PieceDisplay::Label_Map[5][2] = ui->label28;
-    PieceDisplay::Label_Map[5][3] = ui->label29;
-    PieceDisplay::Label_Map[5][4] = ui->label30;
-    PieceDisplay::Label_Map[6][0] = ui->label31;
-    PieceDisplay::Label_Map[6][1] = ui->label32;
-    PieceDisplay::Label_Map[6][2] = ui->label33;
-    PieceDisplay::Label_Map[6][3] = ui->label34;
-    PieceDisplay::Label_Map[6][4] = ui->label35;
-    PieceDisplay::Label_Map[7][0] = ui->label36;
-    PieceDisplay::Label_Map[7][1] = ui->label37;
-    PieceDisplay::Label_Map[7][2] = ui->label38;
-    PieceDisplay::Label_Map[7][3] = ui->label39;
-    PieceDisplay::Label_Map[7][4] = ui->label40;
-    PieceDisplay::Label_Map[8][0] = ui->label41;
-    PieceDisplay::Label_Map[8][1] = ui->label42;
-    PieceDisplay::Label_Map[8][2] = ui->label43;
-    PieceDisplay::Label_Map[8][3] = ui->label44;
-    PieceDisplay::Label_Map[8][4] = ui->label45;
-    PieceDisplay::Label_Map[9][0] = ui->label46;
-    PieceDisplay::Label_Map[9][1] = ui->label47;
-    PieceDisplay::Label_Map[9][2] = ui->label48;
-    PieceDisplay::Label_Map[9][3] = ui->label49;
-    PieceDisplay::Label_Map[9][4] = ui->label50;
-    PieceDisplay::Label_Map[10][0] = ui->label51;
-    PieceDisplay::Label_Map[10][1] = ui->label52;
-    PieceDisplay::Label_Map[10][2] = ui->label53;
-    PieceDisplay::Label_Map[10][3] = ui->label54;
-    PieceDisplay::Label_Map[10][4] = ui->label55;
-    PieceDisplay::Label_Map[11][0] = ui->label56;
-    PieceDisplay::Label_Map[11][1] = ui->label57;
-    PieceDisplay::Label_Map[11][2] = ui->label58;
-    PieceDisplay::Label_Map[11][3] = ui->label59;
-    PieceDisplay::Label_Map[11][4] = ui->label60;
-
+    Label_Map[0][0] = ui->label1;
+    Label_Map[0][0]->row = 0, Label_Map[0][0]->col = 0;
+    Label_Map[0][1] = ui->label2;
+    Label_Map[0][1]->row = 0, Label_Map[0][1]->col = 1;
+    Label_Map[0][2] = ui->label3;
+    Label_Map[0][2]->row = 0, Label_Map[0][2]->col = 2;
+    Label_Map[0][3] = ui->label4;
+    Label_Map[0][3]->row = 0, Label_Map[0][3]->col = 3;
+    Label_Map[0][4] = ui->label5;
+    Label_Map[0][4]->row = 0, Label_Map[0][4]->col = 4;
+    Label_Map[1][0] = ui->label6;
+    Label_Map[1][0]->row = 1, Label_Map[1][0]->col = 0;
+    Label_Map[1][1] = ui->label7;
+    Label_Map[1][1]->row = 1, Label_Map[1][1]->col = 1;
+    Label_Map[1][2] = ui->label8;
+    Label_Map[1][2]->row = 1, Label_Map[1][2]->col = 2;
+    Label_Map[1][3] = ui->label9;
+    Label_Map[1][3]->row = 1, Label_Map[1][3]->col = 3;
+    Label_Map[1][4] = ui->label10;
+    Label_Map[1][4]->row = 1, Label_Map[1][4]->col = 4;
+    Label_Map[2][0] = ui->label11;
+    Label_Map[2][0]->row = 2, Label_Map[2][0]->col = 0;
+    Label_Map[2][1] = ui->label12;
+    Label_Map[2][1]->row = 2, Label_Map[2][1]->col = 1;
+    Label_Map[2][2] = ui->label13;
+    Label_Map[2][2]->row = 2, Label_Map[2][2]->col = 2;
+    Label_Map[2][3] = ui->label14;
+    Label_Map[2][3]->row = 2, Label_Map[2][3]->col = 3;
+    Label_Map[2][4] = ui->label15;
+    Label_Map[2][4]->row = 2, Label_Map[2][4]->col = 4;
+    Label_Map[3][0] = ui->label16;
+    Label_Map[3][0]->row = 3, Label_Map[3][0]->col = 0;
+    Label_Map[3][1] = ui->label17;
+    Label_Map[3][1]->row = 3, Label_Map[3][1]->col = 1;
+    Label_Map[3][2] = ui->label18;
+    Label_Map[3][2]->row = 3, Label_Map[3][2]->col = 2;
+    Label_Map[3][3] = ui->label19;
+    Label_Map[3][3]->row = 3, Label_Map[3][3]->col = 3;
+    Label_Map[3][4] = ui->label20;
+    Label_Map[3][4]->row = 3, Label_Map[3][4]->col = 4;
+    Label_Map[4][0] = ui->label21;
+    Label_Map[4][0]->row = 4, Label_Map[4][0]->col = 0;
+    Label_Map[4][1] = ui->label22;
+    Label_Map[4][1]->row = 4, Label_Map[4][1]->col = 1;
+    Label_Map[4][2] = ui->label23;
+    Label_Map[4][2]->row = 4, Label_Map[4][2]->col = 2;
+    Label_Map[4][3] = ui->label24;
+    Label_Map[4][3]->row = 4, Label_Map[4][3]->col = 3;
+    Label_Map[4][4] = ui->label25;
+    Label_Map[4][4]->row = 4, Label_Map[4][4]->col = 4;
+    Label_Map[5][0] = ui->label26;
+    Label_Map[5][0]->row = 5, Label_Map[5][0]->col = 0;
+    Label_Map[5][1] = ui->label27;
+    Label_Map[5][1]->row = 5, Label_Map[5][1]->col = 1;
+    Label_Map[5][2] = ui->label28;
+    Label_Map[5][2]->row = 5, Label_Map[5][2]->col = 2;
+    Label_Map[5][3] = ui->label29;
+    Label_Map[5][3]->row = 5, Label_Map[5][3]->col = 3;
+    Label_Map[5][4] = ui->label30;
+    Label_Map[5][4]->row = 5, Label_Map[5][4]->col = 4;
+    Label_Map[6][0] = ui->label31;
+    Label_Map[6][0]->row = 6, Label_Map[6][0]->col = 0;
+    Label_Map[6][1] = ui->label32;
+    Label_Map[6][1]->row = 6, Label_Map[6][1]->col = 1;
+    Label_Map[6][2] = ui->label33;
+    Label_Map[6][2]->row = 6, Label_Map[6][2]->col = 2;
+    Label_Map[6][3] = ui->label34;
+    Label_Map[6][3]->row = 6, Label_Map[6][3]->col = 3;
+    Label_Map[6][4] = ui->label35;
+    Label_Map[6][4]->row = 6, Label_Map[6][4]->col = 4;
+    Label_Map[7][0] = ui->label36;
+    Label_Map[7][0]->row = 7, Label_Map[7][0]->col = 0;
+    Label_Map[7][1] = ui->label37;
+    Label_Map[7][1]->row = 7, Label_Map[7][1]->col = 1;
+    Label_Map[7][2] = ui->label38;
+    Label_Map[7][2]->row = 7, Label_Map[7][2]->col = 2;
+    Label_Map[7][3] = ui->label39;
+    Label_Map[7][3]->row = 7, Label_Map[7][3]->col = 3;
+    Label_Map[7][4] = ui->label40;
+    Label_Map[7][4]->row = 7, Label_Map[7][4]->col = 4;
+    Label_Map[8][0] = ui->label41;
+    Label_Map[8][0]->row = 8, Label_Map[8][0]->col = 0;
+    Label_Map[8][1] = ui->label42;
+    Label_Map[8][1]->row = 8, Label_Map[8][1]->col = 1;
+    Label_Map[8][2] = ui->label43;
+    Label_Map[8][2]->row = 8, Label_Map[8][2]->col = 2;
+    Label_Map[8][3] = ui->label44;
+    Label_Map[8][3]->row = 8, Label_Map[8][3]->col = 3;
+    Label_Map[8][4] = ui->label45;
+    Label_Map[8][4]->row = 8, Label_Map[8][4]->col = 4;
+    Label_Map[9][0] = ui->label46;
+    Label_Map[9][0]->row = 9, Label_Map[9][0]->col = 0;
+    Label_Map[9][1] = ui->label47;
+    Label_Map[9][1]->row = 9, Label_Map[9][1]->col = 1;
+    Label_Map[9][2] = ui->label48;
+    Label_Map[9][2]->row = 9, Label_Map[9][2]->col = 2;
+    Label_Map[9][3] = ui->label49;
+    Label_Map[9][3]->row = 9, Label_Map[9][3]->col = 3;
+    Label_Map[9][4] = ui->label50;
+    Label_Map[9][4]->row = 9, Label_Map[9][4]->col = 4;
+    Label_Map[10][0] = ui->label51;
+    Label_Map[10][0]->row = 10, Label_Map[10][0]->col = 0;
+    Label_Map[10][1] = ui->label52;
+    Label_Map[10][1]->row = 10, Label_Map[10][1]->col = 1;
+    Label_Map[10][2] = ui->label53;
+    Label_Map[10][2]->row = 10, Label_Map[10][2]->col = 2;
+    Label_Map[10][3] = ui->label54;
+    Label_Map[10][3]->row = 10, Label_Map[10][3]->col = 3;
+    Label_Map[10][4] = ui->label55;
+    Label_Map[10][4]->row = 10, Label_Map[10][4]->col = 4;
+    Label_Map[11][0] = ui->label56;
+    Label_Map[11][0]->row = 11, Label_Map[11][0]->col = 0;
+    Label_Map[11][1] = ui->label57;
+    Label_Map[11][1]->row = 11, Label_Map[11][1]->col = 1;
+    Label_Map[11][2] = ui->label58;
+    Label_Map[11][2]->row = 11, Label_Map[11][2]->col = 2;
+    Label_Map[11][3] = ui->label59;
+    Label_Map[11][3]->row = 11, Label_Map[11][3]->col = 3;
+    Label_Map[11][4] = ui->label60;
+    Label_Map[11][4]->row = 11, Label_Map[11][4]->col = 4;
     // init Pixmap
     w = Label_Map[0][0]->width();
     h = Label_Map[0][0]->height();
@@ -123,13 +173,13 @@ void PieceDisplay::initDisplay(Ui::MainWindow *ui)
 
 void PieceDisplay::show(QPixmap *pix)
 {
-    QLabel *label = Label_Map[row][col];
+    ClickableLabel *label = Label_Map[row][col];
     label->setPixmap(*pix);
 }
 
 void PieceDisplay::hide()
 {
-    QLabel *label = Label_Map[row][col];
+    ClickableLabel *label = Label_Map[row][col];
     label->setPixmap(*Pixmap[49]);
 }
 
