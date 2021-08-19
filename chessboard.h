@@ -23,6 +23,8 @@ public:
     void clickPiece(int id);
 
     bool isCamp(int row, int col);
+    bool isRailway(int row, int col);
+    bool isEmpty(int row, int col);
     bool canAttackJunQi();
 
     int getNumTurn();
@@ -40,6 +42,8 @@ private:
     MainWindow *win;
     QTimer *timer;
     QTime *current_time;
+
+    static bool Railway[12][5];
 
     PieceDisplay p[50];
     int num_turn;

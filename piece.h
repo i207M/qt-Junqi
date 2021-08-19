@@ -37,9 +37,17 @@ public:
     void kill();
     void move(int _row, int _col);
 
-    bool canMove(int row, int col);
+    bool canMove(int _row, int _col);
+    bool isIn4Direction(int _row, int _col);
+    bool isIn8Direction(int _row, int _col);
 
     bool tryAttack(Piece &obj);
+    void attack(Piece &obj);
+    void dieTogether(Piece &obj);
+
+private:
+
+    bool bfs(int s_row, int s_col, int t_row, int t_col);
 };
 
 #endif // PIECE_H

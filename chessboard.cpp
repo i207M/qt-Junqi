@@ -8,6 +8,8 @@
 
 #include "Mdebug.h"
 
+bool Chessboard::Railway[12][5] = {}; //TODO
+
 Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
     current_player = 0;
@@ -135,6 +137,21 @@ bool Chessboard::isCamp(int row, int col)
     } else {
         return false;
     }
+}
+
+bool Chessboard::isRailway(int row, int col)
+{
+    return Railway[row][col];
+}
+
+bool Chessboard::isEmpty(int row, int col)
+{
+    for(int i = 0; i < 50; ++i) {
+        if(not p[i].dead and p[i].row == row and p[i].col == col) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Chessboard::canAttackJunQi()
