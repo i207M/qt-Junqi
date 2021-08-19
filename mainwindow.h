@@ -55,6 +55,6 @@ private slots:
 private:
     Chessboard *board;
 
-    int gameMode;
+    int game_mode;
 };
 #endif // MAINWINDOW_H

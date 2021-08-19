@@ -29,18 +29,20 @@ public:
 
     int canGameOver();
 
-    int player_id;  // server: 1, client: 2
-    int player_color; // red: 1, blue: 2
+    int current_player;  // server: 1, client: 2
+    int current_color; // red: 1, blue: 2
     int select_id;
+
+    bool is_online;
+    int is_server;
 
 private:
     MainWindow *win;
-    int num_turn;
-
-    PieceDisplay p[50];
-
     QTimer *timer;
     QTime *current_time;
+
+    PieceDisplay p[50];
+    int num_turn;
 };
 
 #endif // CHESSBOARD_H

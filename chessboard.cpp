@@ -9,8 +9,8 @@
 
 Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
-    player_id = 1;
-    player_color = 0;
+    current_player = 0;
+    current_color = 0;
     select_id = -1;
 
     timer = nullptr;
@@ -95,14 +95,14 @@ void Chessboard::clickPiece(int id)
     if(select_id == -1) {
         if(p[id].known == false) {
             p[id].flip();
-            if(!player_color) {
+            if(!current_color) {
                 // TODO
             }
-        } else if(player_color == p[id].color) {
+        } else if(current_color == p[id].color) {
             select_id = id;
         }
     } else {
-        if(player_color == p[id].color) {
+        if(current_color == p[id].color) {
             select_id = id;
         } else if(p[select_id].tryAttack(p[id])) {
             nextTurn();
@@ -131,7 +131,7 @@ bool Chessboard::isCamp(int row, int col)
 bool Chessboard::canAttackJunQi()
 {
     for(int i = 0; i < 50; ++i) {
-        if(p[i].color != player_color and p[i].type == Type::DiLei and not p[i].dead) {
+        if(p[i].color != current_color and p[i].type == Type::DiLei and not p[i].dead) {
             return false;
         }
     }

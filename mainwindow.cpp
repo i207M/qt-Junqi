@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->buttonDisconnect->setDisabled(true);
 
     init();
     PieceDisplay::initDisplay(ui);
@@ -23,7 +24,6 @@ MainWindow::~MainWindow()
 void MainWindow::init()
 {
     board = nullptr;
-    gameMode = 0;
 }
 
 void MainWindow::actionCreateServer()
@@ -38,14 +38,17 @@ void MainWindow::actionConnectServer()
 
 void MainWindow::actionStart()
 {
-    if(gameMode == 0) {
+    if(game_mode == 0) {
         QMessageBox::warning(this,
                              tr("Warning"),
                              tr("Please Select Game Mode."));
-    } else if(gameMode == 1) {
+    } else if(game_mode == 1) {
         board = new Chessboard(this);
         ui->buttonStart->setDisabled(true);
-    } else if (gameMode == 2 or gameMode == 3) {
+        ui->buttonLocal->setDisabled(true);
+        ui->buttonCreateServer->setDisabled(true);
+        ui->buttonConnect->setDisabled(true);
+    } else if (game_mode == 2 or game_mode == 3) {
         ;
     }
 }
@@ -59,18 +62,18 @@ void MainWindow::actionAdmitDefeat()
 
 void MainWindow::actionDisconnect()
 {
-    if (gameMode == 1) {
+    if (game_mode == 1) {
         ;
-    } else if (gameMode == 2) {
+    } else if (game_mode == 2) {
         ;
-    } else if(gameMode == 3) {
+    } else if(game_mode == 3) {
         ;
     }
 }
 
 void MainWindow::actionSetLocalGame()
 {
-    gameMode = 1;
+    game_mode = 1;
 }
 
 void MainWindow::paintEvent(QPaintEvent *)
