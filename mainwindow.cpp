@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->buttonDefeat->setDisabled(true);
 
     init();
     PieceDisplay::initDisplay(ui);
@@ -49,17 +50,16 @@ void MainWindow::actionStart()
         ui->buttonLocal->setDisabled(true);
         ui->buttonCreateServer->setDisabled(true);
         ui->buttonConnect->setDisabled(true);
+        ui->buttonDefeat->setEnabled(true);
     } else if (game_mode == 2 or game_mode == 3) {
         ;
     }
-    log("Game Start!")
+    log("Game Start!");
 }
 
 void MainWindow::actionAdmitDefeat()
 {
-    if(board->getNumTurn() >= 20) {
-        ;
-    }
+    board->tryAdmitDefeat();
 }
 
 void MainWindow::actionSetLocalGame()
@@ -70,11 +70,11 @@ void MainWindow::actionSetLocalGame()
 
 void MainWindow::gameOver(QString str)
 {
+    endTimer();
     QMessageBox::information(this,
                              tr("Game Over"),
                              str);
     delete board;
-    endTimer();
     init();
 }
 
@@ -82,7 +82,7 @@ void MainWindow::startTimer()
 {
     const int PLAYER_TIME = 20;
 
-    timeRemaining = 20;
+    timeRemaining = PLAYER_TIME;
     ui->lcdNumber->display(timeRemaining);
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::oneSecond);
@@ -114,18 +114,18 @@ void MainWindow::changeYouPlayer(int id, int color)
     QString str = QString("Player ") + (id == 1 ? "1" : "2");
     QString arg_str;
     if(color == 0) {
-        arg_str = QString("<span style=\" font-size:12pt;\"><font color = black>%1</font></span>");
+        arg_str = "<span style=\" font-size:14pt;\"><font color = black>%1</font></span>";
     } else if(color == 1) {
-        arg_str = QString("<span style=\" font-size:12pt;\"><font color = red>%1</font></span>");
+        arg_str = "<span style=\" font-size:14pt;\"><font color = red>%1</font></span>";
     } else {
-        arg_str = QString("<span style=\" font-size:12pt;\"><font color = blue>%1</font></span>");
+        arg_str = "<span style=\" font-size:14pt;\"><font color = blue>%1</font></span>";
     }
     ui->labelYouPlayer->setText(arg_str.arg(str));
 }
 
 void MainWindow::changeWhoseTurn(int id)
 {
-    const QString arg_str("<span style=\" font-size:12pt;\">%1</span>");
+    const QString arg_str("<span style=\" font-size:14pt;\">%1</span>");
     QString str = QString("Player ") + (id == 1 ? "1" : "2");
     ui->labelWhoseTurn->setText(arg_str.arg(str));
 }

@@ -462,9 +462,9 @@ public:
         labelBackground->setText(QString());
         labelTimeRemaining->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Time Remaining:</span></p></body></html>", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">You are:</span></p></body></html>", nullptr));
-        labelYouPlayer->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Player #</span></p></body></html>", nullptr));
+        labelYouPlayer->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">Player #</span></p></body></html>", nullptr));
         label_61->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Whose Turn:</span></p></body></html>", nullptr));
-        labelWhoseTurn->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Player #</span></p></body></html>", nullptr));
+        labelWhoseTurn->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">Player #</span></p></body></html>", nullptr));
         buttonStart->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         buttonDefeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
         buttonLocal->setText(QCoreApplication::translate("MainWindow", "Set Local Game", nullptr));

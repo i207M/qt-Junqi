@@ -16,6 +16,7 @@ public:
     void displayAll();
     void nextTurn();
     void timeOut();
+    void tryAdmitDefeat();
 
     void clickPos(int row, int col);
     void clickPiece(int id);
@@ -29,7 +30,6 @@ public:
     int getNumTurn();
 
     void tryGameOver();
-
 
     int current_player;  // server: 1, client: 2
     int current_color; // red: 1, blue: 2

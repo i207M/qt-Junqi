@@ -27,6 +27,7 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     current_player = 0;
     current_color = 0;
     select_id = -1;
+    num_turn = 0;
 
     is_online = false;
     is_server = false;
@@ -89,6 +90,7 @@ void Chessboard::displayAll()
 
 void Chessboard::nextTurn()
 {
+    ++num_turn;
     win->endTimer();
     current_player = (current_player == 1 ? 2 : 1);
     if(current_color != 0) {
@@ -217,4 +219,13 @@ int Chessboard::getNumTurn()
 void Chessboard::timeOut()
 {
     win->gameOver(QString("Time out!\nThe Winner is Player ") + (current_player == 1 ? "2" : "1"));
+}
+
+void Chessboard::tryAdmitDefeat()
+{
+    if(num_turn >= 20) {
+        win->gameOver(QString("Admit defeat!\nThe Winner is Player ") + (current_player == 1 ? "2" : "1"));
+    } else {
+        win->log("Failed to Admit Defeat. The number of rounds is less than 20.");
+    }
 }
