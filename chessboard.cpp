@@ -1,14 +1,26 @@
 #include "chessboard.h"
 
 #include <algorithm>
-#include <vector>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include "Mdebug.h"
 
-bool Chessboard::Railway[12][5] = {}; //TODO
+bool Chessboard::Railway[12][5] = {
+    0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1,
+    1, 0, 0, 0, 1,
+    1, 0, 0, 0, 1,
+    1, 0, 0, 0, 1,
+    1, 2, 1, 2, 1,
+    1, 2, 1, 2, 1,
+    1, 0, 0, 0, 1,
+    1, 0, 0, 0, 1,
+    1, 0, 0, 0, 1,
+    1, 1, 1, 1, 1,
+    0, 0, 0, 0, 0
+}; //TODO
 
 Chessboard::Chessboard(MainWindow *_win): win(_win)
 {

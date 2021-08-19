@@ -1,8 +1,14 @@
 #include "piece.h"
 
 #include <algorithm>
+#include <vector>
+#include <queue>
 using std::min;
 using std::max;
+using std::pair;
+using std::make_pair;
+using std::queue;
+using std::vector;
 
 #include "chessboard.h"
 #include "Mdebug.h"
@@ -95,6 +101,9 @@ bool Piece::tryAttack(Piece &obj)
             if(type == Type::GongBing) {
                 attack(obj);
                 return true;
+            } else if(type == Type::ZhaDan) {
+                dieTogether(obj);
+                return true;
             }
         } else if(obj.type == Type::JunQi) {
             if(board->canAttackJunQi()) {
@@ -129,5 +138,44 @@ void Piece::dieTogether(Piece &obj)
 
 bool Piece::bfs(int s_row, int s_col, int t_row, int t_col)
 {
-    ;
+    static bool vis[12][5];
+    memset(vis, 0, sizeof(vis));
+    queue< pair<int, int> > q;
+
+    q.push(make_pair(s_row, s_col));
+    vis[s_row][s_col] = true;
+
+    while(!q.empty()) {
+        int row = q.front().first, col = q.front().second;
+        q.pop();
+
+        static const vector<int> r4 = {-1, 0, 1, 0};
+        static const vector<int> c4 = {0, 1, 0, -1};
+        static const vector<int> r2 = {0, 0};
+        static const vector<int> c2 = {1, -1};
+        vector<int> r, c;
+        check(Chessboard::Railway[row][col]);
+        if(Chessboard::Railway[row][col] == 1) {
+            r = r4, c = c4;
+        } else {
+            r = r2, c = c2;
+        }
+
+        for(int i = 0; i < r.size(); ++i) {
+            int n_row = row + r[i], n_col = col + c[i];
+
+            if(n_row == t_row and n_col == t_col) {
+                return true;
+            }
+
+            if(n_row >= 0 and n_row<12 and n_col >= 0 and n_col <= 5
+                    and Chessboard::Railway[n_row][n_col]
+                    and board->isEmpty(n_row, n_col)
+                    and not vis[n_row][n_col]) {
+                q.push(make_pair(n_row, n_col));
+                vis[n_row][n_col] = true;
+            }
+        }
+    }
+    return false;
 }

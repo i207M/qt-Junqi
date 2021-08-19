@@ -240,8 +240,7 @@ void PieceDisplay::display()
 
 QPixmap *PieceDisplay::getPixmap(const char *path)
 {
-    QImage img;
-    img.load(path);
+    QImage img(path);
     QPixmap pix = QPixmap::fromImage(img);
     pix = pix.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPixmap *ret = new QPixmap(pix);

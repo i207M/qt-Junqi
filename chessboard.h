@@ -38,12 +38,13 @@ public:
     bool is_online;
     bool is_server;
 
+    static bool Railway[12][5];
+
 private:
     MainWindow *win;
     QTimer *timer;
     QTime *current_time;
 
-    static bool Railway[12][5];
 
     PieceDisplay p[50];
     int num_turn;
