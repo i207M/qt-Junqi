@@ -10,3 +10,5 @@ Makefile
 Makefile.Debug
 Makefile.Release
 *.pro.user
+.qmake.stash
+ui_mainwindow.h
