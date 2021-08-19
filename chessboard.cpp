@@ -10,8 +10,8 @@
 Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
     player_id = 1;
+    player_color = 0;
     select_id = -1;
-    P1_color = 0;
 
     timer = nullptr;
     current_time = nullptr;
@@ -47,13 +47,13 @@ void Chessboard::initBoard()
     cnt = 0;
     for(int i_type = 0; i_type < 12; ++i_type) {
         for(int i_count = 0; i_count < Initial_Count[i_type]; ++i_count) {
-            p[cnt].initPiece(1, Type(i_type));
+            p[cnt].initPiece(cnt, 1, Type(i_type));
             ++cnt;
         }
     }
     for(int i_type = 0; i_type < 12; ++i_type) {
         for(int i_count = 0; i_count < Initial_Count[i_type]; ++i_count) {
-            p[cnt].initPiece(2, Type(i_type));
+            p[cnt].initPiece(cnt, 2, Type(i_type));
             ++cnt;
         }
     }
@@ -64,6 +64,11 @@ void Chessboard::displayAll()
     for(int i = 0; i < 50; ++i) {
         p[i].display();
     }
+}
+
+void Chessboard::nextTurn()
+{
+    select_id = -1;
 }
 
 void Chessboard::clickPos(int row, int col)
@@ -81,33 +86,27 @@ void Chessboard::clickPos(int row, int col)
         p[select_id].move(row, col);
         nextTurn();
     } else {
-        unselectPiece();
+        select_id = -1;
     }
 }
 
 void Chessboard::clickPiece(int id)
 {
     if(select_id == -1) {
-        selectPiece(id);
-    } else if(p[select_id].tryAttack(p[id])) {
-        nextTurn();
+        if(p[id].known == false) {
+            p[id].flip();
+            if(!player_color) {
+                // TODO
+            }
+        } else if(player_color == p[id].color) {
+            select_id = id;
+        }
     } else {
-        selectPiece(id);
-    }
-}
-
-void Chessboard::selectPiece(int id)
-{
-    unselectPiece();
-    p[id].select(true);
-    select_id = id;
-}
-
-void Chessboard::unselectPiece()
-{
-    if(select_id != -1) {
-        p[select_id].select(false);
-        select_id = -1;
+        if(player_color == p[id].color) {
+            select_id = id;
+        } else if(p[select_id].tryAttack(p[id])) {
+            nextTurn();
+        }
     }
 }
 
@@ -129,9 +128,14 @@ bool Chessboard::isCamp(int row, int col)
     }
 }
 
-void Chessboard::nextTurn()
+bool Chessboard::canAttackJunQi()
 {
-    ;
+    for(int i = 0; i < 50; ++i) {
+        if(p[i].color != player_color and p[i].type == Type::DiLei and not p[i].dead) {
+            return false;
+        }
+    }
+    return true;
 }
 
 int Chessboard::getNumTurn()

@@ -21,8 +21,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void init();
-
     void actionCreateServer();
     void actionConnectServer();
     void actionDisconnect();
@@ -31,6 +29,9 @@ public:
     void actionSetLocalGame();
 
     virtual void paintEvent(QPaintEvent *);
+
+    void init();
+    void gameOver(const char *display_str);
 
     void throwError(const char *debug_str);
     void log(const char *debug_str);

@@ -22,19 +22,18 @@ class Piece
 {
 public:
     static Chessboard *board;
-    static void init(Chessboard *_board);
 
-    int team;
+    int id;
+    int color;
     int row, col;
-    bool known, dead, selected;
+    bool known, dead;
     Type type;
 
-    void initPiece(int _team, Type _type);
+    void initPiece(int _id, int _team, Type _type);
 
     virtual void hide() = 0;
     virtual void display() = 0;
     void flip();
-    void select(bool flag);
     void kill();
     void move(int _row, int _col);
 

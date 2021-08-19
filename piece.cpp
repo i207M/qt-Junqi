@@ -4,24 +4,15 @@
 
 Chessboard *Piece::board = nullptr;
 
-void Piece::initPiece(int _team, Type _type)
+void Piece::initPiece(int _id, int _team, Type _type)
 {
-    team = _team, type = _type;
-    known = false, dead = false, selected = false;
+    id = _id, color = _team, type = _type;
+    known = false, dead = false;
 }
 
 void Piece::flip()
 {
-    if(known) {
-        err("Warning: Trying to flip known piece.");
-    } else {
-        known = true;
-    }
-}
-
-void Piece::select(bool flag)
-{
-    selected = flag;
+    known = true;
 }
 
 void Piece::kill()

@@ -217,7 +217,7 @@ void PieceDisplay::display()
     } else if (not known) {
         show(Pixmap[48]);
     } else {
-        show(Pixmap[(selected ? 24 : 0) + (team == 1 ? 0 : 12) + int(type)]);
+        show(Pixmap[(id == board->select_id and color == board->player_color ? 24 : 0) + (color == 1 ? 0 : 12) + int(type)]);
     }
 }
 

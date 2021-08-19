@@ -17,27 +17,24 @@ public:
 
     void initBoard();
     void displayAll();
+    void nextTurn();
 
     void clickPos(int row, int col);
     void clickPiece(int id);
-    void selectPiece(int id);
-    void unselectPiece();
 
     bool isCamp(int row, int col);
-
-    void nextTurn();
+    bool canAttackJunQi();
 
     int getNumTurn();
 
     int canGameOver();
-    void gameOver(const char *display_str);
+
+    int player_id;  // server: 1, client: 2
+    int player_color; // red: 1, blue: 2
+    int select_id;
 
 private:
     MainWindow *win;
-
-    int P1_color;  // red: 1, blue: 2
-    int player_id;
-    int select_id;
     int num_turn;
 
     PieceDisplay p[50];
