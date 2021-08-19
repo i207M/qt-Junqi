@@ -1,16 +1,6 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include <QMainWindow>
-#include <QLabel>
-
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-class MainWindow;
-}
-QT_END_NAMESPACE
-
 enum class Type : int {
     GongBing = 0,
     PaiZhang = 1,

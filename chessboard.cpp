@@ -1,8 +1,5 @@
 #include <algorithm>
 
-#include <QMainWindow>
-#include <QLabel>
-
 #include "chessboard.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -12,8 +9,11 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     player_id = 1;
     select_id = -1;
 
+    timer = nullptr;
+    current_time = nullptr;
+
     init();
-    PieceDisplay::initDisplay();
+    PieceDisplay::initDisplay(win->ui);
 }
 
 Chessboard::~Chessboard()
