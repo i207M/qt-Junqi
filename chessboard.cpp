@@ -99,7 +99,7 @@ void Chessboard::clickPos(int row, int col)
 {
     err("Click", row, col);
     for(int i = 0; i < 50; ++i) {
-        if(p[i].row == row and p[i].col == col) {
+        if(p[i].row == row and p[i].col == col and not p[i].dead) {
             clickPiece(i);
             return;
         }
@@ -116,25 +116,21 @@ void Chessboard::clickPos(int row, int col)
 
 void Chessboard::clickPiece(int id)
 {
-    if(select_id == -1) {
-        if(p[id].known == false) {
-            p[id].flip();
-            if(current_color == 0) {
-                static int flip_color[2];
-                if(flip_color[current_player - 1] == p[id].color) {
-                    current_color = p[id].color;
-                    err("Color fixed", current_player, current_color);
-                }
-                flip_color[current_player - 1] = p[id].color;
+    if(p[id].known == false) {
+        p[id].flip();
+        if(current_color == 0) {
+            static int flip_color[2];
+            if(flip_color[current_player - 1] == p[id].color) {
+                current_color = p[id].color;
+                err("Color fixed", current_player, current_color);
             }
-            nextTurn();
-        } else if(current_color == p[id].color) {
-            select(id);
+            flip_color[current_player - 1] = p[id].color;
         }
-    } else {
-        if(current_color == p[id].color) {
-            select(id);
-        } else if(p[select_id].tryAttack(p[id])) {
+        nextTurn();
+    } else if(current_color == p[id].color) {
+        select(id);
+    } else if(select_id != -1) {
+        if(p[select_id].tryAttack(p[id])) {
             nextTurn();
         }
     }
@@ -185,7 +181,7 @@ bool Chessboard::isRailway(int row, int col)
 bool Chessboard::isEmpty(int row, int col)
 {
     for(int i = 0; i < 50; ++i) {
-        if(not p[i].dead and p[i].row == row and p[i].col == col) {
+        if(p[i].row == row and p[i].col == col and not p[i].dead) {
             return false;
         }
     }

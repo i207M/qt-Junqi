@@ -45,6 +45,7 @@ void Piece::move(int _row, int _col)
 
 bool Piece::canMove(int _row, int _col)
 {
+    check(row != _row or col != _col);
     if(int(type) >= 10) {
         return false;
     } else if(isIn4Direction(_row, _col)) {
@@ -57,7 +58,9 @@ bool Piece::canMove(int _row, int _col)
         } else {
             if(row == _row) {
                 int st = min(col, _col), ed = max(col, _col);
-                for(int i = st; i <= ed; ++i) {
+                // assert that when trying to move, the destination is empty
+                //             when trying to attack, the destination is not, so don't check
+                for(int i = st; i < ed; ++i) {
                     if(not (board->isRailway(row, i) and board->isEmpty(row, i))) {
                         return false;
                     }
@@ -65,7 +68,7 @@ bool Piece::canMove(int _row, int _col)
                 return true;
             } else if(col == _col) {
                 int st = min(row, _row), ed = max(row, _row);
-                for(int i = st; i <= ed; ++i) {
+                for(int i = st; i < ed; ++i) {
                     if(not (board->isRailway(i, col) and board->isEmpty(i, col))) {
                         return false;
                     }
@@ -103,6 +106,7 @@ bool Piece::isIn8Direction(int _row, int _col)
 
 bool Piece::tryAttack(Piece &obj)
 {
+    check(id != obj.id);
     if(canMove(obj.row, obj.col) and not board->isCamp(obj.row, obj.col)) {
         if(obj.type == Type::DiLei) {
             if(type == Type::GongBing) {
@@ -175,7 +179,7 @@ bool Piece::bfs(int s_row, int s_col, int t_row, int t_col)
                 return true;
             }
 
-            if(n_row >= 0 and n_row<12 and n_col >= 0 and n_col <= 5
+            if(n_row >= 0 and n_row < 12 and n_col >= 0 and n_col <= 5
                     and Chessboard::Railway[n_row][n_col]
                     and board->isEmpty(n_row, n_col)
                     and not vis[n_row][n_col]) {
