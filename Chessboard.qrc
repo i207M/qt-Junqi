@@ -29,5 +29,30 @@
         <file>images/yingzhang_red.png</file>
         <file>images/zhadan_blue.png</file>
         <file>images/zhadan_red.png</file>
+        <file>images/border_dilei_blue.png</file>
+        <file>images/border_dilei_red.png</file>
+        <file>images/border_gongbing_blue.png</file>
+        <file>images/border_gongbing_red.png</file>
+        <file>images/border_junqi_blue.png</file>
+        <file>images/border_junqi_red.png</file>
+        <file>images/border_junzhang_blue.png</file>
+        <file>images/border_junzhang_red.png</file>
+        <file>images/border_lianzhang_blue.png</file>
+        <file>images/border_lianzhang_red.png</file>
+        <file>images/border_lvzhang_blue.png</file>
+        <file>images/border_lvzhang_red.png</file>
+        <file>images/border_paizhang_blue.png</file>
+        <file>images/border_paizhang_red.png</file>
+        <file>images/border_shizhang_blue.png</file>
+        <file>images/border_shizhang_red.png</file>
+        <file>images/border_siling_blue.png</file>
+        <file>images/border_siling_red.png</file>
+        <file>images/border_tuanzhang_blue.png</file>
+        <file>images/border_tuanzhang_red.png</file>
+        <file>images/border_unknown.png</file>
+        <file>images/border_yingzhang_blue.png</file>
+        <file>images/border_yingzhang_red.png</file>
+        <file>images/border_zhadan_blue.png</file>
+        <file>images/border_zhadan_red.png</file>
     </qresource>
 </RCC>

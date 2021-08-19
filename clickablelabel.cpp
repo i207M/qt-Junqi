@@ -1,12 +1,15 @@
 #include "clickablelabel.h"
 
+#include "chessboard.h"
 #include "Mdebug.h"
 
-ClickableLabel::ClickableLabel(QWidget *parent): QLabel(parent) {}
+Chessboard *ClickableLabel::board = nullptr;
+
+ClickableLabel::ClickableLabel(QWidget *parent): QLabel(parent), row(-1), col(-1) {}
 
 void ClickableLabel::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) {
-        err(row, col);
+        board->clickPos(row, col);
     }
 }

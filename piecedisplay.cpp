@@ -135,6 +135,7 @@ void PieceDisplay::initDisplay(Ui::MainWindow *ui)
     Label_Map[11][3]->row = 11, Label_Map[11][3]->col = 3;
     Label_Map[11][4] = ui->label60;
     Label_Map[11][4]->row = 11, Label_Map[11][4]->col = 4;
+
     // init Pixmap
     w = Label_Map[0][0]->width();
     h = Label_Map[0][0]->height();
@@ -165,10 +166,36 @@ void PieceDisplay::initDisplay(Ui::MainWindow *ui)
     Pixmap[12 + 10] = getPixmap(":/piece/images/dilei_blue.png");
     Pixmap[12 + 11] = getPixmap(":/piece/images/junqi_blue.png");
 
-    Pixmap[24] = getPixmap(":/piece/images/unknown.png");
+    Pixmap[24 + 0] = getPixmap(":/piece/images/border_gongbing_red.png");
+    Pixmap[24 + 1] = getPixmap(":/piece/images/border_paizhang_red.png");
+    Pixmap[24 + 2] = getPixmap(":/piece/images/border_lianzhang_red.png");
+    Pixmap[24 + 3] = getPixmap(":/piece/images/border_yingzhang_red.png");
+    Pixmap[24 + 4] = getPixmap(":/piece/images/border_tuanzhang_red.png");
+    Pixmap[24 + 5] = getPixmap(":/piece/images/border_lvzhang_red.png");
+    Pixmap[24 + 6] = getPixmap(":/piece/images/border_shizhang_red.png");
+    Pixmap[24 + 7] = getPixmap(":/piece/images/border_junzhang_red.png");
+    Pixmap[24 + 8] = getPixmap(":/piece/images/border_siling_red.png");
+    Pixmap[24 + 9] = getPixmap(":/piece/images/border_zhadan_red.png");
+    Pixmap[24 + 10] = getPixmap(":/piece/images/border_dilei_red.png");
+    Pixmap[24 + 11] = getPixmap(":/piece/images/border_junqi_red.png");
+
+    Pixmap[24 + 12 + 0] = getPixmap(":/piece/images/border_gongbing_blue.png");
+    Pixmap[24 + 12 + 1] = getPixmap(":/piece/images/border_paizhang_blue.png");
+    Pixmap[24 + 12 + 2] = getPixmap(":/piece/images/border_lianzhang_blue.png");
+    Pixmap[24 + 12 + 3] = getPixmap(":/piece/images/border_yingzhang_blue.png");
+    Pixmap[24 + 12 + 4] = getPixmap(":/piece/images/border_tuanzhang_blue.png");
+    Pixmap[24 + 12 + 5] = getPixmap(":/piece/images/border_lvzhang_blue.png");
+    Pixmap[24 + 12 + 6] = getPixmap(":/piece/images/border_shizhang_blue.png");
+    Pixmap[24 + 12 + 7] = getPixmap(":/piece/images/border_junzhang_blue.png");
+    Pixmap[24 + 12 + 8] = getPixmap(":/piece/images/border_siling_blue.png");
+    Pixmap[24 + 12 + 9] = getPixmap(":/piece/images/border_zhadan_blue.png");
+    Pixmap[24 + 12 + 10] = getPixmap(":/piece/images/border_dilei_blue.png");
+    Pixmap[24 + 12 + 11] = getPixmap(":/piece/images/border_junqi_blue.png");
+
+    Pixmap[48] = getPixmap(":/piece/images/unknown.png");
     QPixmap *pix = new QPixmap(w, h);
     pix->fill(Qt::transparent);
-    Pixmap[25] = pix;
+    Pixmap[49] = pix;
 }
 
 void PieceDisplay::show(QPixmap *pix)
@@ -190,7 +217,7 @@ void PieceDisplay::display()
     } else if (not known) {
         show(Pixmap[48]);
     } else {
-        show(Pixmap[(team == 1 ? 0 : 12) + (selected ? 24 : 0) + int(type)]);
+        show(Pixmap[(selected ? 24 : 0) + (team == 1 ? 0 : 12) + int(type)]);
     }
 }
 

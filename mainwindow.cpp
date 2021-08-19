@@ -3,6 +3,7 @@
 #include <QMessageBox>
 
 #include "ui_mainwindow.h"
+#include "Mdebug.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     board = nullptr;
     gameMode = 0;
+
+    PieceDisplay::initDisplay(ui);
 }
 
 MainWindow::~MainWindow()

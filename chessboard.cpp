@@ -16,7 +16,7 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     current_time = nullptr;
 
     init();
-    PieceDisplay::initDisplay(win->ui);
+    ClickableLabel::board = this;
 }
 
 Chessboard::~Chessboard()
@@ -63,6 +63,11 @@ void Chessboard::displayAll()
     for(int i = 0; i < 50; ++i) {
         p[i].display();
     }
+}
+
+void Chessboard::clickPos(int row, int col)
+{
+    err("click", row, col);
 }
 
 bool Chessboard::isCamp(int row, int col)
