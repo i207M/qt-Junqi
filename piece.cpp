@@ -23,16 +23,19 @@ void Piece::initPiece(int _id, int _team, Type _type)
 
 void Piece::flip()
 {
+    err("Flip", row, col);
     known = true;
 }
 
 void Piece::kill()
 {
+    err("Kill", row, col);
     dead = true;
 }
 
 void Piece::move(int _row, int _col)
 {
+    err("Move", row, col);
     row = _row, col = _col;
 }
 

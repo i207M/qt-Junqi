@@ -79,13 +79,19 @@ void Chessboard::initBoard()
 
 void Chessboard::displayAll()
 {
+    static bool vis[12][5];
+    memset(vis, 0, sizeof(vis));
+
     for(int i = 0; i < 50; ++i) {
         p[i].display();
+        vis[p[i].row][p[i].col] = true;
     }
 }
 
 void Chessboard::nextTurn()
 {
+    current_player = (current_player == 1 ? 2 : 1);
+    current_color = (current_color == 1 ? 2 : 1);
     select_id = -1;
 }
 
