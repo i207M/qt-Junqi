@@ -35,6 +35,9 @@ public:
     void endTimer();
     void oneSecond();
 
+    void changeYouPlayer(int id, int color);
+    void changeWhoseTurn(int id);
+
     void throwError(QString str);
     void log(QString str);
 

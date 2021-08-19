@@ -37,6 +37,9 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     initBoard();
     displayAll();
 
+    win->changeYouPlayer(1, 0);
+    win->changeWhoseTurn(1);
+
     win->startTimer();
 }
 
@@ -92,6 +95,8 @@ void Chessboard::nextTurn()
         current_color = (current_color == 1 ? 2 : 1);
     }
     select(-1);
+    win->changeYouPlayer(current_player, current_color);
+    win->changeWhoseTurn(current_player);
     win->startTimer();
     err("Current player", current_player, "Current color", current_color);
 }
@@ -115,17 +120,22 @@ void Chessboard::clickPos(int row, int col)
     }
 }
 
+void Chessboard::tryDetermineColor(int id)
+{
+    static int flip_color[2];
+    if(flip_color[current_player - 1] == p[id].color) {
+        current_color = p[id].color;
+        err("Color determined", current_player, current_color);
+    }
+    flip_color[current_player - 1] = p[id].color;
+}
+
 void Chessboard::clickPiece(int id)
 {
     if(p[id].known == false) {
         p[id].flip();
         if(current_color == 0) {
-            static int flip_color[2];
-            if(flip_color[current_player - 1] == p[id].color) {
-                current_color = p[id].color;
-                err("Color fixed", current_player, current_color);
-            }
-            flip_color[current_player - 1] = p[id].color;
+            tryDetermineColor(id);
         }
         nextTurn();
     } else if(current_color == p[id].color) {

@@ -41,6 +41,7 @@ public:
     static bool Railway[12][5];
 
 private:
+    void tryDetermineColor(int id);
     MainWindow *win;
 
     int num_turn;

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 
-#include <QString>
+class QString;
 #include <QMessageBox>
 
 #include "ui_mainwindow.h"
@@ -52,6 +52,7 @@ void MainWindow::actionStart()
     } else if (game_mode == 2 or game_mode == 3) {
         ;
     }
+    log("Game Start!")
 }
 
 void MainWindow::actionAdmitDefeat()
@@ -64,6 +65,7 @@ void MainWindow::actionAdmitDefeat()
 void MainWindow::actionSetLocalGame()
 {
     game_mode = 1;
+    log("Set Game Mode to Local.");
 }
 
 void MainWindow::gameOver(QString str)
@@ -107,12 +109,38 @@ void MainWindow::oneSecond()
     }
 }
 
+void MainWindow::changeYouPlayer(int id, int color)
+{
+    QString str = QString("Player ") + (id == 1 ? "1" : "2");
+    QString arg_str;
+    if(color == 0) {
+        arg_str = QString("<span style=\" font-size:12pt;\"><font color = black>%1</font></span>");
+    } else if(color == 1) {
+        arg_str = QString("<span style=\" font-size:12pt;\"><font color = red>%1</font></span>");
+    } else {
+        arg_str = QString("<span style=\" font-size:12pt;\"><font color = blue>%1</font></span>");
+    }
+    ui->labelYouPlayer->setText(arg_str.arg(str));
+}
+
+void MainWindow::changeWhoseTurn(int id)
+{
+    const QString arg_str("<span style=\" font-size:12pt;\">%1</span>");
+    QString str = QString("Player ") + (id == 1 ? "1" : "2");
+    ui->labelWhoseTurn->setText(arg_str.arg(str));
+}
+
 void MainWindow::throwError(QString str)
 {
     QMessageBox::critical(this,
                           tr("Error"),
                           str);
     QApplication::exit(1);
+}
+
+void MainWindow::log(QString str)
+{
+    ui->textBrowser->append(str);
 }
 
 #pragma region
