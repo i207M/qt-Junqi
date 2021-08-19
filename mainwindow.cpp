@@ -11,15 +11,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    board = nullptr;
-    gameMode = 0;
-
+    init();
     PieceDisplay::initDisplay(ui);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::init()
+{
+    board = nullptr;
+    gameMode = 0;
 }
 
 void MainWindow::actionCreateServer()
@@ -48,7 +52,9 @@ void MainWindow::actionStart()
 
 void MainWindow::actionAdmitDefeat()
 {
-    board->tryAdmitDefeat();
+    if(board->getNumTurn() >= 20) {
+        ;
+    }
 }
 
 void MainWindow::actionDisconnect()

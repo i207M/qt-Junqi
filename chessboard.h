@@ -15,20 +15,19 @@ public:
     ~Chessboard();
     explicit Chessboard(MainWindow *_win);
 
-    void init();
+    void initBoard();
     void displayAll();
 
     void clickPos(int row, int col);
     void clickPiece(int id);
     void selectPiece(int id);
+    void unselectPiece();
 
     bool isCamp(int row, int col);
-    bool canMove();
 
     void nextTurn();
 
-    void tryAdmitDefeat();
-    bool canAdmitDefeat();
+    int getNumTurn();
 
     int canGameOver();
     void gameOver(const char *display_str);
@@ -39,6 +38,8 @@ private:
     int P1_color;  // red: 1, blue: 2
     int player_id;
     int select_id;
+    int num_turn;
+
     PieceDisplay p[50];
 
     QTimer *timer;

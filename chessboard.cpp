@@ -16,8 +16,10 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     timer = nullptr;
     current_time = nullptr;
 
-    init();
+    Piece::board = this;
     ClickableLabel::board = this;
+
+    initBoard();
 }
 
 Chessboard::~Chessboard()
@@ -25,7 +27,7 @@ Chessboard::~Chessboard()
     ;
 }
 
-void Chessboard::init()
+void Chessboard::initBoard()
 {
     static const int Initial_Count[] = {3, 3, 3, 2, 2, 2, 2, 1, 1, 2, 3, 1};
 
@@ -38,7 +40,6 @@ void Chessboard::init()
             }
         }
     }
-    assert(cnt == 50);
 
     srand(time(0));
     std::random_shuffle(p, p + 50);
@@ -46,17 +47,16 @@ void Chessboard::init()
     cnt = 0;
     for(int i_type = 0; i_type < 12; ++i_type) {
         for(int i_count = 0; i_count < Initial_Count[i_type]; ++i_count) {
-            p[cnt].init(1, Type(i_type));
+            p[cnt].initPiece(1, Type(i_type));
             ++cnt;
         }
     }
     for(int i_type = 0; i_type < 12; ++i_type) {
         for(int i_count = 0; i_count < Initial_Count[i_type]; ++i_count) {
-            p[cnt].init(2, Type(i_type));
+            p[cnt].initPiece(2, Type(i_type));
             ++cnt;
         }
     }
-    assert(cnt == 50);
 }
 
 void Chessboard::displayAll()
@@ -68,7 +68,47 @@ void Chessboard::displayAll()
 
 void Chessboard::clickPos(int row, int col)
 {
-    err("click", row, col);
+    err("Click", row, col);
+    for(int i = 0; i < 50; ++i) {
+        if(p[i].row == row and p[i].col == col) {
+            clickPiece(i);
+            return;
+        }
+    }
+
+    // piece not found
+    if(select_id != -1 and p[select_id].canMove(row, col)) {
+        p[select_id].move(row, col);
+        nextTurn();
+    } else {
+        unselectPiece();
+    }
+}
+
+void Chessboard::clickPiece(int id)
+{
+    if(select_id == -1) {
+        selectPiece(id);
+    } else if(p[select_id].tryAttack(p[id])) {
+        nextTurn();
+    } else {
+        selectPiece(id);
+    }
+}
+
+void Chessboard::selectPiece(int id)
+{
+    unselectPiece();
+    p[id].select(true);
+    select_id = id;
+}
+
+void Chessboard::unselectPiece()
+{
+    if(select_id != -1) {
+        p[select_id].select(false);
+        select_id = -1;
+    }
 }
 
 bool Chessboard::isCamp(int row, int col)
@@ -89,7 +129,12 @@ bool Chessboard::isCamp(int row, int col)
     }
 }
 
-void Chessboard::tryAdmitDefeat()
+void Chessboard::nextTurn()
 {
     ;
+}
+
+int Chessboard::getNumTurn()
+{
+    return num_turn;
 }

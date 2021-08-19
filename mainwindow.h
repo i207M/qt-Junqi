@@ -21,6 +21,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void init();
+
     void actionCreateServer();
     void actionConnectServer();
     void actionDisconnect();
