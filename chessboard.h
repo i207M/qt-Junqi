@@ -34,7 +34,7 @@ public:
     int select_id;
 
     bool is_online;
-    int is_server;
+    bool is_server;
 
 private:
     MainWindow *win;

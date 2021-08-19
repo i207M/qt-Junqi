@@ -1,6 +1,7 @@
 #include "chessboard.h"
 
 #include <algorithm>
+#include <vector>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -12,6 +13,9 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     current_player = 0;
     current_color = 0;
     select_id = -1;
+
+    is_online = false;
+    is_server = false;
 
     timer = nullptr;
     current_time = nullptr;
@@ -95,8 +99,13 @@ void Chessboard::clickPiece(int id)
     if(select_id == -1) {
         if(p[id].known == false) {
             p[id].flip();
-            if(!current_color) {
-                // TODO
+            if(current_color == 0) {
+                static int flip_color[2];
+                if(flip_color[current_player - 1] == p[id].color) {
+                    current_color = p[id].color;
+                    err("Color fixed", current_player, current_color);
+                }
+                flip_color[current_player - 1] = p[id].color;
             }
         } else if(current_color == p[id].color) {
             select_id = id;

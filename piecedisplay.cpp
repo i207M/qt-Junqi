@@ -222,6 +222,8 @@ bool PieceDisplay::showSelected()
             }
             return color == local_color;
         }
+    } else {
+        return false;
     }
 }
 
