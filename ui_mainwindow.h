@@ -34,7 +34,6 @@ public:
     QAction *actionConnect_to_server;
     QAction *actionStart;
     QAction *actionAdmit_defeat;
-    QAction *actionDisconnect;
     QWidget *centralwidget;
     ClickableLabel *labelBackground;
     QWidget *verticalLayoutWidget;
@@ -131,8 +130,6 @@ public:
         actionStart->setObjectName(QString::fromUtf8("actionStart"));
         actionAdmit_defeat = new QAction(MainWindow);
         actionAdmit_defeat->setObjectName(QString::fromUtf8("actionAdmit_defeat"));
-        actionDisconnect = new QAction(MainWindow);
-        actionDisconnect->setObjectName(QString::fromUtf8("actionDisconnect"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         labelBackground = new ClickableLabel(centralwidget);
@@ -441,8 +438,6 @@ public:
         menubar->addAction(menuPlay->menuAction());
         menu->addAction(actionCreate_a_server);
         menu->addAction(actionConnect_to_server);
-        menu->addSeparator();
-        menu->addAction(actionDisconnect);
         menuPlay->addAction(actionStart);
         menuPlay->addAction(actionAdmit_defeat);
 
@@ -458,7 +453,6 @@ public:
         actionConnect_to_server->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
         actionStart->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         actionAdmit_defeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
-        actionDisconnect->setText(QCoreApplication::translate("MainWindow", "Disconnect", nullptr));
         labelBackground->setText(QString());
         labelTimeRemaining->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Time Remaining:</span></p></body></html>", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">You are:</span></p></body></html>", nullptr));

@@ -60,7 +60,7 @@ bool Piece::canMove(int _row, int _col)
                 int st = min(col, _col), ed = max(col, _col);
                 // assert that when trying to move, the destination is empty
                 //             when trying to attack, the destination is not, so don't check
-                for(int i = st; i < ed; ++i) {
+                for(int i = st + 1; i < ed; ++i) {
                     if(not (board->isRailway(row, i) and board->isEmpty(row, i))) {
                         return false;
                     }
@@ -68,7 +68,7 @@ bool Piece::canMove(int _row, int _col)
                 return true;
             } else if(col == _col) {
                 int st = min(row, _row), ed = max(row, _row);
-                for(int i = st; i < ed; ++i) {
+                for(int i = st + 1; i < ed; ++i) {
                     if(not (board->isRailway(i, col) and board->isEmpty(i, col))) {
                         return false;
                     }

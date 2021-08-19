@@ -24,7 +24,7 @@ bool Chessboard::Railway[12][5] = {
 
 Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
-    current_player = 0;
+    current_player = 1;
     current_color = 0;
     select_id = -1;
     num_turn = 0;
