@@ -11,6 +11,7 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
     player_id = 1;
     select_id = -1;
+    P1_color = 0;
 
     timer = nullptr;
     current_time = nullptr;

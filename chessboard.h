@@ -36,6 +36,7 @@ public:
 private:
     MainWindow *win;
 
+    int P1_color;  // red: 1, blue: 2
     int player_id;
     int select_id;
     PieceDisplay p[50];

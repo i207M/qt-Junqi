@@ -3,5 +3,10 @@
 void Piece::init(int _team, Type _type)
 {
     team = _team, type = _type;
-    known = true, dead = false, selected = true;
+    known = false, dead = false, selected = false;
+}
+
+void Piece::flip()
+{
+    ;
 }

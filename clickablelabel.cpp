@@ -5,7 +5,10 @@
 
 Chessboard *ClickableLabel::board = nullptr;
 
-ClickableLabel::ClickableLabel(QWidget *parent): QLabel(parent), row(-1), col(-1) {}
+ClickableLabel::ClickableLabel(QWidget *parent): QLabel(parent)
+{
+    row = -1, col = -1;
+}
 
 void ClickableLabel::mousePressEvent(QMouseEvent *event)
 {
