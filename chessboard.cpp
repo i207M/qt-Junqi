@@ -30,7 +30,6 @@ void Chessboard::init()
     int cnt = 0;
     for(int i = 0; i < 12; ++i) {
         for (int j = 0; j < 5; ++j) {
-            err(i, j, isCamp(i, j));
             if(not isCamp(i, j)) {
                 p[cnt].row = i, p[cnt].col = j;
                 ++cnt;

@@ -20,6 +20,7 @@ public:
 
     void clickPos(int row, int col);
     void clickPiece(int id);
+    void selectPiece(int id);
 
     bool isCamp(int row, int col);
     bool canMove();

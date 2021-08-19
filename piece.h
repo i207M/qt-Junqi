@@ -21,7 +21,7 @@ class Piece
 public:
     int team;
     int row, col;
-    bool known, dead;
+    bool known, dead, selected;
     Type type;
 
     void init(int _team, Type _type);

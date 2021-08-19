@@ -27,7 +27,7 @@ public:
 
 private:
     static QLabel *Label_Map[12][5];
-    static QPixmap *Pixmap[26];
+    static QPixmap *Pixmap[50];
 
     static int w, h;
 
