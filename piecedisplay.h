@@ -1,7 +1,6 @@
 #ifndef PIECEDISPLAY_H
 #define PIECEDISPLAY_H
 
-#include <QMainWindow>
 #include <QLabel>
 #include <QPixmap>
 
@@ -22,16 +21,17 @@ public:
     PieceDisplay();
     ~PieceDisplay();
 
-    void show() override;
+    void show(QPixmap *pix);
     void hide() override;
+    void display() override;
 
 private:
     static QLabel *Label_Map[12][5];
-    static QPixmap Pixmap[26];
+    static QPixmap *Pixmap[26];
 
     static int w, h;
 
-    static QPixmap getPixmap(const char *path);
+    static QPixmap *getPixmap(const char *path);
 };
 
 #endif // PIECEDISPLAY_H

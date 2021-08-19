@@ -1,3 +1,8 @@
+#include <iostream>
+using std::cerr;
+
+#include <QImage>
+
 #include "piecedisplay.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -113,15 +118,16 @@ void PieceDisplay::initDisplay(Ui::MainWindow *ui)
     Pixmap[12 + 11] = getPixmap(":/piece/images/junqi_blue.png");
 
     Pixmap[24] = getPixmap(":/piece/images/unknown.png");
-    QPixmap pixmap(w, h);
-    pixmap.fill(Qt::transparent);
-    Pixmap[25] = pixmap;
+    QPixmap *pix = new QPixmap(w, h);
+    pix->fill(Qt::transparent);
+    Pixmap[25] = pix;
     #pragma endregion
 }
 
-void PieceDisplay::show()
+void PieceDisplay::show(QPixmap *pix)
 {
-    ;
+    QLabel *label = Label_Map[row][col];
+    label->setPixmap(*pix);
 }
 
 void PieceDisplay::hide()
@@ -129,10 +135,21 @@ void PieceDisplay::hide()
     ;
 }
 
-QPixmap PieceDisplay::getPixmap(const char *path)
+void PieceDisplay::display()
+{
+    if(dead) {
+        return;
+    } else if (not known) {
+        show(Pixmap[24]);
+    }
+}
+
+QPixmap *PieceDisplay::getPixmap(const char *path)
 {
     QImage img;
     img.load(path);
-    QPixmap pixmap = QPixmap::fromImage(img);
-    return pixmap.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QPixmap pix = QPixmap::fromImage(img);
+    pix = pix.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QPixmap *ret = new QPixmap(pix);
+    return ret;
 }

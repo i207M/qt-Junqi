@@ -26,9 +26,8 @@ public:
 
     void init(int _team, Type _type);
 
-    virtual void show() = 0;
     virtual void hide() = 0;
-    void display();
+    virtual void display() = 0;
     void flip();
     void select();
     void kill();
