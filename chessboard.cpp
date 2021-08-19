@@ -38,6 +38,7 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     ClickableLabel::board = this;
 
     initBoard();
+    displayAll();
 }
 
 Chessboard::~Chessboard()
@@ -79,20 +80,19 @@ void Chessboard::initBoard()
 
 void Chessboard::displayAll()
 {
-    static bool vis[12][5];
-    memset(vis, 0, sizeof(vis));
-
     for(int i = 0; i < 50; ++i) {
         p[i].display();
-        vis[p[i].row][p[i].col] = true;
     }
 }
 
 void Chessboard::nextTurn()
 {
     current_player = (current_player == 1 ? 2 : 1);
-    current_color = (current_color == 1 ? 2 : 1);
-    select_id = -1;
+    if(current_color != 0) {
+        current_color = (current_color == 1 ? 2 : 1);
+    }
+    select(-1);
+    err("Current player", current_player, "Current color", current_color);
 }
 
 void Chessboard::clickPos(int row, int col)
@@ -110,7 +110,7 @@ void Chessboard::clickPos(int row, int col)
         p[select_id].move(row, col);
         nextTurn();
     } else {
-        select_id = -1;
+        select(-1);
     }
 }
 
@@ -127,15 +127,35 @@ void Chessboard::clickPiece(int id)
                 }
                 flip_color[current_player - 1] = p[id].color;
             }
+            nextTurn();
         } else if(current_color == p[id].color) {
-            select_id = id;
+            select(id);
         }
     } else {
         if(current_color == p[id].color) {
-            select_id = id;
+            select(id);
         } else if(p[select_id].tryAttack(p[id])) {
             nextTurn();
         }
+    }
+}
+
+void Chessboard::select(int id)
+{
+    if(id == -1) {
+        if(select_id != -1) {
+            int t = select_id;
+            select_id = -1;
+            p[t].display();
+        }
+    } else if(select_id == -1) {
+        select_id = id;
+        p[id].display();
+    } else {
+        int t = select_id;
+        select_id = id;
+        p[t].display();
+        p[id].display();
     }
 }
 

@@ -29,8 +29,6 @@ public:
     void actionAdmitDefeat();
     void actionSetLocalGame();
 
-    virtual void paintEvent(QPaintEvent *);
-
     void init();
     void gameOver(const char *display_str);
 

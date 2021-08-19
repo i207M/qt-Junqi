@@ -25,18 +25,22 @@ void Piece::flip()
 {
     err("Flip", row, col);
     known = true;
+    display();
 }
 
 void Piece::kill()
 {
     err("Kill", row, col);
     dead = true;
+    display();
 }
 
 void Piece::move(int _row, int _col)
 {
-    err("Move", row, col);
+    hide();
+    err("Move", row, col, _row, _col);
     row = _row, col = _col;
+    display();
 }
 
 bool Piece::canMove(int _row, int _col)
@@ -99,7 +103,7 @@ bool Piece::isIn8Direction(int _row, int _col)
 
 bool Piece::tryAttack(Piece &obj)
 {
-    if(canMove(obj.row, obj.col)) {
+    if(canMove(obj.row, obj.col) and not board->isCamp(obj.row, obj.col)) {
         if(obj.type == Type::DiLei) {
             if(type == Type::GongBing) {
                 attack(obj);

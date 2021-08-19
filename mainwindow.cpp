@@ -76,15 +76,6 @@ void MainWindow::actionSetLocalGame()
     game_mode = 1;
 }
 
-void MainWindow::paintEvent(QPaintEvent *)
-{
-    if(board == nullptr) {
-        return;
-    } else {
-        board->displayAll();
-    }
-}
-
 void MainWindow::throwError(const char *debug_str)
 {
     QMessageBox::critical(this,

@@ -21,6 +21,7 @@ public:
 
     void clickPos(int row, int col);
     void clickPiece(int id);
+    void select(int id);
 
     bool isCamp(int row, int col);
     bool isRailway(int row, int col);
@@ -45,9 +46,8 @@ private:
     QTimer *timer;
     QTime *current_time;
 
-
-    PieceDisplay p[50];
     int num_turn;
+    PieceDisplay p[50];
 };
 
 #endif // CHESSBOARD_H
