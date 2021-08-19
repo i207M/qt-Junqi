@@ -11,14 +11,6 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class Pos
-{
-public:
-    int row, col;
-    Pos() {};
-    Pos(int _row, int _col) :  row(_row), col(_col) {}
-};
-
 enum class Type : int {
     GongBing = 0,
     PaiZhang = 1,
@@ -29,28 +21,28 @@ enum class Type : int {
     ShiZhang = 6,
     JunZhang = 7,
     SiLing = 8,
-    DiLei = 9,
-    JunQi = 10
+    ZhaDan = 9,
+    DiLei = 10,
+    JunQi = 11
 };
 
-class Piece : public Pos
+class Piece
 {
 public:
-    static QLabel *label_map[12][5];
     int team;
+    int row, col;
     bool known, dead;
     Type type;
 
-    void init(int _team, Type _type)
-    {
-        team = _team, type = _type;
-        known = false, dead = false;
-    }
+    void init(int _team, Type _type);
 
+    virtual void show() = 0;
+    virtual void hide() = 0;
     void display();
     void flip();
     void select();
     void kill();
+    void move();
 
     void tryAttack(Piece &obj);
     bool canAttack();

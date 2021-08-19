@@ -4,7 +4,7 @@
 #include <QTime>
 #include <QTimer>
 
-#include "piece.h"
+#include "piecedisplay.h"
 
 class MainWindow;
 
@@ -14,11 +14,15 @@ public:
     Chessboard() = delete;
     ~Chessboard();
     explicit Chessboard(MainWindow *_win);
-    void init();
-    void display();
 
-    void clickPos(Pos pos);
+    void init();
+    void displayAll();
+
+    void clickPos(int row, int col);
     void clickPiece(int id);
+
+    bool isCamp(int row, int col);
+    bool canMove();
 
     void nextTurn();
 
@@ -27,12 +31,13 @@ public:
 
     int canGameOver();
     void gameOver(const char *display_str);
+
 private:
     MainWindow *win;
 
     int player_id;
     int select_id;
-    Piece p[60];
+    PieceDisplay p[50];
 
     QTimer *timer;
     QTime *current_time;

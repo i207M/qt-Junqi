@@ -18,7 +18,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::actionCreateServer()
 {
     ;
@@ -69,7 +68,7 @@ void MainWindow::paintEvent(QPaintEvent *)
     if(board == nullptr) {
         return;
     } else {
-        board->display();
+        board->displayAll();
     }
 }
 
@@ -81,48 +80,59 @@ void MainWindow::throwError(const char *debug_str)
     QApplication::exit(1);
 }
 
-
+#pragma region
 void MainWindow::on_buttonCreateServer_clicked()
 {
     actionCreateServer();
 }
+
 void MainWindow::on_buttonConnect_clicked()
 {
     actionConnectServer();
 }
+
 void MainWindow::on_buttonDisconnect_clicked()
 {
     actionDisconnect();
 }
+
 void MainWindow::on_buttonStart_clicked()
 {
     actionStart();
 }
+
 void MainWindow::on_buttonDefeat_clicked()
 {
     actionAdmitDefeat();
 }
+
 void MainWindow::on_actionCreate_a_server_triggered()
 {
     actionCreateServer();
 }
+
 void MainWindow::on_actionConnect_to_server_triggered()
 {
     actionConnectServer();
 }
+
 void MainWindow::on_actionDisconnect_triggered()
 {
     actionDisconnect();
 }
+
 void MainWindow::on_actionStart_triggered()
 {
     actionStart();
 }
+
 void MainWindow::on_actionAdmit_defeat_triggered()
 {
     actionAdmitDefeat();
 }
+
 void MainWindow::on_buttonLocal_clicked()
 {
     actionSetLocalGame();
 }
+#pragma endregion
