@@ -1,9 +1,6 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
-#include <QTime>
-#include <QTimer>
-
 #include "piecedisplay.h"
 
 class MainWindow;
@@ -18,6 +15,7 @@ public:
     void initBoard();
     void displayAll();
     void nextTurn();
+    void timeOut();
 
     void clickPos(int row, int col);
     void clickPiece(int id);
@@ -30,7 +28,8 @@ public:
 
     int getNumTurn();
 
-    int canGameOver();
+    void tryGameOver();
+
 
     int current_player;  // server: 1, client: 2
     int current_color; // red: 1, blue: 2
@@ -43,8 +42,6 @@ public:
 
 private:
     MainWindow *win;
-    QTimer *timer;
-    QTime *current_time;
 
     int num_turn;
     PieceDisplay p[50];

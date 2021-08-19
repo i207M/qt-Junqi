@@ -3,7 +3,8 @@
         "qapplication": "cpp",
         "new": "cpp",
         "streambuf": "cpp",
-        "qtimer": "cpp"
+        "qtimer": "cpp",
+        "qmessagebox": "cpp"
     },
     "python.pythonPath": "D:\\Dev\\Program\\Python\\Python38\\python.exe"
 }

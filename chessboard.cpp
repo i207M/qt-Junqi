@@ -31,14 +31,13 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     is_online = false;
     is_server = false;
 
-    timer = nullptr;
-    current_time = nullptr;
-
     Piece::board = this;
     ClickableLabel::board = this;
 
     initBoard();
     displayAll();
+
+    win->startTimer();
 }
 
 Chessboard::~Chessboard()
@@ -87,11 +86,13 @@ void Chessboard::displayAll()
 
 void Chessboard::nextTurn()
 {
+    win->endTimer();
     current_player = (current_player == 1 ? 2 : 1);
     if(current_color != 0) {
         current_color = (current_color == 1 ? 2 : 1);
     }
     select(-1);
+    win->startTimer();
     err("Current player", current_player, "Current color", current_color);
 }
 
@@ -201,4 +202,9 @@ bool Chessboard::canAttackJunQi()
 int Chessboard::getNumTurn()
 {
     return num_turn;
+}
+
+void Chessboard::timeOut()
+{
+    win->gameOver(QString("Time out!\nThe Winner is Player ") + (current_player == 1 ? "2" : "1"));
 }

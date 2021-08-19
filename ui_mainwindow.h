@@ -41,6 +41,10 @@ public:
     QVBoxLayout *verticalLayout;
     QLabel *labelTimeRemaining;
     QLCDNumber *lcdNumber;
+    QLabel *label;
+    QLabel *labelYouPlayer;
+    QLabel *label_61;
+    QLabel *labelWhoseTurn;
     QTextBrowser *textBrowser;
     QSpacerItem *verticalSpacer;
     QPushButton *buttonStart;
@@ -49,7 +53,6 @@ public:
     QPushButton *buttonLocal;
     QPushButton *buttonCreateServer;
     QPushButton *buttonConnect;
-    QPushButton *buttonDisconnect;
     ClickableLabel *label_1;
     ClickableLabel *label_2;
     ClickableLabel *label_3;
@@ -160,14 +163,37 @@ public:
         sizePolicy1.setVerticalStretch(15);
         sizePolicy1.setHeightForWidth(lcdNumber->sizePolicy().hasHeightForWidth());
         lcdNumber->setSizePolicy(sizePolicy1);
+        lcdNumber->setProperty("intValue", QVariant(20));
 
         verticalLayout->addWidget(lcdNumber);
 
+        label = new QLabel(verticalLayoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        verticalLayout->addWidget(label);
+
+        labelYouPlayer = new QLabel(verticalLayoutWidget);
+        labelYouPlayer->setObjectName(QString::fromUtf8("labelYouPlayer"));
+        labelYouPlayer->setAlignment(Qt::AlignCenter);
+
+        verticalLayout->addWidget(labelYouPlayer);
+
+        label_61 = new QLabel(verticalLayoutWidget);
+        label_61->setObjectName(QString::fromUtf8("label_61"));
+
+        verticalLayout->addWidget(label_61);
+
+        labelWhoseTurn = new QLabel(verticalLayoutWidget);
+        labelWhoseTurn->setObjectName(QString::fromUtf8("labelWhoseTurn"));
+        labelWhoseTurn->setAlignment(Qt::AlignCenter);
+
+        verticalLayout->addWidget(labelWhoseTurn);
+
         textBrowser = new QTextBrowser(verticalLayoutWidget);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(80);
+        sizePolicy2.setVerticalStretch(50);
         sizePolicy2.setHeightForWidth(textBrowser->sizePolicy().hasHeightForWidth());
         textBrowser->setSizePolicy(sizePolicy2);
 
@@ -205,11 +231,6 @@ public:
         buttonConnect->setObjectName(QString::fromUtf8("buttonConnect"));
 
         verticalLayout->addWidget(buttonConnect);
-
-        buttonDisconnect = new QPushButton(verticalLayoutWidget);
-        buttonDisconnect->setObjectName(QString::fromUtf8("buttonDisconnect"));
-
-        verticalLayout->addWidget(buttonDisconnect);
 
         label_1 = new ClickableLabel(centralwidget);
         label_1->setObjectName(QString::fromUtf8("label_1"));
@@ -406,7 +427,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 775, 23));
+        menubar->setGeometry(QRect(0, 0, 775, 26));
         menu = new QMenu(menubar);
         menu->setObjectName(QString::fromUtf8("menu"));
         menuPlay = new QMenu(menubar);
@@ -440,12 +461,15 @@ public:
         actionDisconnect->setText(QCoreApplication::translate("MainWindow", "Disconnect", nullptr));
         labelBackground->setText(QString());
         labelTimeRemaining->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Time Remaining:</span></p></body></html>", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">You are:</span></p></body></html>", nullptr));
+        labelYouPlayer->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Player #</span></p></body></html>", nullptr));
+        label_61->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Whose Turn:</span></p></body></html>", nullptr));
+        labelWhoseTurn->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Player #</span></p></body></html>", nullptr));
         buttonStart->setText(QCoreApplication::translate("MainWindow", "Start", nullptr));
         buttonDefeat->setText(QCoreApplication::translate("MainWindow", "Admit Defeat", nullptr));
         buttonLocal->setText(QCoreApplication::translate("MainWindow", "Set Local Game", nullptr));
         buttonCreateServer->setText(QCoreApplication::translate("MainWindow", "Create a Server", nullptr));
         buttonConnect->setText(QCoreApplication::translate("MainWindow", "Connect to Server", nullptr));
-        buttonDisconnect->setText(QCoreApplication::translate("MainWindow", "Disconnect", nullptr));
         label_1->setText(QString());
         label_2->setText(QString());
         label_3->setText(QString());

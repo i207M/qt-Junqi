@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QString>
-#include <QPainter>
+#include <QTime>
+#include <QTimer>
 
 #include "chessboard.h"
 
@@ -24,34 +25,37 @@ public:
 
     void actionCreateServer();
     void actionConnectServer();
-    void actionDisconnect();
     void actionStart();
     void actionAdmitDefeat();
     void actionSetLocalGame();
 
     void init();
-    void gameOver(const char *display_str);
+    void gameOver(QString str);
+    void startTimer();
+    void endTimer();
+    void oneSecond();
 
-    void throwError(const char *debug_str);
-    void log(const char *debug_str);
+    void throwError(QString str);
+    void log(QString str);
 
     Ui::MainWindow *ui;
 
 private slots:
     void on_actionCreate_a_server_triggered();
     void on_actionConnect_to_server_triggered();
-    void on_actionDisconnect_triggered();
     void on_actionStart_triggered();
     void on_actionAdmit_defeat_triggered();
 
     void on_buttonCreateServer_clicked();
     void on_buttonConnect_clicked();
-    void on_buttonDisconnect_clicked();
     void on_buttonStart_clicked();
     void on_buttonDefeat_clicked();
     void on_buttonLocal_clicked();
 
 private:
+    QTimer *timer;
+    int timeRemaining;
+
     Chessboard *board;
 
     int game_mode;
