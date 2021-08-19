@@ -1,11 +1,10 @@
-#include <iostream>
-using std::cerr;
-
 #include <QImage>
 
 #include "piecedisplay.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+#include "Mdebug.h"
 
 QLabel *PieceDisplay::Label_Map[12][5] = {};
 QPixmap *PieceDisplay::Pixmap[26] = {};

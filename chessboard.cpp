@@ -1,10 +1,10 @@
 #include <algorithm>
-#include <iostream>
-using std::cerr;
 
 #include "chessboard.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+#include "Mdebug.h"
 
 Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
@@ -30,7 +30,7 @@ void Chessboard::init()
     int cnt = 0;
     for(int i = 0; i < 12; ++i) {
         for (int j = 0; j < 5; ++j) {
-            cerr << i<<
+            err(i, j, isCamp(i, j));
             if(not isCamp(i, j)) {
                 p[cnt].row = i, p[cnt].col = j;
                 ++cnt;

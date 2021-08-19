@@ -16,6 +16,7 @@ SOURCES += \
     piecedisplay.cpp
 
 HEADERS += \
+    Mdebug.h \
     chessboard.h \
     mainwindow.h \
     piece.h \
