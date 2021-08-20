@@ -1,5 +1,7 @@
 #include "netboard.h"
 
+#include "windows.h"
+
 #include <QMessageBox>
 
 #include "mainwindow.h"
@@ -44,25 +46,33 @@ void Netboard::slotNewConnection()
     tcpSocket = tcpServer->nextPendingConnection();
     connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
 
-    win->connectSuccessfully();
-
-    netGameInit();
-
     static const char Ctrl0[1] = {0};
     tcpSocket->write(Ctrl0, 1);
+    this->win->connectSuccessfully();
+
+    this->initBoard();
+    this->displayAll();
 }
 
 void Netboard::slotRecv()
 {
     QByteArray arr = tcpSocket->readAll();
     char ctrl = arr[0];
-    err("Recv Ctrl", ctrl);
+    err("Recv Ctrl", (int)ctrl);
 
     if(ctrl == 0) {
-        check(local_player == 2);
-        win->connectSuccessfully();
+        check(tcpServer == nullptr);
+        this->win->connectSuccessfully();
+
+        static const char Ctrl1[1] = {1};
+        tcpSocket->write(Ctrl1, 1);
     } else if(ctrl == 1) {
-        syncBoard(arr);
+        // QUESTION
+        if(tcpServer == nullptr) {
+            syncBoard(arr);
+        } else {
+            sendBoard();
+        }
     } else if(ctrl == 2) {
         netPressStart(arr[1]);
     } else if(ctrl == 3) {
@@ -73,7 +83,7 @@ void Netboard::slotRecv()
         Chessboard::clickPos(click_row, click_col);
     } else if(ctrl == 5) {
         // TODO: cannot admit defeat as your opponent
-        // win->actionAdmitDefeat();
+        // this->win->actionAdmitDefeat();
     } else if(ctrl == 6) {
         err("Opponent timed out.");
     } else {
@@ -98,6 +108,7 @@ void Netboard::localPressStart()
         return;
     }
 
+    this->win->log("You Pressed Start.")
     genRandomPrior();
 
     char Ctrl2[2] = {2, random_prior[0]};
@@ -108,15 +119,13 @@ void Netboard::localPressStart()
 
 void Netboard::netPressStart(char _random_prior)
 {
+    this->win->log("Opponent Pressed Start.");
     random_prior[1] = _random_prior;
     checkStart();
 }
 
-void Netboard::netGameInit()
+void Netboard::sendBoard()
 {
-    this->initBoard();
-    this->displayAll();
-
     static char chess_data[1 + 50 * 7];
     int cnt = 0;
     chess_data[cnt++] = 1;
@@ -130,8 +139,12 @@ void Netboard::netGameInit()
         chess_data[cnt++] = p[i].dead;
         chess_data[cnt++] = int(p[i].type);
     }
+    for(int i = 0; i < 1 + 50 * 7; ++i) {
+        err((int)chess_data[i], ' ');
+    }
 
     tcpSocket->write(chess_data, sizeof(chess_data));
+    err("sendBoard");
 }
 
 void Netboard::syncBoard(QByteArray chess_data)
@@ -146,7 +159,7 @@ void Netboard::syncBoard(QByteArray chess_data)
         p[i].dead = chess_data[cnt++];
         p[i].type = Type(chess_data[cnt++]);
     }
-    err("syncBoard");
+    this->win->log("Board Synchronized.");
 
     this->displayAll();
 }
@@ -173,6 +186,7 @@ void Netboard::checkStart()
             // need swap
             this->current_player = local_player;
         }
+        this->win->log("Game Start!");
         this->has_start = true;
         this->nextTurn();
     }

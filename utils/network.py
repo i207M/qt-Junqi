@@ -12,6 +12,8 @@ elif ctrl == 1:
     # 同步棋盘，然后游戏开始
     # 直接发送内存，然后memcpy，然后displayAll
     # 注意static的初始化
+
+    # 先由client向server请求
     pass
 elif ctrl == 2:
     # 点击start

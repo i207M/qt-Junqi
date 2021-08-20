@@ -23,7 +23,7 @@ public slots:
     void slotRecv();
 
 private:
-    void netGameInit();
+    void sendBoard();
     void syncBoard(QByteArray chessData);
     void genRandomPrior();
     void checkStart();
