@@ -7,10 +7,8 @@ __pycache__
 debug/*
 release/*
 Makefile
-Makefile.Debug
-Makefile.Release
+*.Debug
+*.Release
 *.pro.user
 .qmake.stash
 ui_mainwindow.h
-object_script.Junqi.Debug
-object_script.Junqi.Release
