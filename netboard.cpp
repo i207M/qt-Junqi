@@ -17,9 +17,15 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     if(ip == "0") {
         local_player = 1;
 
-        tcpServer = new QTcpServer(this->win);
+        tcpServer = new QTcpServer(this);
         tcpServer->listen(QHostAddress::Any, PORT);
-        connect(tcpServer, SIGNAL(newConnection), this->win, SLOT(slotNewConnection));
+        connect(tcpServer, &QTcpServer::newConnection, this, &Netboard::slotNewConnection);
+    } else {
+        local_player = 2;
+
+        tcpSocket = new QTcpSocket(this);
+        tcpSocket->connectToHost(QHostAddress(ip), PORT);
+        connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
     }
 }
 
