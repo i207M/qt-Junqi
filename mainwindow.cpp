@@ -70,6 +70,10 @@ void MainWindow::gameOver(QString str)
     QMessageBox::information(this,
                              tr("Game Over"),
                              str);
+    QMessageBox::information(this,
+                             tr("Goodbye"),
+                             tr("The Program is about to Close."));
+    qApp->quit();
 }
 
 void MainWindow::startTimer()
@@ -108,11 +112,11 @@ void MainWindow::changeYouPlayer(int id, int color)
     QString str = QString("Player %1").arg(id);
     QString arg_str;
     if(color == 1) {
-        arg_str = "<span style=\" font-size:14pt;\"><font color = red>%1, Red</font></span>";
+        arg_str = QString("<span style=\" font-size:14pt;\"><font color = red>%1, Red</font></span>");
     } else if(color == 2) {
-        arg_str = "<span style=\" font-size:14pt;\"><font color = blue>%1, Blue</font></span>";
+        arg_str = QString("<span style=\" font-size:14pt;\"><font color = blue>%1, Blue</font></span>");
     } else {
-        arg_str = "<span style=\" font-size:14pt;\"><font color = black>%1</font></span>";
+        arg_str = QString("<span style=\" font-size:14pt;\"><font color = black>%1</font></span>");
     }
     ui->labelYouPlayer->setText(arg_str.arg(str));
 }
@@ -129,7 +133,7 @@ void MainWindow::changeWhoseTurn(int id)
 //     QMessageBox::critical(this,
 //                           tr("Error"),
 //                           str);
-//     QApplication::exit(1);
+//     qApp->exit(1);
 // }
 
 void MainWindow::log(QString str)

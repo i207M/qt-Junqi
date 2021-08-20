@@ -19,7 +19,9 @@ public:
     void tryAdmitDefeat();
     void tryGameOver();
     void clickPos(int row, int col);
+    void clickPiece(int id);
 
+    int getOpp();
     int getIdByPos(int row, int col);
 
     static bool isCamp(int row, int col);
@@ -37,13 +39,13 @@ public:
     int select_id;
 
 private:
-    void clickPiece(int id);
     void tryDetermineColor(int id);
     void select(int id);
 
     MainWindow *win;
     int num_turn;
     int num_time_out[2];
+    int flip_color[2];
 };
 
 #endif // CHESSBOARD_H

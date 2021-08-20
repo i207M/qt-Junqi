@@ -4,7 +4,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include "Mdebug.h"
 
 bool Chessboard::Railway[12][5] = {
@@ -24,13 +23,14 @@ bool Chessboard::Railway[12][5] = {
 
 Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
+    is_online = false;
     current_player = 2;  // WARNING
     current_color = 0;
     select_id = -1;
+
     num_turn = 0;
     num_time_out[0] = 0, num_time_out[1] = 0;
-
-    is_online = false;
+    flip_color[0] = 0, flip_color[1] = 0;
 
     Piece::board = this;
     ClickableLabel::board = this;
@@ -41,10 +41,7 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     nextTurn();
 }
 
-Chessboard::~Chessboard()
-{
-    ;
-}
+Chessboard::~Chessboard() {}
 
 void Chessboard::initBoard()
 {
@@ -89,11 +86,13 @@ void Chessboard::nextTurn()
 {
     ++num_turn;
     win->endTimer();
-    current_player = (current_player == 1 ? 2 : 1);
+
+    current_player = getOpp();
     if(current_color != 0) {
         current_color = (current_color == 1 ? 2 : 1);
     }
     select(-1);
+
     win->changeYouPlayer(current_player, current_color);
     win->changeWhoseTurn(current_player);
 
@@ -103,14 +102,41 @@ void Chessboard::nextTurn()
     win->log(QString("Turn #%1").arg(num_turn));
 }
 
-int Chessboard::getIdByPos(int row, int col)
+void Chessboard::timeOut()
+{
+    int t = ++num_time_out[current_player - 1];
+    if(t >= 3) {
+        win->gameOver(QString("Time out!\nThe Winner is Player %1.").arg(getOpp()));
+    } else {
+        win->log(QString("Player %1 timed out.").arg(current_player));
+    }
+    nextTurn();
+}
+
+void Chessboard::tryAdmitDefeat()
+{
+    if(num_turn >= 20) {
+        win->gameOver(QString("Admit defeat!\nThe Winner is Player %1.").arg(getOpp()));
+    } else {
+        win->log("Failed to Admit Defeat. The number of rounds is less than 20.");
+    }
+}
+
+void Chessboard::tryGameOver()
 {
     for(int i = 0; i < 50; ++i) {
-        if(p[i].row == row and p[i].col == col and not p[i].dead) {
-            return i;
+        if(p[i].color == current_color and p[i].type == Type::JunQi and p[i].dead) {
+            win->gameOver(QString("Flag Lost!\nThe Winner is Player %1.").arg(getOpp()));
+            return;
         }
     }
-    return -1;
+
+    for(int i = 0; i < 50; ++i) {
+        if(p[i].color == current_color and not p[i].dead and p[i].canMoveAround()) {
+            return;
+        }
+    }
+    win->gameOver(QString("No Possible Move Found!\nThe Winner is Player %1.").arg(getOpp()));
 }
 
 void Chessboard::clickPos(int row, int col)
@@ -130,16 +156,6 @@ void Chessboard::clickPos(int row, int col)
     }
 }
 
-void Chessboard::tryDetermineColor(int id)
-{
-    static int flip_color[2];
-    if(flip_color[current_player - 1] == p[id].color) {
-        current_color = p[id].color;
-        win->log(QString("Color determined: Player %1 is %2").arg(current_player).arg(current_color == 1 ? "red" : "blue"));
-    }
-    flip_color[current_player - 1] = p[id].color;
-}
-
 void Chessboard::clickPiece(int id)
 {
     if(p[id].known == false) {
@@ -157,34 +173,25 @@ void Chessboard::clickPiece(int id)
     }
 }
 
-void Chessboard::select(int id)
+int Chessboard::getOpp()
 {
-    if(id == -1) {
-        if(select_id != -1) {
-            int t = select_id;
-            select_id = -1;
-            p[t].display();
+    return getOpp();
+}
+
+int Chessboard::getIdByPos(int row, int col)
+{
+    for(int i = 0; i < 50; ++i) {
+        if(p[i].row == row and p[i].col == col and not p[i].dead) {
+            return i;
         }
-    } else if(select_id == -1) {
-        select_id = id;
-        p[id].display();
-    } else {
-        int t = select_id;
-        select_id = id;
-        p[t].display();
-        p[id].display();
     }
+    return -1;
 }
 
 bool Chessboard::isCamp(int row, int col)
 {
     // static const int Camp_Row[] = {2, 2, 3, 4, 4, 7, 7, 8, 9, 9};
     // static const int Camp_Col[] = {1, 3, 2, 1, 3, 1, 3, 2, 1, 3};
-    // for (int i = 0; i < 10; ++i) {
-    //     if (row == Camp_Row[i] and col == Camp_Col[i]) {
-    //         return true;
-    //     }
-    // }
     if (col == 1 or col == 3) {
         return row == 2 or row == 4 or row == 7 or row == 9;
     } else if (col == 2) {
@@ -196,7 +203,7 @@ bool Chessboard::isCamp(int row, int col)
 
 bool Chessboard::isRailway(int row, int col)
 {
-    return Railway[row][col];
+    return bool(Railway[row][col]);
 }
 
 bool Chessboard::isEmpty(int row, int col)
@@ -219,26 +226,6 @@ bool Chessboard::canAttackJunQi()
     return true;
 }
 
-void Chessboard::timeOut()
-{
-    int t = ++num_time_out[current_player - 1];
-    if(t >= 3) {
-        win->gameOver(QString("Time out!\nThe Winner is Player %1.").arg(current_player == 1 ? 2 : 1));
-    } else {
-        win->log(QString("Player %1 timed out.").arg(current_player));
-    }
-    nextTurn();
-}
-
-void Chessboard::tryAdmitDefeat()
-{
-    if(num_turn >= 20) {
-        win->gameOver(QString("Admit defeat!\nThe Winner is Player %1.").arg(current_player == 1 ? 2 : 1));
-    } else {
-        win->log("Failed to Admit Defeat. The number of rounds is less than 20.");
-    }
-}
-
 bool Chessboard::showSelected(int id)
 {
     if(id == select_id) {
@@ -249,18 +236,31 @@ bool Chessboard::showSelected(int id)
     }
 }
 
-void Chessboard::tryGameOver()
+void Chessboard::tryDetermineColor(int id)
 {
-    for(int i = 0; i < 50; ++i) {
-        if(p[i].type == Type::JunQi and p[i].color == current_color and p[i].dead) {
-            win->gameOver(QString("Flag Lost!\nThe Winner is Player %1.").arg(current_player == 1 ? 2 : 1));
-        }
+    if(flip_color[current_player - 1] == p[id].color) {
+        current_color = p[id].color;
+        win->log(QString("Color determined: Player %1 is %2").arg(current_player)
+                 .arg(current_color == 1 ? "red" : "blue"));
     }
+    flip_color[current_player - 1] = p[id].color;
+}
 
-    for(int i = 0; i < 50; ++i) {
-        if(p[i].color == current_color and not p[i].dead and p[i].canMoveAround()) {
-            return;
+void Chessboard::select(int id)
+{
+    if(id == -1) {
+        if(select_id != -1) {
+            int t = select_id;
+            select_id = -1;
+            p[t].display();
         }
+    } else if(select_id == -1) {
+        select_id = id;
+        p[id].display();
+    } else {
+        int t = select_id;
+        select_id = id;
+        p[t].display();
+        p[id].display();
     }
-    win->gameOver(QString("No Possible Move Found!\nThe Winner is Player %1.").arg(current_player == 1 ? 2 : 1));
 }
