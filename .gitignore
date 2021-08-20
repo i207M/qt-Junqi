@@ -12,3 +12,5 @@ Makefile.Release
 *.pro.user
 .qmake.stash
 ui_mainwindow.h
+object_script.Junqi.Debug
+object_script.Junqi.Release

@@ -18,7 +18,7 @@ public:
     virtual void localPressStart() override;
     virtual void netPressStart(char _random_prior);
 
-public slots:
+private slots:
     void slotNewConnection();
     void slotRecv();
 
