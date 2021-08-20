@@ -24,6 +24,7 @@ void Piece::initPiece(int _id, int _team, Type _type)
 void Piece::flip()
 {
     err("Flip", row, col);
+    check(not known);
     known = true;
     display();
 }
@@ -31,47 +32,70 @@ void Piece::flip()
 void Piece::kill()
 {
     err("Kill", row, col);
+    check(not dead);
     dead = true;
     display();
 }
 
 void Piece::move(int _row, int _col)
 {
-    hide();
     err("Move", row, col, _row, _col);
+    check(not dead);
+    hide();
     row = _row, col = _col;
     display();
 }
 
-bool Piece::canMove(int _row, int _col) const
+bool Piece::goVerticalRailway(int row, int col, int n_col)
+{
+    int st = min(col, n_col), ed = max(col, n_col);
+    for(int i = st + 1; i < ed; ++i) {
+        if(not (board->isRailway(row, i) and board->isEmpty(row, i))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Piece::goHorizontalRailway(int col, int row, int n_row)
+{
+    int st = min(row, n_row), ed = max(row, n_row);
+    for(int i = st + 1; i < ed; ++i) {
+        if(not (board->isRailway(i, col) and board->isEmpty(i, col))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Piece::canMove(int n_row, int n_col) const
 {
     // assert that when trying to move, the destination is empty
     //             when trying to attack, the destination is not, so don't check
-
-    check(row != _row or col != _col);
+    check(row != n_row or col != n_col);
 
     if(int(type) >= 10) {
         return false;
-    } else if(isIn4Direction(_row, _col)) {
+    } else if(isIn4Direction(n_row, n_col)) {
         // special case: (5, 1), (5, 3)
-        int min_row = min(row, _row);
-        int max_row = max(row, _row);
-        if((min_row == 5 and col == 1 and max_row == 6 and _col == 1)
-                or (min_row == 5 and col == 3 and max_row == 6 and _col == 3)) {
+        int min_row = min(row, n_row);
+        int max_row = max(row, n_row);
+        if((min_row == 5 and col == 1 and max_row == 6 and n_col == 1)
+                or (min_row == 5 and col == 3 and max_row == 6 and n_col == 3)) {
             return false;
         }
         return true;
-    } else if( (Chessboard::isCamp(row, col) or Chessboard::isCamp(_row, _col))
-               and isIn8Direction(_row, _col)) {
+    } else if( (Chessboard::isCamp(row, col) or Chessboard::isCamp(n_row, n_col))
+               and isIn8Direction(n_row, n_col)) {
         return true;
-    } else if(Chessboard::isRailway(row, col) and Chessboard::isRailway(_row, _col)) {
+    } else if(Chessboard::isRailway(row, col) and Chessboard::isRailway(n_row, n_col)) {
         if(type == Type::GongBing) {
-            return bfs(row, col, _row, _col);
+            return bfs(row, col, n_row, n_col);
         } else {
-            if(row == _row) {
-                return goVerticalRailway(row, col, _col);
-            } else if(col == _col) {
-                return goHorizontalRailway(col, row, _row);
+            if(row == n_row) {
+                return goVerticalRailway(row, col, n_col);
+            } else if(col == n_col) {
+                return goHorizontalRailway(col, row, n_row);
             }
         }
     }
@@ -102,50 +126,28 @@ bool Piece::canMoveAround()
     return false;
 }
 
-bool Piece::isIn4Direction(int _row, int _col) const
+bool Piece::isIn4Direction(int n_row, int n_col) const
 {
     static const int r[] = {-1, 0, 1, 0};
     static const int c[] = {0, 1, 0, -1};
     for(int i = 0; i < 4; ++i) {
-        if(row + r[i] == _row and col + c[i] == _col) {
+        if(row + r[i] == n_row and col + c[i] == n_col) {
             return true;
         }
     }
     return false;
 }
 
-bool Piece::isIn8Direction(int _row, int _col) const
+bool Piece::isIn8Direction(int n_row, int n_col) const
 {
     static const int r[] = {-1, 1, 1, -1};
     static const int c[] = {1, 1, -1, -1};
     for(int i = 0; i < 4; ++i) {
-        if(row + r[i] == _row and col + c[i] == _col) {
+        if(row + r[i] == n_row and col + c[i] == n_col) {
             return true;
         }
     }
     return false;
-}
-
-bool Piece::goVerticalRailway(int row, int col, int _col)
-{
-    int st = min(col, _col), ed = max(col, _col);
-    for(int i = st + 1; i < ed; ++i) {
-        if(not (board->isRailway(row, i) and board->isEmpty(row, i))) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool Piece::goHorizontalRailway(int col, int row, int _row)
-{
-    int st = min(row, _row), ed = max(row, _row);
-    for(int i = st + 1; i < ed; ++i) {
-        if(not (board->isRailway(i, col) and board->isEmpty(i, col))) {
-            return false;
-        }
-    }
-    return true;
 }
 
 bool Piece::canAttack(const Piece &obj) const
@@ -234,12 +236,12 @@ bool Piece::bfs(int s_row, int s_col, int t_row, int t_col) const
         int row = q.front().first, col = q.front().second;
         q.pop();
 
+        check(Chessboard::Railway[row][col]);
         static const vector<int> r4 = {-1, 0, 1, 0};
         static const vector<int> c4 = {0, 1, 0, -1};
         static const vector<int> r2 = {0, 0};
         static const vector<int> c2 = {1, -1};
         vector<int> r, c;
-        check(Chessboard::Railway[row][col]);
         if(Chessboard::Railway[row][col] == 1) {
             r = r4, c = c4;
         } else {
