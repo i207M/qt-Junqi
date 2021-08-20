@@ -85,8 +85,8 @@ bool Piece::canMove(int n_row, int n_col) const
             return false;
         }
         return true;
-    } else if( (Chessboard::isCamp(row, col) or Chessboard::isCamp(n_row, n_col))
-               and isIn8Direction(n_row, n_col)) {
+    } else if((Chessboard::isCamp(row, col) or Chessboard::isCamp(n_row, n_col))
+              and isIn8Direction(n_row, n_col)) {
         return true;
     } else if(Chessboard::isRailway(row, col) and Chessboard::isRailway(n_row, n_col)) {
         if(type == Type::GongBing) {
@@ -149,6 +149,8 @@ bool Piece::isIn8Direction(int n_row, int n_col) const
     }
     return false;
 }
+
+// TODO
 
 bool Piece::canAttack(const Piece &obj) const
 {

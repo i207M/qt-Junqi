@@ -4,7 +4,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include "Mdebug.h"
 
 ClickableLabel *PieceDisplay::Label_Map[12][5] = {};

@@ -23,12 +23,12 @@ public:
     void display() override;
 
 private:
+    static QPixmap *getPixmap(const char *path);
+
     static ClickableLabel *Label_Map[12][5];
     static QPixmap *Pixmap[50];
 
     static int w, h;
-
-    static QPixmap *getPixmap(const char *path);
 };
 
 #endif // PIECEDISPLAY_H
