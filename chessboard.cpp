@@ -20,17 +20,17 @@ bool Chessboard::Railway[12][5] = {
     1, 0, 0, 0, 1,
     1, 1, 1, 1, 1,
     0, 0, 0, 0, 0
-}; //TODO
+};
 
 Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
-    current_player = 1;
+    current_player = 2;  // WARNING
     current_color = 0;
     select_id = -1;
     num_turn = 0;
+    num_time_out[0] = 0, num_time_out[1] = 0;
 
     is_online = false;
-    is_server = false;
 
     Piece::board = this;
     ClickableLabel::board = this;
@@ -38,10 +38,7 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     initBoard();
     displayAll();
 
-    win->changeYouPlayer(1, 0);
-    win->changeWhoseTurn(1);
-
-    win->startTimer();
+    nextTurn();
 }
 
 Chessboard::~Chessboard()
@@ -100,7 +97,7 @@ void Chessboard::nextTurn()
     win->changeYouPlayer(current_player, current_color);
     win->changeWhoseTurn(current_player);
     win->startTimer();
-    err("Current player", current_player, "Current color", current_color);
+    win->log(QString("Turn #%1").arg(num_turn));
 }
 
 void Chessboard::clickPos(int row, int col)
@@ -127,7 +124,7 @@ void Chessboard::tryDetermineColor(int id)
     static int flip_color[2];
     if(flip_color[current_player - 1] == p[id].color) {
         current_color = p[id].color;
-        err("Color determined", current_player, current_color);
+        win->log(QString("Color determined: Player %1 is %2").arg(current_player).arg(current_color == 1 ? "red" : "blue"));
     }
     flip_color[current_player - 1] = p[id].color;
 }
@@ -218,7 +215,13 @@ int Chessboard::getNumTurn()
 
 void Chessboard::timeOut()
 {
-    win->gameOver(QString("Time out!\nThe Winner is Player ") + (current_player == 1 ? "2" : "1"));
+    int t = ++num_time_out[current_player - 1];
+    if(t >= 3) {
+        win->gameOver(QString("Time out!\nThe Winner is Player ") + (current_player == 1 ? "2" : "1"));
+    } else {
+        win->log(QString("Player %1 timed out.").arg(current_player));
+    }
+    nextTurn();
 }
 
 void Chessboard::tryAdmitDefeat()

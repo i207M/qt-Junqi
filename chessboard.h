@@ -36,7 +36,6 @@ public:
     int select_id;
 
     bool is_online;
-    bool is_server;
 
     static bool Railway[12][5];
 
@@ -46,6 +45,8 @@ private:
 
     int num_turn;
     PieceDisplay p[50];
+
+    int num_time_out[2];
 };
 
 #endif // CHESSBOARD_H

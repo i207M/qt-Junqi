@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->buttonDefeat->setDisabled(true);
 
+    timer = new QTimer;
+    timeRemaining = 0;
+
     init();
     PieceDisplay::initDisplay(ui);
 }
@@ -54,7 +57,6 @@ void MainWindow::actionStart()
     } else if (game_mode == 2 or game_mode == 3) {
         ;
     }
-    log("Game Start!");
 }
 
 void MainWindow::actionAdmitDefeat()
@@ -99,7 +101,7 @@ void MainWindow::oneSecond()
     --timeRemaining;
     ui->lcdNumber->display(timeRemaining);
 
-    if(timeRemaining == 0) {
+    if(timeRemaining <= 0) {
         board->timeOut();
     } else {
         delete timer;
@@ -111,14 +113,14 @@ void MainWindow::oneSecond()
 
 void MainWindow::changeYouPlayer(int id, int color)
 {
-    QString str = QString("Player ") + (id == 1 ? "1" : "2");
+    QString str = QString("Player %1").arg(id);
     QString arg_str;
     if(color == 0) {
         arg_str = "<span style=\" font-size:14pt;\"><font color = black>%1</font></span>";
     } else if(color == 1) {
-        arg_str = "<span style=\" font-size:14pt;\"><font color = red>%1</font></span>";
+        arg_str = "<span style=\" font-size:14pt;\"><font color = red>%1, Red</font></span>";
     } else {
-        arg_str = "<span style=\" font-size:14pt;\"><font color = blue>%1</font></span>";
+        arg_str = "<span style=\" font-size:14pt;\"><font color = blue>%1, Blue</font></span>";
     }
     ui->labelYouPlayer->setText(arg_str.arg(str));
 }
@@ -126,7 +128,7 @@ void MainWindow::changeYouPlayer(int id, int color)
 void MainWindow::changeWhoseTurn(int id)
 {
     const QString arg_str("<span style=\" font-size:14pt;\">%1</span>");
-    QString str = QString("Player ") + (id == 1 ? "1" : "2");
+    QString str = QString("Player %1").arg(id);
     ui->labelWhoseTurn->setText(arg_str.arg(str));
 }
 
