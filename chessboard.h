@@ -18,6 +18,7 @@ public:
     void timeOut();
     void tryAdmitDefeat();
 
+    int getIdByPos(int row,int col);
     void clickPos(int row, int col);
     void clickPiece(int id);
     void select(int id);
@@ -39,13 +40,13 @@ public:
     bool is_online;
 
     static bool Railway[12][5];
+    PieceDisplay p[50];
 
 private:
     void tryDetermineColor(int id);
     MainWindow *win;
 
     int num_turn;
-    PieceDisplay p[50];
 
     int num_time_out[2];
 };

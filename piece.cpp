@@ -43,7 +43,7 @@ void Piece::move(int _row, int _col)
     display();
 }
 
-bool Piece::canMove(int _row, int _col)
+bool Piece::canMove(int _row, int _col) const
 {
     // assert that when trying to move, the destination is empty
     //             when trying to attack, the destination is not, so don't check
@@ -78,7 +78,31 @@ bool Piece::canMove(int _row, int _col)
     return false;
 }
 
-bool Piece::isIn4Direction(int _row, int _col)
+bool Piece::canMoveAround()
+{
+    if(int(type) >= 10) {
+        return false;
+    } else {
+        static const int r[] = {-1, 0, 1, 0, -1, 1, 1, -1};
+        static const int c[] = {0, 1, 0, -1, 1, 1, -1, -1};
+        for(int i = 0; i < 8; ++i) {
+            int n_row = row + r[i], n_col = col + r[i];
+            if(n_row >= 0 and n_row < 12 and n_col >= 0 and n_col <= 5) {
+                int n_id = board->getIdByPos(n_row, n_col);
+                if(n_id == -1) {
+                    if(canMove(n_row, n_col)) {
+                        return true;
+                    }
+                } else if(canAttack(board->p[n_id])) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool Piece::isIn4Direction(int _row, int _col) const
 {
     static const int r[] = {-1, 0, 1, 0};
     static const int c[] = {0, 1, 0, -1};
@@ -90,7 +114,7 @@ bool Piece::isIn4Direction(int _row, int _col)
     return false;
 }
 
-bool Piece::isIn8Direction(int _row, int _col)
+bool Piece::isIn8Direction(int _row, int _col) const
 {
     static const int r[] = {-1, 1, 1, -1};
     static const int c[] = {1, 1, -1, -1};
@@ -124,9 +148,35 @@ bool Piece::goHorizontalRailway(int col, int row, int _row)
     return true;
 }
 
+bool Piece::canAttack(const Piece &obj) const
+{
+    if(color == obj.color) {
+        return false;
+    }
+
+    if(canMove(obj.row, obj.col) and not board->isCamp(obj.row, obj.col)) {
+        if(obj.type == Type::DiLei) {
+            if(type == Type::GongBing or type == Type::ZhaDan) {
+                return true;
+            }
+        } else if(obj.type == Type::JunQi) {
+            if(board->canAttackJunQi()) {
+                return true;
+            }
+        } else if(type == Type::ZhaDan or obj.type == Type::ZhaDan) {
+            return true;
+        } else if(type >= obj.type) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool Piece::tryAttack(Piece &obj)
 {
-    check(id != obj.id);
+    check(color != obj.color);
+
     if(canMove(obj.row, obj.col) and not board->isCamp(obj.row, obj.col)) {
         if(obj.type == Type::DiLei) {
             if(type == Type::GongBing) {
@@ -138,7 +188,11 @@ bool Piece::tryAttack(Piece &obj)
             }
         } else if(obj.type == Type::JunQi) {
             if(board->canAttackJunQi()) {
-                attack(obj);
+                if(type == Type::ZhaDan) {
+                    dieTogether(obj);
+                } else {
+                    attack(obj);
+                }
                 return true;
             }
         } else if(type == Type::ZhaDan or obj.type == Type::ZhaDan) {
@@ -167,7 +221,7 @@ void Piece::dieTogether(Piece &obj)
     kill();
 }
 
-bool Piece::bfs(int s_row, int s_col, int t_row, int t_col)
+bool Piece::bfs(int s_row, int s_col, int t_row, int t_col) const
 {
     static bool vis[12][5];
     memset(vis, 0, sizeof(vis));

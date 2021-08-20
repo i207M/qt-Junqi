@@ -37,19 +37,21 @@ public:
     void kill();
     void move(int _row, int _col);
 
-    bool canMove(int _row, int _col);
-    bool isIn4Direction(int _row, int _col);
-    bool isIn8Direction(int _row, int _col);
+    bool canMove(int _row, int _col) const;
+    bool canMoveAround();
+    bool isIn4Direction(int _row, int _col) const;
+    bool isIn8Direction(int _row, int _col) const;
     static bool goVerticalRailway(int row, int col, int _col);
     static bool goHorizontalRailway(int col, int row, int _row);
 
+    bool canAttack(const Piece &obj) const;
     bool tryAttack(Piece &obj);
     void attack(Piece &obj);
     void dieTogether(Piece &obj);
 
 private:
 
-    bool bfs(int s_row, int s_col, int t_row, int t_col);
+    bool bfs(int s_row, int s_col, int t_row, int t_col) const;
 };
 
 #endif // PIECE_H
