@@ -232,3 +232,13 @@ void Chessboard::tryAdmitDefeat()
         win->log("Failed to Admit Defeat. The number of rounds is less than 20.");
     }
 }
+
+bool Chessboard::showSelected(int id)
+{
+    if(id == select_id) {
+        check(not is_online);
+        return true;
+    } else {
+        return false;
+    }
+}

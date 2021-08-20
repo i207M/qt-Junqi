@@ -20,7 +20,6 @@ public:
 
     void show(QPixmap *pix);
     void hide() override;
-    bool showSelected();
     void display() override;
 
 private:

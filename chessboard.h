@@ -26,6 +26,7 @@ public:
     bool isRailway(int row, int col);
     bool isEmpty(int row, int col);
     bool canAttackJunQi();
+    bool showSelected(int id);
 
     int getNumTurn();
 

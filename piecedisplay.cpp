@@ -210,23 +210,6 @@ void PieceDisplay::hide()
     label->setPixmap(*Pixmap[49]);
 }
 
-bool PieceDisplay::showSelected()
-{
-    if(id == board->select_id) {
-        if(not board->is_online) {
-            return true;
-        } else {
-            int local_color = board->current_color;
-            if((1 + board->is_server) != board->current_player) {
-                local_color = (local_color == 1 ? 2 : 1);
-            }
-            return color == local_color;
-        }
-    } else {
-        return false;
-    }
-}
-
 void PieceDisplay::display()
 {
     if(dead) {
@@ -234,7 +217,7 @@ void PieceDisplay::display()
     } else if (not known) {
         show(Pixmap[48]);
     } else {
-        show(Pixmap[(showSelected() ? 24 : 0) + (color == 1 ? 0 : 12) + int(type)]);
+        show(Pixmap[(board->showSelected(id) ? 24 : 0) + (color == 1 ? 0 : 12) + int(type)]);
     }
 }
 
