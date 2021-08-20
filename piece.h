@@ -40,6 +40,8 @@ public:
     bool canMove(int _row, int _col);
     bool isIn4Direction(int _row, int _col);
     bool isIn8Direction(int _row, int _col);
+    static bool goVerticalRailway(int row, int col, int _col);
+    static bool goHorizontalRailway(int col, int row, int _row);
 
     bool tryAttack(Piece &obj);
     void attack(Piece &obj);

@@ -45,35 +45,33 @@ void Piece::move(int _row, int _col)
 
 bool Piece::canMove(int _row, int _col)
 {
+    // assert that when trying to move, the destination is empty
+    //             when trying to attack, the destination is not, so don't check
+
     check(row != _row or col != _col);
+
     if(int(type) >= 10) {
         return false;
     } else if(isIn4Direction(_row, _col)) {
+        // special case: (5, 1), (5, 3)
+        int min_row = min(row, _row);
+        int max_row = max(row, _row);
+        if((min_row == 5 and col == 1 and max_row == 6 and _col == 1)
+                or (min_row == 5 and col == 3 and max_row == 6 and _col == 3)) {
+            return false;
+        }
         return true;
-    } else if(board->isCamp(_row, _col) and isIn8Direction(_row, _col)) {
+    } else if( (board->isCamp(row, col) or board->isCamp(_row, _col))
+               and isIn8Direction(_row, _col)) {
         return true;
     } else if(board->isRailway(row, col) and board->isRailway(_row, _col)) {
         if(type == Type::GongBing) {
             return bfs(row, col, _row, _col);
         } else {
             if(row == _row) {
-                int st = min(col, _col), ed = max(col, _col);
-                // assert that when trying to move, the destination is empty
-                //             when trying to attack, the destination is not, so don't check
-                for(int i = st + 1; i < ed; ++i) {
-                    if(not (board->isRailway(row, i) and board->isEmpty(row, i))) {
-                        return false;
-                    }
-                }
-                return true;
+                return goVerticalRailway(row, col, _col);
             } else if(col == _col) {
-                int st = min(row, _row), ed = max(row, _row);
-                for(int i = st + 1; i < ed; ++i) {
-                    if(not (board->isRailway(i, col) and board->isEmpty(i, col))) {
-                        return false;
-                    }
-                }
-                return true;
+                return goHorizontalRailway(col, row, _row);
             }
         }
     }
@@ -102,6 +100,28 @@ bool Piece::isIn8Direction(int _row, int _col)
         }
     }
     return false;
+}
+
+bool Piece::goVerticalRailway(int row, int col, int _col)
+{
+    int st = min(col, _col), ed = max(col, _col);
+    for(int i = st + 1; i < ed; ++i) {
+        if(not (board->isRailway(row, i) and board->isEmpty(row, i))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Piece::goHorizontalRailway(int col, int row, int _row)
+{
+    int st = min(row, _row), ed = max(row, _row);
+    for(int i = st + 1; i < ed; ++i) {
+        if(not (board->isRailway(i, col) and board->isEmpty(i, col))) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Piece::tryAttack(Piece &obj)

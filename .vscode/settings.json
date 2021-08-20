@@ -4,7 +4,11 @@
         "new": "cpp",
         "streambuf": "cpp",
         "qtimer": "cpp",
-        "qmessagebox": "cpp"
+        "qmessagebox": "cpp",
+        "*.tcc": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp",
+        "variant": "cpp"
     },
     "python.pythonPath": "D:\\Dev\\Program\\Python\\Python38\\python.exe"
 }
