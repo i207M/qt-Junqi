@@ -41,8 +41,6 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     nextTurn();
 }
 
-Chessboard::~Chessboard() {}
-
 void Chessboard::initBoard()
 {
     static const int Initial_Count[] = {3, 3, 3, 2, 2, 2, 2, 1, 1, 2, 3, 1};

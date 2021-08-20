@@ -13,6 +13,7 @@ SOURCES += \
     clickablelabel.cpp \
     main.cpp \
     mainwindow.cpp \
+    netboard.cpp \
     piece.cpp \
     piecedisplay.cpp
 
@@ -21,6 +22,7 @@ HEADERS += \
     chessboard.h \
     clickablelabel.h \
     mainwindow.h \
+    netboard.h \
     piece.h \
     piecedisplay.h
 

@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     timeRemaining = 0;
     board = nullptr;
     game_mode = 0;
+    ip = QHostAddress("-1");
 
     PieceDisplay::initDisplay(ui);
 }
@@ -27,12 +28,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::actionCreateServer()
 {
-    ;
+    game_mode = 2;
+    log(getIp());  // TODO
+    log("Set Game Mode to Server.");
 }
 
 void MainWindow::actionConnectServer()
 {
-    ;
+    game_mode = 3;
+    ip = QHostAddress("127.0.0.1");  // TODO
+    log("Set Game Mode to Client.");
 }
 
 void MainWindow::actionStart()
@@ -49,7 +54,7 @@ void MainWindow::actionStart()
         ui->buttonConnect->setDisabled(true);
         ui->buttonDefeat->setEnabled(true);
     } else if (game_mode == 2 or game_mode == 3) {
-        ;
+        board = new Netboard(this, ip);
     }
 }
 
@@ -144,6 +149,17 @@ void MainWindow::log(QString str)
 void MainWindow::on_actionRandomly_Kill_triggered()
 {
     board->debugRandomlyKill();
+}
+
+QString MainWindow::getIp()
+{
+    QList<QHostAddress> list = QNetworkInterface::allAddresses();
+    for(const auto &address : list) {
+        if(address.protocol() == QAbstractSocket::IPv4Protocol) {
+            return address.toString();
+        }
+    }
+    return QString("-1");
 }
 
 #pragma region

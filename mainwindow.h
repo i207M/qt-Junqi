@@ -5,8 +5,10 @@
 #include <QString>
 #include <QTime>
 #include <QTimer>
+#include <QNetworkInterface>
 
 #include "chessboard.h"
+#include "netboard.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -42,6 +44,9 @@ public:
     // void throwError(QString str);
     void log(QString str);
 
+    // network related
+    static QString getIp();
+
     Ui::MainWindow *ui;
 
 private slots:
@@ -63,6 +68,9 @@ private:
     int timeRemaining;
 
     Chessboard *board;
-    int game_mode;
+    int game_mode;  // 1: local, 2: server, 3: client
+
+    // network related
+    QHostAddress ip;
 };
 #endif // MAINWINDOW_H

@@ -1,0 +1,10 @@
+release/chessboard.o
+release/clickablelabel.o
+release/main.o
+release/mainwindow.o
+release/netboard.o
+release/piece.o
+release/piecedisplay.o
+release/qrc_Chessboard.o
+release/moc_clickablelabel.o
+release/moc_mainwindow.o

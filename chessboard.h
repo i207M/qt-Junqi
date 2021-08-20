@@ -9,7 +9,6 @@ class Chessboard
 {
 public:
     Chessboard() = delete;
-    ~Chessboard();
     explicit Chessboard(MainWindow *_win);
 
     void initBoard();
@@ -40,11 +39,13 @@ public:
     int current_color; // red: 1, blue: 2
     int select_id;
 
+protected:
+    MainWindow *win;
+
 private:
     void tryDetermineColor(int id);
     void select(int id);
 
-    MainWindow *win;
     int num_turn;
     int num_time_out[2];
     int flip_color[2];
