@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     timeRemaining = 0;
     board = nullptr;
     game_mode = 0;
-    ip = QString("-1");
+    ip = "-1";
 
     PieceDisplay::initDisplay(ui);
 }
@@ -30,14 +30,28 @@ void MainWindow::actionCreateServer()
 {
     game_mode = 2;
     log(getIp());  // TODO
-    ip = QString("0");
+    ip = "0";
+
+    board = new Netboard(this, ip);
+
+    ui->buttonLocal->setDisabled(true);
+    ui->buttonCreateServer->setDisabled(true);
+    ui->buttonConnect->setDisabled(true);
+
     log("Set Game Mode to Server.");
 }
 
 void MainWindow::actionConnectServer()
 {
     game_mode = 3;
-    ip = QString("127.0.0.1");  // TODO
+    ip = "127.0.0.1";  // TODO
+
+    board = new Netboard(this, ip);
+
+    ui->buttonLocal->setDisabled(true);
+    ui->buttonCreateServer->setDisabled(true);
+    ui->buttonConnect->setDisabled(true);
+
     log("Set Game Mode to Client.");
 }
 
@@ -47,18 +61,19 @@ void MainWindow::actionStart()
         QMessageBox::warning(this,
                              tr("Warning"),
                              tr("Please Select Game Mode."));
-    } else {
-        if(game_mode == 1) {
-            board = new Chessboard(this);
-        } else if (game_mode == 2 or game_mode == 3) {
-            board = new Netboard(this, ip);
-        }
-        ui->buttonStart->setDisabled(true);
-        ui->buttonLocal->setDisabled(true);
-        ui->buttonCreateServer->setDisabled(true);
-        ui->buttonConnect->setDisabled(true);
-        ui->buttonDefeat->setEnabled(true);
+        return;
     }
+
+    if(game_mode == 1) {
+        board = new Chessboard(this);
+    } else if (game_mode == 2 or game_mode == 3) {
+        board->netPressStart();
+    } else {
+        err("Error Gamemode");
+    }
+
+    ui->buttonStart->setDisabled(true);
+    ui->buttonDefeat->setEnabled(true);
 }
 
 void MainWindow::actionAdmitDefeat()
@@ -69,6 +84,10 @@ void MainWindow::actionAdmitDefeat()
 void MainWindow::actionSetLocalGame()
 {
     game_mode = 1;
+    ui->buttonLocal->setDisabled(true);
+    ui->buttonCreateServer->setDisabled(true);
+    ui->buttonConnect->setDisabled(true);
+
     log("Set Game Mode to Local.");
 }
 
@@ -86,9 +105,9 @@ void MainWindow::gameOver(QString str)
 
 void MainWindow::startTimer()
 {
-    const int PLAYER_TIME = 20;
+    const int Player_Time = 20;
 
-    timeRemaining = PLAYER_TIME;
+    timeRemaining = Player_Time;
     ui->lcdNumber->display(timeRemaining);
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::oneSecond);
@@ -162,7 +181,7 @@ QString MainWindow::getIp()
             return address.toString();
         }
     }
-    return QString("-1");
+    return "-1";
 }
 
 void MainWindow::connectSuccessfully()

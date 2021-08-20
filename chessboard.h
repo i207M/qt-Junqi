@@ -21,6 +21,7 @@ public:
     void tryGameOver();
     virtual void clickPos(int row, int col);
     void clickPiece(int id);
+    virtual void netPressStart() {}
 
     int getOpp() const;
     int getIdByPos(int row, int col) const;

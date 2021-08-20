@@ -12,21 +12,17 @@ elif ctrl == 1:
     # 同步棋盘，然后游戏开始
     # 直接发送内存，然后memcpy，然后displayAll
     # 注意static的初始化
-
-    # 分两次同步，一次800字节
     pass
 elif ctrl == 2:
-    # 由server至client
-    # 第二次同步
-    # 然后游戏开始
+    # 点击start
     pass
-elif ctrl == 3:
+elif ctrl == 2:
     # 鼠标点击事件
     # 内容：两个char
     pass
-elif ctrl == 4:
+elif ctrl == 3:
     # 认输
     pass
-elif ctrl == 5:
+elif ctrl == 4:
     # 超时
     pass

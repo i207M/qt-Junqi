@@ -15,6 +15,7 @@ public:
     explicit Netboard(MainWindow *_win, QString ip);
 
     virtual void clickPos(int row, int col) override;
+    virtual void netPressStart() override;
 
 public slots:
     void slotNewConnection();
@@ -22,7 +23,7 @@ public slots:
 
 private:
     void netGameInit();
-    void syncBoard(QByteArray arr, int part);
+    void syncBoard(QByteArray chessData);
 
     QTcpServer *tcpServer;
     QTcpSocket *tcpSocket;

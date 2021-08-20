@@ -32,8 +32,8 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 void Netboard::clickPos(int row, int col)
 {
     Chessboard::clickPos(row, col);
-    char arr[2] = {row, col};
-    tcpSocket->write(arr, 2);
+    char arr[3] = {2, row, col};
+    tcpSocket->write(arr, 3);
 }
 
 void Netboard::slotNewConnection()
@@ -47,6 +47,7 @@ void Netboard::slotNewConnection()
     win->connectSuccessfully();
 
     netGameInit();
+    tcpSocket->write()
 }
 
 void Netboard::slotRecv()
@@ -56,35 +57,55 @@ void Netboard::slotRecv()
     err("Recv", ctrl);
 
     if(ctrl == 0) {
+        check(local_player == 2);
         win->connectSuccessfully();
     } else if(ctrl == 1) {
-        syncBoard(arr.mid(1), 0);
+        syncBoard(arr.mid(1));
     } else if(ctrl == 2) {
-        syncBoard(arr.mid(1), 1);
+        ;
     } else if(ctrl == 3) {
         int click_row = arr[0], click_col = arr[1];
         Chessboard::clickPos(click_row, click_col);
     } else if(ctrl == 4) {
         win->actionAdmitDefeat();
     } else if(ctrl == 5) {
-        // this->timeOut();
+        err("Opponent timed out.");
     } else {
-        check(0);
+        err("Error CTRL");
     }
 }
 
 void Netboard::netGameInit()
 {
-    ;
+    static char chess_data[50 * 7];
+    int cnt = 0;
+
+    for(int i = 0; i < 50; ++i) {
+        chess_data[cnt++] = p[i].id;
+        chess_data[cnt++] = p[i].color;
+        chess_data[cnt++] = p[i].row;
+        chess_data[cnt++] = p[i].col;
+        chess_data[cnt++] = p[i].known;
+        chess_data[cnt++] = p[i].dead;
+        chess_data[cnt++] = int(p[i].type);
+    }
+
+    tcpSocket->write(chess_data, sizeof(chess_data));
 }
 
-void Netboard::syncBoard(QByteArray arr, int part)
+void Netboard::syncBoard(QByteArray chess_data)
 {
-    const int Half_Size = sizeof(this->p) / 2;
-    memcpy(this->p + part * (Half_Size)
-           , arr.constData(), Half_Size);
-
-    if(part == 1) {
-        this->displayAll();
+    int cnt = 0;
+    for(int i = 0; i < 50; ++i) {
+        p[i].id = chess_data[cnt++];
+        p[i].color = chess_data[cnt++];
+        p[i].row = chess_data[cnt++];
+        p[i].col = chess_data[cnt++];
+        p[i].known = chess_data[cnt++];
+        p[i].dead = chess_data[cnt++];
+        p[i].type = Type(chess_data[cnt++]);
     }
+    err("syncBoard");
+
+    this->displayAll();
 }
