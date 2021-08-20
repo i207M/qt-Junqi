@@ -15,7 +15,8 @@ public:
     explicit Netboard(MainWindow *_win, QString ip);
 
     virtual void clickPos(int row, int col) override;
-    virtual void netPressStart() override;
+    virtual void localPressStart() override;
+    virtual void netPressStart(char _random_prior);
 
 public slots:
     void slotNewConnection();
@@ -24,11 +25,14 @@ public slots:
 private:
     void netGameInit();
     void syncBoard(QByteArray chessData);
+    void genRandomPrior();
+    void checkStart();
 
     QTcpServer *tcpServer;
     QTcpSocket *tcpSocket;
 
     int local_player;  // 1: server, 2: client
+    char random_prior[2]; // 0: self, 1: opponent
 };
 
 #endif // NETBOARD_H

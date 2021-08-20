@@ -15,14 +15,18 @@ elif ctrl == 1:
     pass
 elif ctrl == 2:
     # 点击start
+    # 同时发送一个随机数，点数大者为先手
     pass
-elif ctrl == 2:
+elif ctrl == 3:
+    # 弃用
+    pass
+elif ctrl == 4:
     # 鼠标点击事件
     # 内容：两个char
     pass
-elif ctrl == 3:
+elif ctrl == 5:
     # 认输
     pass
-elif ctrl == 4:
+elif ctrl == 6:
     # 超时
     pass

@@ -13,6 +13,7 @@ public:
     Chessboard() = delete;
     explicit Chessboard(MainWindow *_win);
 
+    virtual void localPressStart();
     void initBoard();
     void displayAll();
     void nextTurn();
@@ -21,16 +22,16 @@ public:
     void tryGameOver();
     virtual void clickPos(int row, int col);
     void clickPiece(int id);
-    virtual void netPressStart() {}
 
     int getOpp() const;
+    static int getOpp(int _current_player);
     int getIdByPos(int row, int col) const;
 
     static bool isCamp(int row, int col);
     static bool isRailway(int row, int col);
     bool isEmpty(int row, int col) const;
     bool canAttackJunQi() const;
-    bool showSelected(int id) const;
+    virtual bool showSelected(int id) const;
 
     void debugRandomlyKill();
 
@@ -43,6 +44,7 @@ public:
     int select_id;
 
 protected:
+    bool has_start;
     MainWindow *win;
 
 private:

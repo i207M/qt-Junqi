@@ -66,8 +66,9 @@ void MainWindow::actionStart()
 
     if(game_mode == 1) {
         board = new Chessboard(this);
+        board->localPressStart();
     } else if (game_mode == 2 or game_mode == 3) {
-        board->netPressStart();
+        board->localPressStart();
     } else {
         err("Error Gamemode");
     }

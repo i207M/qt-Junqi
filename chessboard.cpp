@@ -21,12 +21,11 @@ bool Chessboard::Railway[12][5] = {
     0, 0, 0, 0, 0
 };
 
-Chessboard::Chessboard(MainWindow *_win): QObject(_win), win(_win)
+Chessboard::Chessboard(MainWindow *_win): win(_win)
 {
-    err("Sizeof pieces", sizeof(p));
-
+    has_start = false;  // WARNING
     is_online = false;
-    current_player = 2;  // WARNING
+    current_player = 0;
     current_color = 0;
     select_id = -1;
 
@@ -36,10 +35,15 @@ Chessboard::Chessboard(MainWindow *_win): QObject(_win), win(_win)
 
     Piece::board = this;
     ClickableLabel::board = this;
+}
 
+void Chessboard::localPressStart()
+{
     initBoard();
     displayAll();
 
+    current_player = 2;  // WARNING
+    has_start = true;
     nextTurn();
 }
 
@@ -149,6 +153,10 @@ void Chessboard::tryGameOver()
 
 void Chessboard::clickPos(int row, int col)
 {
+    if(not has_start) {
+        return;
+    }
+
     err("Click", row, col);
     int id = getIdByPos(row, col);
     if(id != -1) {
@@ -187,6 +195,11 @@ void Chessboard::clickPiece(int id)
 int Chessboard::getOpp() const
 {
     return current_player == 1 ? 2 : 1;
+}
+
+int Chessboard::getOpp(int _current_player)
+{
+    return _current_player == 1 ? 2 : 1;
 }
 
 int Chessboard::getIdByPos(int row, int col) const

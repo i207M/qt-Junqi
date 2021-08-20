@@ -12,6 +12,8 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     check(ip != "-1");
 
     this->is_online = true;
+    random_prior[0] = -1, random_prior[1] = -1;
+
     tcpServer = nullptr;
     tcpSocket = nullptr;
     if(ip == "0") {
@@ -29,17 +31,13 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     }
 }
 
-void Netboard::clickPos(int row, int col)
-{
-    Chessboard::clickPos(row, col);
-    char arr[3] = {2, row, col};
-    tcpSocket->write(arr, 3);
-}
-
 void Netboard::slotNewConnection()
 {
     err("Got connection");
-    check(tcpSocket == nullptr);
+    if(tcpSocket != nullptr) {
+        err("Reject multiple connection");
+        return;
+    }
 
     tcpSocket = tcpServer->nextPendingConnection();
     connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
@@ -47,38 +45,71 @@ void Netboard::slotNewConnection()
     win->connectSuccessfully();
 
     netGameInit();
-    tcpSocket->write()
+
+    static const char Ctrl0[1] = {0};
+    tcpSocket->write(Ctrl0, 1);
 }
 
 void Netboard::slotRecv()
 {
     QByteArray arr = tcpSocket->readAll();
     char ctrl = arr[0];
-    err("Recv", ctrl);
+    err("Recv Ctrl", ctrl);
 
     if(ctrl == 0) {
         check(local_player == 2);
         win->connectSuccessfully();
     } else if(ctrl == 1) {
-        syncBoard(arr.mid(1));
+        syncBoard(arr);
     } else if(ctrl == 2) {
-        ;
+        netPressStart(arr[1]);
     } else if(ctrl == 3) {
+        // DEPRECATED
+        err("Error Deprecated Ctrl");
+    } else if(ctrl == 4) {
         int click_row = arr[0], click_col = arr[1];
         Chessboard::clickPos(click_row, click_col);
-    } else if(ctrl == 4) {
-        win->actionAdmitDefeat();
     } else if(ctrl == 5) {
+        // TODO: cannot admit defeat as your opponent
+        // win->actionAdmitDefeat();
+    } else if(ctrl == 6) {
         err("Opponent timed out.");
     } else {
-        err("Error CTRL");
+        err("Error Ctrl");
     }
+}
+
+void Netboard::clickPos(int row, int col)
+{
+    Chessboard::clickPos(row, col);
+    char Ctrl4[3] = {4, row, col};
+    tcpSocket->write(Ctrl4, 3);
+}
+
+void Netboard::localPressStart()
+{
+    genRandomPrior();
+
+    char Ctrl2[2] = {2, random_prior[0]};
+    tcpSocket->write(Ctrl2, 2);
+
+    checkStart();
+}
+
+void Netboard::netPressStart(char _random_prior)
+{
+    random_prior[1] = _random_prior;
+    checkStart();
 }
 
 void Netboard::netGameInit()
 {
-    static char chess_data[50 * 7];
+    this->initBoard();
+    this->displayAll();
+
+    static char chess_data[1 + 50 * 7];
     int cnt = 0;
+    chess_data[cnt++] = 1;
 
     for(int i = 0; i < 50; ++i) {
         chess_data[cnt++] = p[i].id;
@@ -95,7 +126,7 @@ void Netboard::netGameInit()
 
 void Netboard::syncBoard(QByteArray chess_data)
 {
-    int cnt = 0;
+    int cnt = 1;
     for(int i = 0; i < 50; ++i) {
         p[i].id = chess_data[cnt++];
         p[i].color = chess_data[cnt++];
@@ -108,4 +139,27 @@ void Netboard::syncBoard(QByteArray chess_data)
     err("syncBoard");
 
     this->displayAll();
+}
+
+void Netboard::genRandomPrior()
+{
+    if(random_prior[0] == -1) {
+        srand(time(0));
+        random_prior[0] = rand() % 128;
+    }
+}
+
+void Netboard::checkStart()
+{
+    if(random_prior[0] == -1 or random_prior[1] == -1) {
+        return;
+    } else {
+        if(random_prior[0] >= random_prior[1]) {
+            // self is the first
+        } else {
+            // opponent is the first
+        }
+        this->has_start = true;
+        this->nextTurn();
+    }
 }
