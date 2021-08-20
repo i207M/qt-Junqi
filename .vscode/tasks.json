@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Compile & Run (Debug)",
+            "label": "Compile & Run",
             "type": "shell",
             "command": "cmd",
             "args": [
@@ -14,6 +14,20 @@
                 "kind": "build",
                 "isDefault": true
             },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "run.bat",
+                "debug"
+            ],
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated"

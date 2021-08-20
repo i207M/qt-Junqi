@@ -43,12 +43,16 @@ void Netboard::slotNewConnection()
 
     tcpSocket = tcpServer->nextPendingConnection();
     connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
+
+    win->connectSuccessfully();
 }
 
 void Netboard::slotRecv()
 {
     err("Recv");
     QByteArray arr = tcpSocket->readAll();
+
+    // TODO: determine connect successfully
 
     int click_row = arr[0], click_col = arr[1];
     Chessboard::clickPos(click_row, click_col);

@@ -165,6 +165,12 @@ QString MainWindow::getIp()
     return QString("-1");
 }
 
+void MainWindow::connectSuccessfully()
+{
+    log("Connect Successfully.");
+    // TODO: QMessage::information
+}
+
 #pragma region
 void MainWindow::on_buttonCreateServer_clicked()
 {

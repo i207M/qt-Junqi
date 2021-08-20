@@ -41,11 +41,12 @@ public:
     int current_color; // red: 1, blue: 2
     int select_id;
 
+protected:
+    MainWindow *win;
+
 private:
     void tryDetermineColor(int id);
     void select(int id);
-
-    MainWindow *win;
 
     int num_turn;
     int num_time_out[2];

@@ -46,6 +46,7 @@ public:
 
     // network related
     static QString getIp();
+    void connectSuccessfully();
 
     Ui::MainWindow *ui;
 
