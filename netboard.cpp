@@ -108,7 +108,7 @@ void Netboard::localPressStart()
         return;
     }
 
-    this->win->log("You Pressed Start.")
+    this->win->log("You Pressed Start.");
     genRandomPrior();
 
     char Ctrl2[2] = {2, random_prior[0]};
