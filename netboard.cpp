@@ -31,15 +31,25 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 
 void Netboard::clickPos(int row, int col)
 {
-    ;
+    Chessboard::clickPos(row, col);
+    char arr[2] = {row, col};
+    tcpSocket->write(arr, 3);
 }
 
 void Netboard::slotNewConnection()
 {
-    ;
+    err("Got connection");
+    check(tcpSocket == nullptr);
+
+    tcpSocket = tcpServer->nextPendingConnection();
+    connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
 }
 
 void Netboard::slotRecv()
 {
-    ;
+    err("Recv");
+    QByteArray arr = tcpSocket->readAll();
+
+    int click_row = arr[0], click_col = arr[1];
+    Chessboard::clickPos(click_row, click_col);
 }
