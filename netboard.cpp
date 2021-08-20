@@ -10,7 +10,7 @@
 
 Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 {
-    const int PORT = 2077;
+    const int PORT = 12077;
 
     qDebug() << "Netboard init " << ip;
     check(ip != "-1");
@@ -93,6 +93,7 @@ void Netboard::slotRecv()
 
 void Netboard::clickPos(int row, int col)
 {
+    err("Netboard clickPos", row, col);
     Chessboard::clickPos(row, col);
     char Ctrl4[3] = {4, row, col};
     tcpSocket->write(Ctrl4, 3);
@@ -177,6 +178,7 @@ void Netboard::checkStart()
     if(random_prior[0] == -1 or random_prior[1] == -1) {
         return;
     } else {
+        err("Start Prior", random_prior[0], random_prior[1]);
         if(random_prior[0] >= random_prior[1]) {
             // self is the first
             // need swap

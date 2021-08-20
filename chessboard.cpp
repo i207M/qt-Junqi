@@ -157,8 +157,10 @@ void Chessboard::clickPos(int row, int col)
         return;
     }
 
-    err("Click", row, col);
     int id = getIdByPos(row, col);
+    err("ClickPos", row, col, id);
+    check((row >= 0 and row < 12 and col >= 0 and col < 5)
+          or (row == -1 and col == -1));
     if(id != -1) {
         clickPiece(id);
         return;
