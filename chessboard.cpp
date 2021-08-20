@@ -23,6 +23,8 @@ bool Chessboard::Railway[12][5] = {
 
 Chessboard::Chessboard(MainWindow *_win): QObject(_win), win(_win)
 {
+    err("Sizeof pieces", sizeof(p));
+
     is_online = false;
     current_player = 2;  // WARNING
     current_color = 0;

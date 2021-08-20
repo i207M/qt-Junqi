@@ -33,7 +33,7 @@ void Netboard::clickPos(int row, int col)
 {
     Chessboard::clickPos(row, col);
     char arr[2] = {row, col};
-    tcpSocket->write(arr, 3);
+    tcpSocket->write(arr, 2);
 }
 
 void Netboard::slotNewConnection()
@@ -52,8 +52,20 @@ void Netboard::slotRecv()
     err("Recv");
     QByteArray arr = tcpSocket->readAll();
 
-    // TODO: determine connect successfully
+    char ctrl = arr[0];
+    if(ctrl == 0) {
+        win->connectSuccessfully();
+    } else if(ctrl == 1) {
+        syncBoard(arr.mid(1), 0);
+    } else if(ctrl == 2) {
+        syncBoard(arr.mid(1), 1);
+    } else if(ctrl == 3) {
+        int click_row = arr[0], click_col = arr[1];
+        Chessboard::clickPos(click_row, click_col);
+    } else if(ctrl == 4) {
+        win->actionAdmitDefeat();
+    } else if(ctrl == 5) {
+        // this->timeOut();
+    }
 
-    int click_row = arr[0], click_col = arr[1];
-    Chessboard::clickPos(click_row, click_col);
 }
