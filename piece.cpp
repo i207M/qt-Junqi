@@ -237,8 +237,8 @@ bool Piece::bfs(int s_row, int s_col, int t_row, int t_col) const
     while(!q.empty()) {
         int row = q.front().first, col = q.front().second;
         q.pop();
-
         check(Chessboard::Railway[row][col]);
+
         static const vector<int> r4 = {-1, 0, 1, 0};
         static const vector<int> c4 = {0, 1, 0, -1};
         static const vector<int> r2 = {0, 0};

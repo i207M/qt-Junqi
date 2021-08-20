@@ -30,6 +30,8 @@ public:
     bool canAttackJunQi() const;
     bool showSelected(int id) const;
 
+    void debugRandomlyKill();
+
     static bool Railway[12][5];
 
     PieceDisplay p[50];

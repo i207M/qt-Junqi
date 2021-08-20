@@ -1019,8 +1019,15 @@
     <addaction name="actionStart"/>
     <addaction name="actionAdmit_defeat"/>
    </widget>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="actionRandomly_Kill"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuPlay"/>
+   <addaction name="menuDebug"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionCreate_a_server">
@@ -1041,6 +1048,11 @@
   <action name="actionAdmit_defeat">
    <property name="text">
     <string>Admit Defeat</string>
+   </property>
+  </action>
+  <action name="actionRandomly_Kill">
+   <property name="text">
+    <string>Randomly Kill</string>
    </property>
   </action>
  </widget>

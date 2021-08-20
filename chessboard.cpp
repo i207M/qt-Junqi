@@ -275,3 +275,13 @@ void Chessboard::select(int id)
         p[id].display();
     }
 }
+
+void Chessboard::debugRandomlyKill()
+{
+    for(int i = 0; i < 50; ++i) {
+        if(p[i].type != Type::JunQi and not p[i].dead and rand() % 2 == 1) {
+            p[i].kill();
+        }
+    }
+    nextTurn();
+}

@@ -141,6 +141,11 @@ void MainWindow::log(QString str)
     ui->textBrowser->append(str);
 }
 
+void MainWindow::on_actionRandomly_Kill_triggered()
+{
+    board->debugRandomlyKill();
+}
+
 #pragma region
 void MainWindow::on_buttonCreateServer_clicked()
 {

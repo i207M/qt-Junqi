@@ -56,6 +56,8 @@ private slots:
     void on_buttonDefeat_clicked();
     void on_buttonLocal_clicked();
 
+    void on_actionRandomly_Kill_triggered();
+
 private:
     QTimer *timer;
     int timeRemaining;
