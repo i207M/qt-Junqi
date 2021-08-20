@@ -14,20 +14,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     timer = new QTimer;
     timeRemaining = 0;
+    board = nullptr;
+    game_mode = 0;
 
-    init();
     PieceDisplay::initDisplay(ui);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::init()
-{
-    board = nullptr;
-    game_mode = 0;
 }
 
 void MainWindow::actionCreateServer()
@@ -75,8 +70,6 @@ void MainWindow::gameOver(QString str)
     QMessageBox::information(this,
                              tr("Game Over"),
                              str);
-    delete board;
-    init();
 }
 
 void MainWindow::startTimer()
@@ -114,12 +107,12 @@ void MainWindow::changeYouPlayer(int id, int color)
 {
     QString str = QString("Player %1").arg(id);
     QString arg_str;
-    if(color == 0) {
-        arg_str = "<span style=\" font-size:14pt;\"><font color = black>%1</font></span>";
-    } else if(color == 1) {
+    if(color == 1) {
         arg_str = "<span style=\" font-size:14pt;\"><font color = red>%1, Red</font></span>";
-    } else {
+    } else if(color == 2) {
         arg_str = "<span style=\" font-size:14pt;\"><font color = blue>%1, Blue</font></span>";
+    } else {
+        arg_str = "<span style=\" font-size:14pt;\"><font color = black>%1</font></span>";
     }
     ui->labelYouPlayer->setText(arg_str.arg(str));
 }
@@ -131,13 +124,13 @@ void MainWindow::changeWhoseTurn(int id)
     ui->labelWhoseTurn->setText(arg_str.arg(str));
 }
 
-void MainWindow::throwError(QString str)
-{
-    QMessageBox::critical(this,
-                          tr("Error"),
-                          str);
-    QApplication::exit(1);
-}
+// void MainWindow::throwError(QString str)
+// {
+//     QMessageBox::critical(this,
+//                           tr("Error"),
+//                           str);
+//     QApplication::exit(1);
+// }
 
 void MainWindow::log(QString str)
 {

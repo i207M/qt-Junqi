@@ -29,16 +29,17 @@ public:
     void actionAdmitDefeat();
     void actionSetLocalGame();
 
-    void init();
     void gameOver(QString str);
+
+    // timer related
     void startTimer();
     void endTimer();
     void oneSecond();
 
+    // ui related
     void changeYouPlayer(int id, int color);
     void changeWhoseTurn(int id);
-
-    void throwError(QString str);
+    // void throwError(QString str);
     void log(QString str);
 
     Ui::MainWindow *ui;
@@ -60,7 +61,6 @@ private:
     int timeRemaining;
 
     Chessboard *board;
-
     int game_mode;
 };
 #endif // MAINWINDOW_H

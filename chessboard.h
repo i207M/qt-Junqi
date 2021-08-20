@@ -17,37 +17,32 @@ public:
     void nextTurn();
     void timeOut();
     void tryAdmitDefeat();
-
-    int getIdByPos(int row,int col);
+    void tryGameOver();
     void clickPos(int row, int col);
-    void clickPiece(int id);
-    void select(int id);
 
-    bool isCamp(int row, int col);
-    bool isRailway(int row, int col);
+    int getIdByPos(int row, int col);
+
+    static bool isCamp(int row, int col);
+    static bool isRailway(int row, int col);
     bool isEmpty(int row, int col);
     bool canAttackJunQi();
     bool showSelected(int id);
 
-    int getNumTurn();
+    static bool Railway[12][5];
 
-    void tryGameOver();
-
+    PieceDisplay p[50];
+    bool is_online;
     int current_player;  // server: 1, client: 2
     int current_color; // red: 1, blue: 2
     int select_id;
 
-    bool is_online;
-
-    static bool Railway[12][5];
-    PieceDisplay p[50];
-
 private:
+    void clickPiece(int id);
     void tryDetermineColor(int id);
+    void select(int id);
+
     MainWindow *win;
-
     int num_turn;
-
     int num_time_out[2];
 };
 

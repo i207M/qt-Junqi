@@ -219,11 +219,6 @@ bool Chessboard::canAttackJunQi()
     return true;
 }
 
-int Chessboard::getNumTurn()
-{
-    return num_turn;
-}
-
 void Chessboard::timeOut()
 {
     int t = ++num_time_out[current_player - 1];

@@ -61,10 +61,10 @@ bool Piece::canMove(int _row, int _col) const
             return false;
         }
         return true;
-    } else if( (board->isCamp(row, col) or board->isCamp(_row, _col))
+    } else if( (Chessboard::isCamp(row, col) or Chessboard::isCamp(_row, _col))
                and isIn8Direction(_row, _col)) {
         return true;
-    } else if(board->isRailway(row, col) and board->isRailway(_row, _col)) {
+    } else if(Chessboard::isRailway(row, col) and Chessboard::isRailway(_row, _col)) {
         if(type == Type::GongBing) {
             return bfs(row, col, _row, _col);
         } else {
@@ -154,7 +154,7 @@ bool Piece::canAttack(const Piece &obj) const
         return false;
     }
 
-    if(canMove(obj.row, obj.col) and not board->isCamp(obj.row, obj.col)) {
+    if(canMove(obj.row, obj.col) and not Chessboard::isCamp(obj.row, obj.col)) {
         if(obj.type == Type::DiLei) {
             if(type == Type::GongBing or type == Type::ZhaDan) {
                 return true;
@@ -177,7 +177,7 @@ bool Piece::tryAttack(Piece &obj)
 {
     check(color != obj.color);
 
-    if(canMove(obj.row, obj.col) and not board->isCamp(obj.row, obj.col)) {
+    if(canMove(obj.row, obj.col) and not Chessboard::isCamp(obj.row, obj.col)) {
         if(obj.type == Type::DiLei) {
             if(type == Type::GongBing) {
                 attack(obj);
