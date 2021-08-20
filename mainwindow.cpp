@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->buttonDefeat->setDisabled(true);
 
-    timer = new QTimer;
+    timer = new QTimer(this);
     timeRemaining = 0;
     board = nullptr;
     game_mode = 0;

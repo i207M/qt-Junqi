@@ -84,6 +84,7 @@ void Chessboard::displayAll()
 
 void Chessboard::nextTurn()
 {
+    err("nextTurn");
     ++num_turn;
     win->endTimer();
 
@@ -124,6 +125,10 @@ void Chessboard::tryAdmitDefeat()
 
 void Chessboard::tryGameOver()
 {
+    if(current_color == 0) {
+        return;
+    }
+
     for(int i = 0; i < 50; ++i) {
         if(p[i].color == current_color and p[i].type == Type::JunQi and p[i].dead) {
             win->gameOver(QString("Flag Lost!\nThe Winner is Player %1.").arg(getOpp()));
@@ -133,6 +138,9 @@ void Chessboard::tryGameOver()
 
     for(int i = 0; i < 50; ++i) {
         if(p[i].color == current_color and not p[i].dead and p[i].canMoveAround()) {
+            return;
+        }
+        if(p[i].known == false) {
             return;
         }
     }
@@ -145,6 +153,7 @@ void Chessboard::clickPos(int row, int col)
     int id = getIdByPos(row, col);
     if(id != -1) {
         clickPiece(id);
+        return;
     }
 
     // piece not found
@@ -158,6 +167,7 @@ void Chessboard::clickPos(int row, int col)
 
 void Chessboard::clickPiece(int id)
 {
+    err("clickPiece", p[id].row, p[id].col);
     if(p[id].known == false) {
         p[id].flip();
         if(current_color == 0) {
@@ -171,11 +181,12 @@ void Chessboard::clickPiece(int id)
             nextTurn();
         }
     }
+    err("__clickPiece");
 }
 
 int Chessboard::getOpp() const
 {
-    return getOpp();
+    return current_player == 1 ? 2 : 1;
 }
 
 int Chessboard::getIdByPos(int row, int col) const

@@ -72,6 +72,7 @@ bool Piece::canMove(int n_row, int n_col) const
 {
     // assert that when trying to move, the destination is empty
     //             when trying to attack, the destination is not, so don't check
+    err("canMove", row, col, n_row, n_col);
     check(row != n_row or col != n_col);
 
     if(int(type) >= 10) {
@@ -150,8 +151,6 @@ bool Piece::isIn8Direction(int n_row, int n_col) const
     return false;
 }
 
-// TODO
-
 bool Piece::canAttack(const Piece &obj) const
 {
     if(color == obj.color) {
@@ -179,6 +178,7 @@ bool Piece::canAttack(const Piece &obj) const
 
 bool Piece::tryAttack(Piece &obj)
 {
+    err("tryAttack", row, col, obj.row, obj.col);
     check(color != obj.color);
 
     if(canMove(obj.row, obj.col) and not Chessboard::isCamp(obj.row, obj.col)) {
