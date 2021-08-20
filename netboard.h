@@ -21,6 +21,9 @@ public slots:
     void slotRecv();
 
 private:
+    void netGameInit();
+    void syncBoard(QByteArray arr, int part);
+
     QTcpServer *tcpServer;
     QTcpSocket *tcpSocket;
 

@@ -45,14 +45,16 @@ void Netboard::slotNewConnection()
     connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
 
     win->connectSuccessfully();
+
+    netGameInit();
 }
 
 void Netboard::slotRecv()
 {
-    err("Recv");
     QByteArray arr = tcpSocket->readAll();
-
     char ctrl = arr[0];
+    err("Recv", ctrl);
+
     if(ctrl == 0) {
         win->connectSuccessfully();
     } else if(ctrl == 1) {
@@ -66,6 +68,23 @@ void Netboard::slotRecv()
         win->actionAdmitDefeat();
     } else if(ctrl == 5) {
         // this->timeOut();
+    } else {
+        check(0);
     }
+}
 
+void Netboard::netGameInit()
+{
+    ;
+}
+
+void Netboard::syncBoard(QByteArray arr, int part)
+{
+    const int Half_Size = sizeof(this->p) / 2;
+    memcpy(this->p + part * (Half_Size)
+           , arr.constData(), Half_Size);
+
+    if(part == 1) {
+        this->displayAll();
+    }
 }
