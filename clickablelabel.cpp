@@ -13,6 +13,8 @@ ClickableLabel::ClickableLabel(QWidget *parent): QLabel(parent)
 void ClickableLabel::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) {
-        board->clickPos(row, col);
+        if(board != nullptr) {
+            board->clickPos(row, col);
+        }
     }
 }

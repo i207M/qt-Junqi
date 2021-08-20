@@ -1,5 +1,7 @@
 #include "netboard.h"
 
+#include <QMessageBox>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Mdebug.h"
@@ -88,6 +90,14 @@ void Netboard::clickPos(int row, int col)
 
 void Netboard::localPressStart()
 {
+    err("localPressStart");
+    if(tcpSocket == nullptr) {
+        QMessageBox::warning(this->win,
+                             tr("Warning"),
+                             tr("Client Not Connected."));
+        return;
+    }
+
     genRandomPrior();
 
     char Ctrl2[2] = {2, random_prior[0]};
@@ -156,8 +166,12 @@ void Netboard::checkStart()
     } else {
         if(random_prior[0] >= random_prior[1]) {
             // self is the first
+            // need swap
+            this->current_player = this->getOpp(local_player);
         } else {
             // opponent is the first
+            // need swap
+            this->current_player = local_player;
         }
         this->has_start = true;
         this->nextTurn();

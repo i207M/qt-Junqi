@@ -16,7 +16,7 @@
             },
             "presentation": {
                 "reveal": "always",
-                "panel": "dedicated"
+                "panel": "shared"
             }
         },
         {
@@ -30,7 +30,7 @@
             ],
             "presentation": {
                 "reveal": "always",
-                "panel": "dedicated"
+                "panel": "shared"
             }
         }
     ]
