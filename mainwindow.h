@@ -71,6 +71,6 @@ private:
     int game_mode;  // 1: local, 2: server, 3: client
 
     // network related
-    QHostAddress ip;
+    QString ip;
 };
 #endif // MAINWINDOW_H

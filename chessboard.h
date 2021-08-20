@@ -5,10 +5,13 @@
 
 class MainWindow;
 
-class Chessboard
+class Chessboard: public QObject
 {
+    Q_OBJECT
+
 public:
-    Chessboard() = delete;
+    Chessboard();
+    // Chessboard(QObject *parent = nullptr);
     explicit Chessboard(MainWindow *_win);
 
     void initBoard();
@@ -17,7 +20,7 @@ public:
     void timeOut();
     void tryAdmitDefeat();
     void tryGameOver();
-    void clickPos(int row, int col);
+    virtual void clickPos(int row, int col);
     void clickPiece(int id);
 
     int getOpp() const;

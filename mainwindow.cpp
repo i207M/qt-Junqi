@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     timeRemaining = 0;
     board = nullptr;
     game_mode = 0;
-    ip = QHostAddress("-1");
+    ip = QString("-1");
 
     PieceDisplay::initDisplay(ui);
 }
@@ -30,13 +30,14 @@ void MainWindow::actionCreateServer()
 {
     game_mode = 2;
     log(getIp());  // TODO
+    ip = QString("0");
     log("Set Game Mode to Server.");
 }
 
 void MainWindow::actionConnectServer()
 {
     game_mode = 3;
-    ip = QHostAddress("127.0.0.1");  // TODO
+    ip = QString("127.0.0.1");  // TODO
     log("Set Game Mode to Client.");
 }
 
@@ -46,15 +47,17 @@ void MainWindow::actionStart()
         QMessageBox::warning(this,
                              tr("Warning"),
                              tr("Please Select Game Mode."));
-    } else if(game_mode == 1) {
-        board = new Chessboard(this);
+    } else {
+        if(game_mode == 1) {
+            board = new Chessboard(this);
+        } else if (game_mode == 2 or game_mode == 3) {
+            board = new Netboard(this, ip);
+        }
         ui->buttonStart->setDisabled(true);
         ui->buttonLocal->setDisabled(true);
         ui->buttonCreateServer->setDisabled(true);
         ui->buttonConnect->setDisabled(true);
         ui->buttonDefeat->setEnabled(true);
-    } else if (game_mode == 2 or game_mode == 3) {
-        board = new Netboard(this, ip);
     }
 }
 
