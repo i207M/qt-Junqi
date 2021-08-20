@@ -173,12 +173,12 @@ void Chessboard::clickPiece(int id)
     }
 }
 
-int Chessboard::getOpp()
+int Chessboard::getOpp() const
 {
     return getOpp();
 }
 
-int Chessboard::getIdByPos(int row, int col)
+int Chessboard::getIdByPos(int row, int col) const
 {
     for(int i = 0; i < 50; ++i) {
         if(p[i].row == row and p[i].col == col and not p[i].dead) {
@@ -206,7 +206,7 @@ bool Chessboard::isRailway(int row, int col)
     return bool(Railway[row][col]);
 }
 
-bool Chessboard::isEmpty(int row, int col)
+bool Chessboard::isEmpty(int row, int col) const
 {
     for(int i = 0; i < 50; ++i) {
         if(p[i].row == row and p[i].col == col and not p[i].dead) {
@@ -216,7 +216,7 @@ bool Chessboard::isEmpty(int row, int col)
     return true;
 }
 
-bool Chessboard::canAttackJunQi()
+bool Chessboard::canAttackJunQi() const
 {
     for(int i = 0; i < 50; ++i) {
         if(p[i].color != current_color and p[i].type == Type::DiLei and not p[i].dead) {
@@ -226,7 +226,7 @@ bool Chessboard::canAttackJunQi()
     return true;
 }
 
-bool Chessboard::showSelected(int id)
+bool Chessboard::showSelected(int id) const
 {
     if(id == select_id) {
         check(not is_online);

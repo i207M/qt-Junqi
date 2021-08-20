@@ -21,6 +21,25 @@ class Chessboard;
 class Piece
 {
 public:
+    void initPiece(int _id, int _team, Type _type);
+    virtual void hide() = 0;
+    virtual void display() = 0;
+    void flip();
+    void kill();
+    void move(int _row, int _col);
+
+    static bool goVerticalRailway(int row, int col, int _col);
+    static bool goHorizontalRailway(int col, int row, int _row);
+    bool canMove(int _row, int _col) const;
+    bool canMoveAround();
+    bool isIn4Direction(int _row, int _col) const;
+    bool isIn8Direction(int _row, int _col) const;
+
+    bool canAttack(const Piece &obj) const;
+    bool tryAttack(Piece &obj);
+    void attack(Piece &obj);
+    void dieTogether(Piece &obj);
+
     static Chessboard *board;
 
     int id;
@@ -28,26 +47,6 @@ public:
     int row, col;
     bool known, dead;
     Type type;
-
-    void initPiece(int _id, int _team, Type _type);
-
-    virtual void hide() = 0;
-    virtual void display() = 0;
-    void flip();
-    void kill();
-    void move(int _row, int _col);
-
-    bool canMove(int _row, int _col) const;
-    bool canMoveAround();
-    bool isIn4Direction(int _row, int _col) const;
-    bool isIn8Direction(int _row, int _col) const;
-    static bool goVerticalRailway(int row, int col, int _col);
-    static bool goHorizontalRailway(int col, int row, int _row);
-
-    bool canAttack(const Piece &obj) const;
-    bool tryAttack(Piece &obj);
-    void attack(Piece &obj);
-    void dieTogether(Piece &obj);
 
 private:
 

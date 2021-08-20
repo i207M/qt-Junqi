@@ -21,14 +21,14 @@ public:
     void clickPos(int row, int col);
     void clickPiece(int id);
 
-    int getOpp();
-    int getIdByPos(int row, int col);
+    int getOpp() const;
+    int getIdByPos(int row, int col) const;
 
     static bool isCamp(int row, int col);
     static bool isRailway(int row, int col);
-    bool isEmpty(int row, int col);
-    bool canAttackJunQi();
-    bool showSelected(int id);
+    bool isEmpty(int row, int col) const;
+    bool canAttackJunQi() const;
+    bool showSelected(int id) const;
 
     static bool Railway[12][5];
 
