@@ -12,7 +12,6 @@ class Netboard : public Chessboard
     Q_OBJECT
 
 public:
-    // explicit Netboard(QObject *parent = nullptr);
     explicit Netboard(MainWindow *_win, QString ip);
 
     virtual void clickPos(int row, int col) override;

@@ -21,8 +21,6 @@ bool Chessboard::Railway[12][5] = {
     0, 0, 0, 0, 0
 };
 
-// Chessboard::Chessboard(QObject *parent) : QObject(parent) {}
-
 Chessboard::Chessboard(MainWindow *_win): QObject(_win), win(_win)
 {
     is_online = false;

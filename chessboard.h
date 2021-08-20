@@ -10,8 +10,7 @@ class Chessboard: public QObject
     Q_OBJECT
 
 public:
-    Chessboard();
-    // Chessboard(QObject *parent = nullptr);
+    Chessboard() = delete;
     explicit Chessboard(MainWindow *_win);
 
     void initBoard();

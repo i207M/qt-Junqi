@@ -4,8 +4,6 @@
 #include "ui_mainwindow.h"
 #include "Mdebug.h"
 
-// Netboard::Netboard(QObject *parent): QObject(parent) {}
-
 Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 {
     const int PORT = 2077;
