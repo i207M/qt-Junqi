@@ -8,7 +8,13 @@
         "*.tcc": "cpp",
         "mutex": "cpp",
         "thread": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "algorithm": "cpp",
+        "random": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "utility": "cpp"
     },
     "python.pythonPath": "D:\\Dev\\Program\\Python\\Python38\\python.exe"
 }

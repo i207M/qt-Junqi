@@ -13,6 +13,7 @@ public:
     Chessboard() = delete;
     explicit Chessboard(MainWindow *_win);
 
+    // logic
     virtual void localPressStart();
     void initBoard();
     void displayAll();
@@ -33,19 +34,20 @@ public:
     bool canAttackJunQi() const;
     virtual bool showSelected(int id) const;
 
+    // debug
     void debugRandomlyKill();
 
     static bool Railway[12][5];
 
     PieceDisplay p[50];
-    bool is_online;
-    int current_player;  // server: 1, client: 2
-    int current_color; // red: 1, blue: 2
-    int select_id;
 
 protected:
-    bool has_start;
     MainWindow *win;
+
+    bool is_online;
+    bool has_start;
+    int current_player;  // server: 1, client: 2
+    int current_color; // red: 1, blue: 2
 
 private:
     void tryDetermineColor(int id);
@@ -54,6 +56,7 @@ private:
     int num_turn;
     int num_time_out[2];
     int flip_color[2];
+    int select_id;
 };
 
 #endif // CHESSBOARD_H

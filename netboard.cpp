@@ -49,44 +49,101 @@ void Netboard::slotNewConnection()
     tcpSocket = tcpServer->nextPendingConnection();
     connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
 
-    static const char Ctrl0[1] = {0};
+    static const char Ctrl0[1] = {100};
     tcpSocket->write(Ctrl0, 1);
     this->win->connectSuccessfully();
+
+    sendBoard();
 }
 
 void Netboard::slotRecv()
 {
+    err("TCP Recv");
     QByteArray arr = tcpSocket->readAll();
-    char ctrl = arr[0];
-    err("Recv Ctrl", (int)ctrl);
+    if(arr.isEmpty()) {
+        return;
+    }
 
-    if(ctrl == 0) {
+    for(const auto &c : arr) {
+        err("Buf put", int(c));
+        buf.put(c);
+    }
+    if(buf.eof()) {
+        buf.clear();
+    }
+    check(buf.good());
+
+    tryProcessPackage();
+}
+
+void Netboard::tryProcessPackage()
+{
+    err("tryProcessPackage", buf.good());
+    while(processPackage());
+}
+
+QByteArray Netboard::tryReadData(int size)
+{
+    char t;
+    QByteArray ret;
+    for(int i = 0; i < size; ++i) {
+        t = buf.get();
+        if(buf.eof()) {
+            err("Buffer is not enough.");
+            for(int j = 0; j < i; ++j) {
+                buf.unget();
+            }
+            return QByteArray();
+        }
+        ret.append(t);
+    }
+    return ret;
+}
+
+// when buffer is not enough, nothing happends
+bool Netboard::processPackage()
+{
+    char ctrl = buf.get();
+    if(buf.eof()) {
+        err("Ctrl EOF");
+        return false;
+    }
+    err("Ctrl", int(ctrl));
+
+    if(ctrl == 100) {
         check(tcpServer == nullptr);
         this->win->connectSuccessfully();
-
-        static const char Ctrl1[1] = {1};
-        tcpSocket->write(Ctrl1, 1);
-    } else if(ctrl == 1) {
-        // QUESTION
-        // DEPRECATED
-        if(tcpServer == nullptr) {
-            syncBoard(arr);
-        } else {
-            sendBoard();
+        return true;
+    } else if(ctrl == 101) {
+        QByteArray arr = tryReadData(50 * 7);
+        if(arr.isEmpty()) {
+            buf.unget();
+            return false;
         }
-    } else if(ctrl == 2) {
-        netPressStart(arr[1]);
-    } else if(ctrl == 3) {
-        // DEPRECATED
-        err("Error Deprecated Ctrl");
-    } else if(ctrl == 4) {
+
+        syncBoard(arr);
+        return true;
+    } else if(ctrl == 102) {
+        char t = buf.get();
+        if(buf.eof()) {
+            buf.unget();
+            return false;
+        }
+
+        netPressStart(t);
+        return true;
+    } else if (ctrl == 104) {
+        QByteArray arr = tryReadData(2);
+        if(arr.isEmpty()) {
+            buf.unget();
+            return false;
+        }
+
         int click_row = arr[0], click_col = arr[1];
         Chessboard::clickPos(click_row, click_col);
-    } else if(ctrl == 5) {
+    } else if(ctrl == 105) {
         // TODO: cannot admit defeat as your opponent
         // this->win->actionAdmitDefeat();
-    } else if(ctrl == 6) {
-        err("Opponent timed out.");
     } else {
         err("Error Ctrl");
     }
@@ -96,7 +153,7 @@ void Netboard::clickPos(int row, int col)
 {
     err("Netboard clickPos", row, col);
     Chessboard::clickPos(row, col);
-    char Ctrl4[3] = {4, row, col};
+    char Ctrl4[3] = {104, row, col};
     tcpSocket->write(Ctrl4, 3);
 }
 
@@ -113,7 +170,7 @@ void Netboard::localPressStart()
     this->win->log("You Pressed Start.");
     genRandomPrior();
 
-    char Ctrl2[2] = {2, random_prior[0]};
+    char Ctrl2[2] = {102, random_prior[0]};
     tcpSocket->write(Ctrl2, 2);
 
     checkStart();
@@ -129,8 +186,9 @@ void Netboard::netPressStart(char _random_prior)
 void Netboard::sendBoard()
 {
     static char chess_data[1 + 50 * 7];
+
     int cnt = 0;
-    chess_data[cnt++] = 1;
+    chess_data[cnt++] = 101;
     for(int i = 0; i < 50; ++i) {
         chess_data[cnt++] = p[i].id;
         chess_data[cnt++] = p[i].color;
@@ -150,7 +208,7 @@ void Netboard::sendBoard()
 
 void Netboard::syncBoard(QByteArray chess_data)
 {
-    int cnt = 1;
+    int cnt = 0;
     for(int i = 0; i < 50; ++i) {
         p[i].id = chess_data[cnt++];
         p[i].color = chess_data[cnt++];

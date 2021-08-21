@@ -1,6 +1,9 @@
 #ifndef NETBOARD_H
 #define NETBOARD_H
 
+#include <sstream>
+using std::stringstream;
+
 #include <QNetworkInterface>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -23,6 +26,10 @@ private slots:
     void slotRecv();
 
 private:
+    QByteArray tryReadData(int size);
+    void tryProcessPackage();
+    bool processPackage();
+
     void sendBoard();
     void syncBoard(QByteArray chessData);
     void genRandomPrior();
@@ -30,6 +37,8 @@ private:
 
     QTcpServer *tcpServer;
     QTcpSocket *tcpSocket;
+
+    stringstream buf;
 
     int local_player;  // 1: server, 2: client
     char random_prior[2]; // 0: self, 1: opponent
