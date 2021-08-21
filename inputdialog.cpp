@@ -12,3 +12,8 @@ InputDialog::~InputDialog()
 {
     delete ui;
 }
+
+void InputDialog::on_buttonBox_accepted()
+{
+
+}

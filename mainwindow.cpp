@@ -4,6 +4,7 @@
 
 #include "ui_mainwindow.h"
 #include "createserverdialog.h"
+#include "inputdialog.h"
 #include "m_debug.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,7 +28,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::actionCreateServer()
 {
-    CreateServerDialog dlg;
+    CreateServerDialog dlg(this);
     QList<QHostAddress> list = QNetworkInterface::allAddresses();
     for(const auto &address : list) {
         if(address.protocol() == QAbstractSocket::IPv4Protocol) {
@@ -53,6 +54,9 @@ void MainWindow::actionCreateServer()
 
 void MainWindow::actionConnectServer()
 {
+    InputDialog dlg(this);
+    dlg.exec();
+
     game_mode = 3;
     ip = "127.0.0.1";  // TODO
 
