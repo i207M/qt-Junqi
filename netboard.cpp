@@ -22,6 +22,9 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     tcpSocket = nullptr;
     if(ip == "0") {
         local_player = 1;
+        this->initBoard();
+        this->displayAll();
+        this->win->log("Chessboard Initialized.");
 
         tcpServer = new QTcpServer(this);
         tcpServer->listen(QHostAddress::Any, PORT);
@@ -49,9 +52,6 @@ void Netboard::slotNewConnection()
     static const char Ctrl0[1] = {0};
     tcpSocket->write(Ctrl0, 1);
     this->win->connectSuccessfully();
-
-    this->initBoard();
-    this->displayAll();
 }
 
 void Netboard::slotRecv()
@@ -68,6 +68,7 @@ void Netboard::slotRecv()
         tcpSocket->write(Ctrl1, 1);
     } else if(ctrl == 1) {
         // QUESTION
+        // DEPRECATED
         if(tcpServer == nullptr) {
             syncBoard(arr);
         } else {
@@ -130,7 +131,6 @@ void Netboard::sendBoard()
     static char chess_data[1 + 50 * 7];
     int cnt = 0;
     chess_data[cnt++] = 1;
-
     for(int i = 0; i < 50; ++i) {
         chess_data[cnt++] = p[i].id;
         chess_data[cnt++] = p[i].color;
@@ -140,11 +140,11 @@ void Netboard::sendBoard()
         chess_data[cnt++] = p[i].dead;
         chess_data[cnt++] = int(p[i].type);
     }
+    tcpSocket->write(chess_data, sizeof(chess_data));
+
     for(int i = 0; i < 1 + 50 * 7; ++i) {
         err((int)chess_data[i], ' ');
     }
-
-    tcpSocket->write(chess_data, sizeof(chess_data));
     err("sendBoard");
 }
 
@@ -160,7 +160,7 @@ void Netboard::syncBoard(QByteArray chess_data)
         p[i].dead = chess_data[cnt++];
         p[i].type = Type(chess_data[cnt++]);
     }
-    this->win->log("Board Synchronized.");
+    this->win->log("Chessboard Synchronized.");
 
     this->displayAll();
 }
@@ -169,7 +169,7 @@ void Netboard::genRandomPrior()
 {
     if(random_prior[0] == -1) {
         srand(time(0));
-        random_prior[0] = rand() % 128;
+        random_prior[0] = rand() % 100;
     }
 }
 
@@ -180,12 +180,10 @@ void Netboard::checkStart()
     } else {
         err("Start Prior", random_prior[0], random_prior[1]);
         if(random_prior[0] >= random_prior[1]) {
-            // self is the first
-            // need swap
+            // self is the first, but need swap
             this->current_player = this->getOpp(local_player);
         } else {
-            // opponent is the first
-            // need swap
+            // opponent is the first, but need swap
             this->current_player = local_player;
         }
         this->win->log("Game Start!");
