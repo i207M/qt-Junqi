@@ -9,46 +9,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - qt_arch: win32_mingw53
-            qt_ver: 5.9.9
-            qt_tools: "tools_mingw,5.3.0-2,qt.tools.win32_mingw530"
-            qt_tools_mingw_install: mingw530_32
-          - qt_arch: win32_mingw53
-            qt_ver: 5.10.1
-            qt_tools: "tools_mingw,5.3.0-2,qt.tools.win32_mingw530"
-            qt_tools_mingw_install: mingw530_32
-          - qt_arch: win32_mingw53
-            qt_ver: 5.11.3
-            qt_tools: "tools_mingw,5.3.0-2,qt.tools.win32_mingw530"
-            qt_tools_mingw_install: mingw530_32
-          - qt_arch: win32_mingw73
-            qt_ver: 5.12.10
-            qt_tools: "tools_mingw,7.3.0-1-202004170606,qt.tools.win32_mingw730"
-            qt_tools_mingw_install: mingw730_32
-          - qt_arch: win32_mingw73
-            qt_ver: 5.13.2
-            qt_tools: "tools_mingw,7.3.0-1-202004170606,qt.tools.win32_mingw730"
-            qt_tools_mingw_install: mingw730_32
-          - qt_arch: win32_mingw73
-            qt_ver: 5.14.2
-            qt_tools: "tools_mingw,7.3.0-1-202004170606,qt.tools.win32_mingw730"
-            qt_tools_mingw_install: mingw730_32
-          - qt_arch: win64_mingw73
-            qt_ver: 5.12.10
-            qt_tools: "tools_mingw,7.3.0-1-202004170606,qt.tools.win64_mingw730"
-            qt_tools_mingw_install: mingw730_64
-          - qt_arch: win64_mingw73
-            qt_ver: 5.13.2
-            qt_tools: "tools_mingw,7.3.0-1-202004170606,qt.tools.win64_mingw730"
-            qt_tools_mingw_install: mingw730_64
-          - qt_arch: win64_mingw73
-            qt_ver: 5.14.2
-            qt_tools: "tools_mingw,7.3.0-1-202004170606,qt.tools.win64_mingw730"
-            qt_tools_mingw_install: mingw730_64
-          - qt_arch: win32_mingw81
-            qt_ver: 5.15.2
-            qt_tools: "tools_mingw,8.1.0-1-202004170606,qt.tools.win32_mingw810"
-            qt_tools_mingw_install: mingw810_32
           - qt_arch: win64_mingw81
             qt_ver: 5.15.2
             qt_tools: "tools_mingw,8.1.0-1-202004170606,qt.tools.win64_mingw810"
@@ -58,7 +18,7 @@ jobs:
             qt_tools: "tools_mingw,8.1.0-1-202004170606,qt.tools.win64_mingw810"
             qt_tools_mingw_install: mingw810_64
     env:
-      targetName: HelloActions-Qt.exe
+      targetName: Junqi.exe
     steps:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.13.0
@@ -106,12 +66,3 @@ jobs:
         with:
           name: ${{ steps.package.outputs.packageName }}
           path: ${{ steps.package.outputs.packageName }}.zip
-      - name: uploadRelease
-        if: startsWith(github.event.ref, 'refs/tags/')
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ steps.package.outputs.packageName }}.zip
-          asset_name: ${{ steps.package.outputs.packageName }}.zip
-          tag: ${{ github.ref }}
-          overwrite: true
