@@ -4,7 +4,7 @@
 
 #include "ui_mainwindow.h"
 #include "createserverdialog.h"
-#include "Mdebug.h"
+#include "m_debug.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

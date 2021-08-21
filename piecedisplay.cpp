@@ -4,7 +4,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Mdebug.h"
+#include "m_debug.h"
 
 ClickableLabel *PieceDisplay::Label_Map[12][5] = {};
 QPixmap *PieceDisplay::Pixmap[50] = {};

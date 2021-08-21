@@ -1,7 +1,7 @@
 #include "clickablelabel.h"
 
 #include "chessboard.h"
-#include "Mdebug.h"
+#include "m_debug.h"
 
 Chessboard *ClickableLabel::board = nullptr;
 

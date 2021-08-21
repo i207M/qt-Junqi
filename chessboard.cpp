@@ -4,7 +4,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Mdebug.h"
+#include "m_debug.h"
 
 bool Chessboard::Railway[12][5] = {
     0, 0, 0, 0, 0,

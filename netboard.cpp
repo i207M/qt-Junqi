@@ -4,7 +4,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Mdebug.h"
+#include "m_debug.h"
 
 Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 {

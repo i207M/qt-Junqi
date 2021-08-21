@@ -1,5 +1,5 @@
-#ifndef MDEBUG_H
-#define MDEBUG_H
+#ifndef m_debug_H
+#define m_debug_H
 
 #include <iostream>
 
@@ -34,4 +34,4 @@ void errprt(T arr, int n)
 #define check(flag) "NO_DEBUG"
 #endif
 
-#endif // MDEBUG_H
+#endif // m_debug_H

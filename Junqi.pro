@@ -19,7 +19,7 @@ SOURCES += \
     piecedisplay.cpp
 
 HEADERS += \
-    Mdebug.h \
+    m_debug.h \
     chessboard.h \
     clickablelabel.h \
     createserverdialog.h \
