@@ -12,6 +12,7 @@ SOURCES += \
     chessboard.cpp \
     clickablelabel.cpp \
     createserverdialog.cpp \
+    inputdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     netboard.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     piecedisplay.cpp
 
 HEADERS += \
+    inputdialog.h \
     m_debug.h \
     chessboard.h \
     clickablelabel.h \
@@ -30,6 +32,7 @@ HEADERS += \
 
 FORMS += \
     createserverdialog.ui \
+    inputdialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.
