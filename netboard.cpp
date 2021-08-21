@@ -1,7 +1,5 @@
 #include "netboard.h"
 
-#include "windows.h"
-
 #include <QMessageBox>
 
 #include "mainwindow.h"
@@ -19,7 +17,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     random_prior[0] = -1, random_prior[1] = -1;
 
     tcpServer = new QTcpServer(this);
-    tcpSocket = new QTcpSocket(this);
+    tcpSocket = nullptr;
     if(ip == "0") {
         local_player = 1;
         initBoard();
@@ -31,6 +29,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     } else {
         local_player = 2;
 
+        tcpSocket = new QTcpSocket(this);
         tcpSocket->connectToHost(ip, PORT);
         connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
     }
@@ -43,7 +42,9 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 Netboard::~Netboard()
 {
     delete tcpServer;
-    delete tcpSocket;
+    if(tcpSocket != nullptr) {
+        delete tcpSocket;
+    }
     delete send_heart_beat;
     delete recv_heart_beat;
 }
@@ -92,6 +93,8 @@ void Netboard::slotRecv()
         } else if(ctrl == 105) {
             // TODO: cannot admit defeat as your opponent
             // win->actionAdmitDefeat();
+        } else if(ctrl == 106) {
+            err("Opponent timed out.");
         } else {
             err("Error Ctrl");
         }
