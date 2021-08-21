@@ -10,7 +10,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 {
     const int PORT = 12077;
 
-    qDebug() << "Netboard init " << ip;
+    err("Netboard init", ip.toStdString());
     check(ip != "-1");
 
     is_online = true;

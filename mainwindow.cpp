@@ -167,7 +167,7 @@ void MainWindow::on_actionDisconnect_triggered()
 // {
 //     QList<QHostAddress> list = QNetworkInterface::allAddresses();
 //     for(const auto &address : list) {
-//         qDebug() << address.toString();
+//         err(address.toString().toStdString());
 //         if(address.protocol() == QAbstractSocket::IPv4Protocol) {
 //             return address.toString();
 //         }
