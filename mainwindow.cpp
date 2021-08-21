@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     ip = "-1";
 
     PieceDisplay::initDisplay(ui);
+    log("Author: i207M");
 }
 
 MainWindow::~MainWindow()

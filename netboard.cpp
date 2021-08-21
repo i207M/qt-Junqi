@@ -23,6 +23,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
         initBoard();
         displayAll();
         win->log("Chessboard Initialized.");
+        win->log("Waiting for Client...");
 
         tcpServer->listen(QHostAddress::Any, PORT);
         connect(tcpServer, &QTcpServer::newConnection, this, &Netboard::slotNewConnection);

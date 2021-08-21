@@ -11,6 +11,7 @@ CONFIG += c++11 Console
 SOURCES += \
     chessboard.cpp \
     clickablelabel.cpp \
+    clientwaitconnectdialog.cpp \
     createserverdialog.cpp \
     inputdialog.cpp \
     main.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     piecedisplay.cpp
 
 HEADERS += \
+    clientwaitconnectdialog.h \
     inputdialog.h \
     m_debug.h \
     chessboard.h \
@@ -31,6 +33,7 @@ HEADERS += \
     piecedisplay.h
 
 FORMS += \
+    clientwaitconnectdialog.ui \
     createserverdialog.ui \
     inputdialog.ui \
     mainwindow.ui
