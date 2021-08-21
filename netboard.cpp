@@ -42,9 +42,6 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 Netboard::~Netboard()
 {
     delete tcpServer;
-    if(tcpSocket != nullptr) {
-        delete tcpSocket;
-    }
     delete send_heart_beat;
     delete recv_heart_beat;
 }

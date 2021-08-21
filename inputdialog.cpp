@@ -27,7 +27,7 @@ void InputDialog::on_pushButton_ok_clicked()
     static regex re("^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}$");
 
     QString str = ui->lineEdit->text();
-    bool match_result = regex_search(str.toStdString(), re);
+    bool match_result = regex_match(str.toStdString(), re);
 
     if(match_result) {
         *ip = QString(str);

@@ -19,8 +19,8 @@ public:
     static void initDisplay(Ui::MainWindow *ui);
 
     void show(QPixmap *pix);
-    void hide() override;
-    void display() override;
+    virtual void hide() override;
+    virtual void display() override;
 
 private:
     static QPixmap *getPixmap(const char *path);
