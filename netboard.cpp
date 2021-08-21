@@ -108,7 +108,7 @@ void Netboard::clickPos(int row, int col)
         return;
     }
     Chessboard::clickPos(row, col);
-    char Ctrl4[3] = {104, row, col};
+    char Ctrl4[3] = {104, char(row), char(col)};
     tcpSocket->write(Ctrl4, 3);
 }
 
@@ -163,7 +163,7 @@ void Netboard::localPressStart()
     win->log("You pressed start.");
     genRandomPrior();
 
-    char Ctrl2[2] = {102, random_prior[0]};
+    char Ctrl2[2] = {102, char(random_prior[0])};
     tcpSocket->write(Ctrl2, 2);
 
     checkStart();

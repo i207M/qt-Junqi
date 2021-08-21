@@ -250,7 +250,7 @@ bool Piece::bfs(int s_row, int s_col, int t_row, int t_col) const
             r = r2, c = c2;
         }
 
-        for(int i = 0; i < r.size(); ++i) {
+        for(int i = 0; i < int(r.size()); ++i) {
             int n_row = row + r[i], n_col = col + c[i];
             if(n_row == t_row and n_col == t_col) {
                 return true;
