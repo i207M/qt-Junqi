@@ -76,8 +76,8 @@ void Netboard::slotRecv()
         err("Ctrl", ctrl);
         if(ctrl == 100) {
             check(local_player == 2);
-            win->connectSuccessfully();
             initHeartBeat();
+            win->connectSuccessfully();
         } else if(ctrl == 101) {
             syncBoard(arr.mid(i, 50 * 7));
             i += 50 * 7;

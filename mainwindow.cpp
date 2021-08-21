@@ -43,13 +43,12 @@ void MainWindow::actionCreateServer()
 
     ip = "0";
     game_mode = 2;
+    log("Set Game Mode to Server.");
     board = new Netboard(this, ip);
 
     ui->buttonLocal->setDisabled(true);
     ui->buttonCreateServer->setDisabled(true);
     ui->buttonConnect->setDisabled(true);
-
-    log("Set Game Mode to Server.");
 }
 
 void MainWindow::actionConnectServer()
@@ -61,13 +60,12 @@ void MainWindow::actionConnectServer()
     err("Connecting to", ip.toStdString());
 
     game_mode = 3;
+    log("Set Game Mode to Client.");
     board = new Netboard(this, ip);
 
     ui->buttonLocal->setDisabled(true);
     ui->buttonCreateServer->setDisabled(true);
     ui->buttonConnect->setDisabled(true);
-
-    log("Set Game Mode to Client.");
 }
 
 void MainWindow::actionStart()
@@ -178,8 +176,10 @@ void MainWindow::on_actionDisconnect_triggered()
 
 void MainWindow::connectSuccessfully()
 {
-    log("Connect Successfully.");
-    // TODO: QMessage::information
+    log("Connection Established.");
+    // QMessageBox::information(this,
+    //                       tr("Connection Established"),
+    //                       tr("You can press start."));
 }
 
 #pragma region
