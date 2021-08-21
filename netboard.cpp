@@ -41,7 +41,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
         connect(connect_timer, &QTimer::timeout, this, [ = ]() {
             QMessageBox::warning(this->win,
                                  tr("Warning"),
-                                 tr("Connection Timeout."));
+                                 tr("Connection Timeout"));
             this->win->restart();
         });
         connect_timer->start(2000);
@@ -166,7 +166,7 @@ void Netboard::localPressStart()
     if(tcpSocket == nullptr) {
         QMessageBox::warning(win,
                              tr("Warning"),
-                             tr("Client Not Connected."));
+                             tr("Client Not Connected"));
         return;
     }
 
