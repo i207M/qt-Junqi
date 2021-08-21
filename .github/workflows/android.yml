@@ -22,6 +22,7 @@ jobs:
           target: ${{ matrix.qt_target }}
           # Architecture for Windows/Android
           arch: ${{ matrix.qt_arch }}
+          setup-python: "false"
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
