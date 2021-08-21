@@ -17,7 +17,7 @@ public:
     virtual void localPressStart();
     void initBoard();
     void displayAll();
-    void nextTurn();
+    virtual void nextTurn();
     void timeOut();
     void tryAdmitDefeat();
     void tryGameOver();
@@ -42,20 +42,20 @@ public:
     PieceDisplay p[50];
 
 protected:
+    virtual void tryDetermineColor(int id);
+    void select(int id);
+
     MainWindow *win;
 
     bool is_online;
     bool has_start;
     int current_player;  // server: 1, client: 2
     int current_color; // red: 1, blue: 2
+    int flip_color[2];
+    int num_turn;
 
 private:
-    void tryDetermineColor(int id);
-    void select(int id);
-
-    int num_turn;
     int num_time_out[2];
-    int flip_color[2];
     int select_id;
 };
 

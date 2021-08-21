@@ -60,9 +60,6 @@ void Netboard::slotRecv()
 {
     err("TCP Recv");
     QByteArray arr = tcpSocket->readAll();
-    if(arr.isEmpty()) {
-        return;
-    }
 
     for(int i = 0; i < arr.size(); ) {
         int ctrl = arr[i++];
@@ -186,4 +183,37 @@ void Netboard::checkStart()
         this->has_start = true;
         this->nextTurn();
     }
+}
+
+void Netboard::nextTurn()
+{
+    err("nextTurn");
+    ++(this->num_turn);
+    this->win->endTimer();
+
+    this->current_player = getOpp();
+    if(this->current_color != 0) {
+        this->current_color = (this->current_color == 1 ? 2 : 1);
+    }
+    this->select(-1);
+    win->changeYouPlayer(current_player, current_color);
+
+    this->win->changeWhoseTurn(current_player);
+
+    this->tryGameOver();
+
+    this->win->startTimer();
+    this->win->log(QString("Turn #%1").arg(num_turn));
+}
+
+void Netboard::tryDetermineColor(int id)
+{
+    if(this->flip_color[current_player - 1] == this->p[id].color) {
+        current_color = p[id].color;
+        win->log(QString("Color determined: Player %1 is %2").arg(current_player)
+                 .arg(current_color == 1 ? "red" : "blue"));
+
+        // TODO
+    }
+    flip_color[current_player - 1] = p[id].color;
 }

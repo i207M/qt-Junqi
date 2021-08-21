@@ -1,9 +1,6 @@
 #ifndef NETBOARD_H
 #define NETBOARD_H
 
-#include <sstream>
-using std::stringstream;
-
 #include <QNetworkInterface>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -17,13 +14,17 @@ class Netboard : public Chessboard
 public:
     explicit Netboard(MainWindow *_win, QString ip);
 
-    virtual void clickPos(int row, int col) override;
     virtual void localPressStart() override;
     virtual void netPressStart(char _random_prior);
+    virtual void clickPos(int row, int col) override;
+    virtual void nextTurn() override;
 
 private slots:
     void slotNewConnection();
     void slotRecv();
+
+protected:
+    virtual void tryDetermineColor(int id) override;
 
 private:
     void sendBoard();
@@ -34,9 +35,8 @@ private:
     QTcpServer *tcpServer;
     QTcpSocket *tcpSocket;
 
-    stringstream buf;
-
     int local_player;  // 1: server, 2: client
+    int local_color;
     char random_prior[2]; // 0: self, 1: opponent
 };
 
