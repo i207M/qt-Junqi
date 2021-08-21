@@ -46,6 +46,7 @@ private:
     QTcpSocket *tcpSocket;
     QTimer *send_heart_beat;
     QTimer *recv_heart_beat;
+    QTimer *connect_timer;
 
     int local_player;  // 1: server, 2: client
     int local_color;

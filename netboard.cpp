@@ -15,6 +15,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 
     is_online = true;
     random_prior[0] = -1, random_prior[1] = -1;
+    connect_timer = new QTimer(this);
 
     tcpServer = new QTcpServer(this);
     tcpSocket = nullptr;
@@ -31,8 +32,19 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
         local_player = 2;
 
         tcpSocket = new QTcpSocket(this);
-        tcpSocket->connectToHost(ip, PORT);
+        connect(tcpSocket, &QTcpSocket::connected, this, [ = ]() {
+            this->connect_timer->stop();
+        });
         connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
+        tcpSocket->connectToHost(ip, PORT);
+
+        connect(connect_timer, &QTimer::timeout, this, [ = ]() {
+            QMessageBox::warning(this->win,
+                                 tr("Warning"),
+                                 tr("Connection Timeout."));
+            this->win->restart();
+        });
+        connect_timer->start(2000);
     }
     win->changeYouPlayer(local_player, 0);
 

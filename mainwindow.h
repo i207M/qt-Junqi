@@ -32,6 +32,7 @@ public:
     void actionSetLocalGame();
 
     void gameOver(QString str);
+    void restart();
 
     // ui related
     void changeYouPlayer(int id, int color);

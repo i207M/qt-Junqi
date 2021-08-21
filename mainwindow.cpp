@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 #include <QMessageBox>
+#include <QProcess>
 
 #include "ui_mainwindow.h"
 #include "createserverdialog.h"
@@ -115,6 +116,12 @@ void MainWindow::gameOver(QString str)
     QMessageBox::information(this,
                              tr("Goodbye"),
                              tr("The Program is about to Close."));
+    qApp->quit();
+}
+
+void MainWindow::restart()
+{
+    QProcess::startDetached(qApp->applicationFilePath(), QStringList());
     qApp->quit();
 }
 
