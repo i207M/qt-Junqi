@@ -26,6 +26,8 @@ jobs:
         run: |
           qmake
           make
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       # 打包
       - name: package
         run: |
