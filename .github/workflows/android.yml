@@ -9,20 +9,19 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-20.04]
-        qt_ver: [6.1.2]
+        qt_ver: [5.15.2]
         qt_target: [android]
         qt_arch: [android_armv7]
     steps:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.10.0
         with:
-          # Version of Qt to install
           version: ${{ matrix.qt_ver }}
-          # Target platform for build
           target: ${{ matrix.qt_target }}
-          # Architecture for Windows/Android
           arch: ${{ matrix.qt_arch }}
           setup-python: "false"
+          tools: "tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.14.0-0,qt.tools.qtcreator"
+
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1

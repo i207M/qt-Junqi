@@ -42,7 +42,7 @@ jobs:
         run: |
           Write-Output "${{ env.Qt6_DIR }}/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           Write-Output "${{ env.Qt6_DIR }}/../../Tools/${{ matrix.qt_tools_mingw_install }}/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-      - name: where is qmake & where is mingw32-make
+      - name: Where
         shell: pwsh
         run: |
           Get-Command -Name 'qmake' | Format-List
@@ -53,7 +53,7 @@ jobs:
         run: |
           qmake
           mingw32-make
-      - name: package
+      - name: Package
         id: package
         env:
           archiveName: ${{ matrix.qt_ver }}-${{ matrix.qt_arch }}
