@@ -1,12 +1,10 @@
-name: Linter
-
-on:
-  push:
-
+name: cpplint
+on: [push, pull_request]
 jobs:
-  Lint:
-    name: c-linter
+  cpplint:
     runs-on: ubuntu-latest
     steps:
-      - name: c-linter
-        uses: ArtificialAmateur/clang-tidy-action@master
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+      - run: pip install cpplint
+      - run: cpplint --recursive .
