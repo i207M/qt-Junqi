@@ -40,9 +40,8 @@ void MainWindow::actionCreateServer()
         return;
     }
 
-    game_mode = 2;
     ip = "0";
-
+    game_mode = 2;
     board = new Netboard(this, ip);
 
     ui->buttonLocal->setDisabled(true);
@@ -54,14 +53,13 @@ void MainWindow::actionCreateServer()
 
 void MainWindow::actionConnectServer()
 {
-    InputDialog dlg(this);
+    InputDialog dlg(this, &ip);
     if(dlg.exec() != QDialog::Accepted) {
         return;
     }
+    err("Connecting to", ip.toStdString());
 
     game_mode = 3;
-    ip = "127.0.0.1";  // TODO
-
     board = new Netboard(this, ip);
 
     ui->buttonLocal->setDisabled(true);
