@@ -53,8 +53,6 @@ jobs:
         run: |
           qmake
           mingw32-make
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
       - name: package
         id: package
         env:
