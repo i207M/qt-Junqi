@@ -3,7 +3,8 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 class CreateServerDialog;
 }
 
@@ -14,6 +15,8 @@ class CreateServerDialog : public QDialog
 public:
     explicit CreateServerDialog(QWidget *parent = nullptr);
     ~CreateServerDialog();
+
+    void showIp(QString ip);
 
 private:
     Ui::CreateServerDialog *ui;

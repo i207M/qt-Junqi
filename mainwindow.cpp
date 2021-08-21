@@ -3,6 +3,7 @@
 #include <QMessageBox>
 
 #include "ui_mainwindow.h"
+#include "createserverdialog.h"
 #include "Mdebug.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -26,8 +27,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::actionCreateServer()
 {
+    CreateServerDialog dlg;
+    QList<QHostAddress> list = QNetworkInterface::allAddresses();
+    for(const auto &address : list) {
+        if(address.protocol() == QAbstractSocket::IPv4Protocol) {
+            dlg.showIp(address.toString());
+            log("Your IP address is " + address.toString());
+        }
+    }
+    if(dlg.exec() != QDialog::Accepted) {
+        return;
+    }
+
     game_mode = 2;
-    log("Your IP address is " + getIp()); // TODO
     ip = "0";
 
     board = new Netboard(this, ip);
@@ -147,16 +159,17 @@ void MainWindow::on_actionDisconnect_triggered()
     board->stopHeartBeat();
 }
 
-QString MainWindow::getIp()
-{
-    QList<QHostAddress> list = QNetworkInterface::allAddresses();
-    for(const auto &address : list) {
-        if(address.protocol() == QAbstractSocket::IPv4Protocol) {
-            return address.toString();
-        }
-    }
-    return "-1";
-}
+// QString MainWindow::getOneIp()
+// {
+//     QList<QHostAddress> list = QNetworkInterface::allAddresses();
+//     for(const auto &address : list) {
+//         qDebug() << address.toString();
+//         if(address.protocol() == QAbstractSocket::IPv4Protocol) {
+//             return address.toString();
+//         }
+//     }
+//     return "-1";
+// }
 
 void MainWindow::connectSuccessfully()
 {

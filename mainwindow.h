@@ -40,7 +40,7 @@ public:
     void log(QString str);
 
     // network related
-    static QString getIp();
+    // static QString getOneIp();
     void connectSuccessfully();
 
     Ui::MainWindow *ui;

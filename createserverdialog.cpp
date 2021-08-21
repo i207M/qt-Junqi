@@ -12,3 +12,8 @@ CreateServerDialog::~CreateServerDialog()
 {
     delete ui;
 }
+
+void CreateServerDialog::showIp(QString ip)
+{
+    ui->textBrowser->append(ip);
+}
