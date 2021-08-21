@@ -26,10 +26,6 @@ private slots:
     void slotRecv();
 
 private:
-    QByteArray tryReadData(int size);
-    void tryProcessPackage();
-    bool processPackage();
-
     void sendBoard();
     void syncBoard(QByteArray chessData);
     void genRandomPrior();

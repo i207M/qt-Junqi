@@ -64,88 +64,26 @@ void Netboard::slotRecv()
         return;
     }
 
-    for(const auto &c : arr) {
-        err("Buf put", int(c));
-        buf.put(c);
-    }
-    if(buf.eof()) {
-        buf.clear();
-    }
-    check(buf.good());
-
-    tryProcessPackage();
-}
-
-void Netboard::tryProcessPackage()
-{
-    err("tryProcessPackage", buf.good());
-    while(processPackage());
-}
-
-QByteArray Netboard::tryReadData(int size)
-{
-    char t;
-    QByteArray ret;
-    for(int i = 0; i < size; ++i) {
-        t = buf.get();
-        if(buf.eof()) {
-            err("Buffer is not enough.");
-            for(int j = 0; j < i; ++j) {
-                buf.unget();
-            }
-            return QByteArray();
+    for(int i = 0; i < arr.size(); ) {
+        int ctrl = arr[i++];
+        err("Ctrl", ctrl);
+        if(ctrl == 100) {
+            check(tcpServer == nullptr);
+            this->win->connectSuccessfully();
+        } else if(ctrl == 101) {
+            syncBoard(arr.mid(i, 50 * 7));
+            i += 50 * 7;
+        } else if(ctrl == 102) {
+            netPressStart(arr[i++]);
+        } else if (ctrl == 104) {
+            int click_row = arr[i++], click_col = arr[i++];
+            Chessboard::clickPos(click_row, click_col);
+        } else if(ctrl == 105) {
+            // TODO: cannot admit defeat as your opponent
+            // this->win->actionAdmitDefeat();
+        } else {
+            err("Error Ctrl");
         }
-        ret.append(t);
-    }
-    return ret;
-}
-
-// when buffer is not enough, nothing happends
-bool Netboard::processPackage()
-{
-    char ctrl = buf.get();
-    if(buf.eof()) {
-        err("Ctrl EOF");
-        return false;
-    }
-    err("Ctrl", int(ctrl));
-
-    if(ctrl == 100) {
-        check(tcpServer == nullptr);
-        this->win->connectSuccessfully();
-        return true;
-    } else if(ctrl == 101) {
-        QByteArray arr = tryReadData(50 * 7);
-        if(arr.isEmpty()) {
-            buf.unget();
-            return false;
-        }
-
-        syncBoard(arr);
-        return true;
-    } else if(ctrl == 102) {
-        char t = buf.get();
-        if(buf.eof()) {
-            buf.unget();
-            return false;
-        }
-
-        netPressStart(t);
-        return true;
-    } else if (ctrl == 104) {
-        QByteArray arr = tryReadData(2);
-        if(arr.isEmpty()) {
-            buf.unget();
-            return false;
-        }
-
-        int click_row = arr[0], click_col = arr[1];
-        Chessboard::clickPos(click_row, click_col);
-    } else if(ctrl == 105) {
-        // TODO: cannot admit defeat as your opponent
-        // this->win->actionAdmitDefeat();
-    } else {
-        err("Error Ctrl");
     }
 }
 
