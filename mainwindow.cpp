@@ -115,8 +115,8 @@ void MainWindow::gameOver(QString str)
                              str);
     QMessageBox::information(this,
                              tr("Goodbye"),
-                             tr("The Program is about to Close."));
-    qApp->quit();
+                             tr("The program is about to restart."));
+    restart();
 }
 
 void MainWindow::restart()
