@@ -34,6 +34,11 @@ public:
     bool canAttackJunQi() const;
     virtual bool showSelected(int id) const;
 
+    // timer related
+    void startTimer();
+    void endTimer();
+    void oneSecond();
+
     // debug
     virtual void stopHeartBeat() {}
     void debugRandomlyKill();
@@ -56,6 +61,9 @@ protected:
     int num_turn;
 
 private:
+    QTimer *timer;
+
+    int timeRemaining;
     int num_time_out[2];
     int select_id;
 };

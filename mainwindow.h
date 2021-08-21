@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include <QString>
 #include <QTime>
 #include <QTimer>
+#include <QMainWindow>
 #include <QNetworkInterface>
 
 #include "chessboard.h"
@@ -32,11 +32,6 @@ public:
     void actionSetLocalGame();
 
     void gameOver(QString str);
-
-    // timer related
-    void startTimer();
-    void endTimer();
-    void oneSecond();
 
     // ui related
     void changeYouPlayer(int id, int color);
@@ -66,9 +61,6 @@ private slots:
     void on_actionDisconnect_triggered();
 
 private:
-    QTimer *timer;
-    int timeRemaining;
-
     Chessboard *board;
     int game_mode;  // 1: local, 2: server, 3: client
 

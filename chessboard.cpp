@@ -33,6 +33,9 @@ Chessboard::Chessboard(MainWindow *_win): win(_win)
     num_time_out[0] = 0, num_time_out[1] = 0;
     flip_color[0] = 0, flip_color[1] = 0;
 
+    timer = new QTimer(this);
+    timeRemaining = 0;
+
     Piece::board = this;
     ClickableLabel::board = this;
 }
@@ -92,7 +95,7 @@ void Chessboard::nextTurn()
 {
     err("nextTurn");
     ++num_turn;
-    win->endTimer();
+    endTimer();
 
     current_player = getOpp();
     if(current_color != 0) {
@@ -107,7 +110,7 @@ void Chessboard::nextTurn()
 
     tryGameOver();
 
-    win->startTimer();
+    startTimer();
     win->log(QString("Round #%1").arg(num_turn));
 }
 
@@ -292,6 +295,39 @@ void Chessboard::select(int id)
         select_id = id;
         p[t].display();
         p[id].display();
+    }
+}
+
+void Chessboard::startTimer()
+{
+    const int Player_Time = 20;
+
+    timeRemaining = Player_Time;
+    win->ui->lcdNumber->display(timeRemaining);
+
+    delete timer;
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Chessboard::oneSecond);
+    timer->start(1000);
+}
+
+void Chessboard::endTimer()
+{
+    timer->stop();
+}
+
+void Chessboard::oneSecond()
+{
+    --timeRemaining;
+    win->ui->lcdNumber->display(timeRemaining);
+
+    if(timeRemaining <= 0) {
+        timeOut();
+    } else {
+        delete timer;
+        timer = new QTimer(this);
+        connect(timer, &QTimer::timeout, this, &Chessboard::oneSecond);
+        timer->start(1000);
     }
 }
 

@@ -12,8 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->buttonDefeat->setDisabled(true);
 
-    timer = new QTimer(this);
-    timeRemaining = 0;
     board = nullptr;
     game_mode = 0;
     ip = "-1";
@@ -94,7 +92,7 @@ void MainWindow::actionSetLocalGame()
 
 void MainWindow::gameOver(QString str)
 {
-    endTimer();
+    board->endTimer();
     QMessageBox::information(this,
                              tr("Game Over"),
                              str);
@@ -102,39 +100,6 @@ void MainWindow::gameOver(QString str)
                              tr("Goodbye"),
                              tr("The Program is about to Close."));
     qApp->quit();
-}
-
-void MainWindow::startTimer()
-{
-    const int Player_Time = 20;
-
-    timeRemaining = Player_Time;
-    ui->lcdNumber->display(timeRemaining);
-
-    delete timer;
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &MainWindow::oneSecond);
-    timer->start(1000);
-}
-
-void MainWindow::endTimer()
-{
-    timer->stop();
-}
-
-void MainWindow::oneSecond()
-{
-    --timeRemaining;
-    ui->lcdNumber->display(timeRemaining);
-
-    if(timeRemaining <= 0) {
-        board->timeOut();
-    } else {
-        delete timer;
-        timer = new QTimer(this);
-        connect(timer, &QTimer::timeout, this, &MainWindow::oneSecond);
-        timer->start(1000);
-    }
 }
 
 void MainWindow::changeYouPlayer(int id, int color)
