@@ -12,13 +12,14 @@ class Chessboard: public QObject
 public:
     Chessboard() = delete;
     explicit Chessboard(MainWindow *_win);
+    virtual ~Chessboard();
 
     // logic
     virtual void localPressStart();
     void initBoard();
     void displayAll();
     void nextTurn();
-    void timeOut();
+    virtual void timeOut();
     void tryAdmitDefeat();
     void tryGameOver();
     virtual void clickPos(int row, int col);
@@ -57,14 +58,14 @@ protected:
     bool has_start;
     int current_player;  // server: 1, client: 2
     int current_color; // red: 1, blue: 2
-    int flip_color[2];
     int num_turn;
+    int flip_color[2];
+    int num_time_out[2];
 
 private:
     QTimer *timer;
 
     int timeRemaining;
-    int num_time_out[2];
     int select_id;
 };
 

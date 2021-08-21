@@ -18,21 +18,19 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     is_online = true;
     random_prior[0] = -1, random_prior[1] = -1;
 
-    tcpServer = nullptr;
-    tcpSocket = nullptr;
+    tcpServer = new QTcpServer(this);
+    tcpSocket = new QTcpSocket(this);
     if(ip == "0") {
         local_player = 1;
         initBoard();
         displayAll();
         win->log("Chessboard Initialized.");
 
-        tcpServer = new QTcpServer(this);
         tcpServer->listen(QHostAddress::Any, PORT);
         connect(tcpServer, &QTcpServer::newConnection, this, &Netboard::slotNewConnection);
     } else {
         local_player = 2;
 
-        tcpSocket = new QTcpSocket(this);
         tcpSocket->connectToHost(ip, PORT);
         connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
     }
@@ -40,6 +38,14 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 
     send_heart_beat = new QTimer(this);
     recv_heart_beat = new QTimer(this);
+}
+
+Netboard::~Netboard()
+{
+    delete tcpServer;
+    delete tcpSocket;
+    delete send_heart_beat;
+    delete recv_heart_beat;
 }
 
 void Netboard::slotNewConnection()
@@ -70,7 +76,7 @@ void Netboard::slotRecv()
         int ctrl = arr[i++];
         err("Ctrl", ctrl);
         if(ctrl == 100) {
-            check(tcpServer == nullptr);
+            check(local_player == 2);
             win->connectSuccessfully();
             initHeartBeat();
         } else if(ctrl == 101) {
@@ -101,6 +107,22 @@ void Netboard::clickPos(int row, int col)
     Chessboard::clickPos(row, col);
     char Ctrl4[3] = {104, row, col};
     tcpSocket->write(Ctrl4, 3);
+}
+
+void Netboard::timeOut()
+{
+    int t = ++num_time_out[current_player - 1];
+    if(current_player == local_player) {
+        static const char Ctrl6[1] = {106};
+        tcpSocket->write(Ctrl6);
+    }
+
+    if(t >= 3) {
+        win->gameOver(QString("Time out!\nThe Winner is Player %1.").arg(getOpp()));
+    } else {
+        win->log(QString("Player %1 timed out.").arg(current_player));
+    }
+    nextTurn();
 }
 
 void Netboard::localPressStart()

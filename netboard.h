@@ -12,14 +12,17 @@ class Netboard : public Chessboard
     Q_OBJECT
 
 public:
+    // Netboard() = delete;
     explicit Netboard(MainWindow *_win, QString ip);
+    virtual ~Netboard();
 
     virtual void localPressStart() override;
     virtual void netPressStart(int _random_prior);
     virtual void clickPos(int row, int col) override;
+    virtual void timeOut() override;
 
     virtual void stopHeartBeat() override;
-    
+
 private slots:
     void slotNewConnection();
     void slotRecv();
