@@ -98,7 +98,9 @@ void Chessboard::nextTurn()
     }
     select(-1);
 
-    win->changeYouPlayer(current_player, current_color);
+    if(not is_online) {
+        win->changeYouPlayer(current_player, current_color);
+    }
     win->changeWhoseTurn(current_player);
 
     tryGameOver();

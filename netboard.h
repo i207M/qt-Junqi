@@ -17,7 +17,6 @@ public:
     virtual void localPressStart() override;
     virtual void netPressStart(char _random_prior);
     virtual void clickPos(int row, int col) override;
-    virtual void nextTurn() override;
 
 private slots:
     void slotNewConnection();

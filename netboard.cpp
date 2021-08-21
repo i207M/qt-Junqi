@@ -185,27 +185,6 @@ void Netboard::checkStart()
     }
 }
 
-void Netboard::nextTurn()
-{
-    err("nextTurn");
-    ++(num_turn);
-    win->endTimer();
-
-    current_player = getOpp();
-    if(current_color != 0) {
-        current_color = (current_color == 1 ? 2 : 1);
-    }
-    select(-1);
-    win->changeYouPlayer(current_player, current_color);
-
-    win->changeWhoseTurn(current_player);
-
-    tryGameOver();
-
-    win->startTimer();
-    win->log(QString("Turn #%1").arg(num_turn));
-}
-
 void Netboard::tryDetermineColor(int id)
 {
     if(flip_color[current_player - 1] == p[id].color) {
@@ -213,7 +192,12 @@ void Netboard::tryDetermineColor(int id)
         win->log(QString("Color determined: Player %1 is %2").arg(current_player)
                  .arg(current_color == 1 ? "red" : "blue"));
 
-        // TODO
+        if(current_player == local_player) {
+            local_color = current_color;
+        } else {
+            local_color = getOpp(current_color);
+        }
+        win->changeYouPlayer(current_player, current_color);
     }
     flip_color[current_player - 1] = p[id].color;
 }

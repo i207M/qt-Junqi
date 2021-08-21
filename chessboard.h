@@ -17,7 +17,7 @@ public:
     virtual void localPressStart();
     void initBoard();
     void displayAll();
-    virtual void nextTurn();
+    void nextTurn();
     void timeOut();
     void tryAdmitDefeat();
     void tryGameOver();
