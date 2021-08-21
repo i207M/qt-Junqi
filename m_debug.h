@@ -2,6 +2,7 @@
 #define m_debug_H
 
 #include <iostream>
+#include <cassert>
 
 #define M_DEBUG
 
