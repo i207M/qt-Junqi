@@ -219,7 +219,7 @@ void Netboard::syncBoard(QByteArray chess_data)
         p[i].col = chess_data[cnt++];
         p[i].known = chess_data[cnt++];
         p[i].dead = chess_data[cnt++];
-        p[i].type = Type(chess_data[cnt++]);
+        p[i].type = Type(int(chess_data[cnt++]));
     }
     win->log("Chessboard Synchronized.");
 
