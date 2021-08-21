@@ -21,7 +21,7 @@ bool Chessboard::Railway[12][5] = {
     0, 0, 0, 0, 0
 };
 
-Chessboard::Chessboard(MainWindow *_win): win(_win)
+Chessboard::Chessboard(MainWindow *_win): QObject(_win), win(_win)
 {
     has_start = false;  // WARNING
     is_online = false;

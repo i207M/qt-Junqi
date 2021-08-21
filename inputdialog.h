@@ -3,7 +3,8 @@
 
 #include <QDialog>
 
-namespace Ui {
+namespace Ui
+{
 class InputDialog;
 }
 
@@ -16,7 +17,8 @@ public:
     ~InputDialog();
 
 private slots:
-    void on_buttonBox_accepted();
+    void on_pushButton_ok_clicked();
+    void on_pushButton_cancel_clicked();
 
 private:
     Ui::InputDialog *ui;

@@ -12,7 +12,6 @@ class Netboard : public Chessboard
     Q_OBJECT
 
 public:
-    // Netboard() = delete;
     explicit Netboard(MainWindow *_win, QString ip);
     virtual ~Netboard();
 

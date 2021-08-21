@@ -55,7 +55,9 @@ void MainWindow::actionCreateServer()
 void MainWindow::actionConnectServer()
 {
     InputDialog dlg(this);
-    dlg.exec();
+    if(dlg.exec() != QDialog::Accepted) {
+        return;
+    }
 
     game_mode = 3;
     ip = "127.0.0.1";  // TODO
