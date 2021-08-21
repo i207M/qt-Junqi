@@ -93,6 +93,7 @@ void MainWindow::actionSetLocalGame()
 void MainWindow::gameOver(QString str)
 {
     board->endTimer();
+    board->stopHeartBeat();
     QMessageBox::information(this,
                              tr("Game Over"),
                              str);

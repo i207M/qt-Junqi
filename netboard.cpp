@@ -141,6 +141,15 @@ void Netboard::tryAdmitDefeat()
     }
 }
 
+bool Netboard::showSelected(int id) const
+{
+    if(id == select_id and p[id].color == local_color) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void Netboard::localPressStart()
 {
     err("localPressStart");

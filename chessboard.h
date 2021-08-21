@@ -61,12 +61,12 @@ protected:
     int num_turn;
     int flip_color[2];
     int num_time_out[2];
+    int select_id;
 
 private:
     QTimer *timer;
 
     int timeRemaining;
-    int select_id;
 };
 
 #endif // CHESSBOARD_H
