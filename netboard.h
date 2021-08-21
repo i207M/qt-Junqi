@@ -13,7 +13,7 @@ class Netboard : public Chessboard
 
 public:
     explicit Netboard(MainWindow *_win, QString ip);
-    virtual ~Netboard();
+    // virtual ~Netboard();
 
     virtual void localPressStart() override;
     virtual void netPressStart(int _random_prior);

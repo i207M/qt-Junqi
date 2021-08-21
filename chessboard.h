@@ -12,7 +12,7 @@ class Chessboard: public QObject
 public:
     Chessboard() = delete;
     explicit Chessboard(MainWindow *_win);
-    virtual ~Chessboard();
+    // virtual ~Chessboard();
 
     // logic
     virtual void localPressStart();

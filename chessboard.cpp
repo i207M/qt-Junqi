@@ -40,10 +40,10 @@ Chessboard::Chessboard(MainWindow *_win): QObject(_win), win(_win)
     ClickableLabel::board = this;
 }
 
-Chessboard::~Chessboard()
-{
-    delete timer;
-}
+// Chessboard::~Chessboard()
+// {
+//     delete timer;
+// }
 
 void Chessboard::localPressStart()
 {

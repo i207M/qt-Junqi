@@ -52,12 +52,12 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     recv_heart_beat = new QTimer(this);
 }
 
-Netboard::~Netboard()
-{
-    delete tcpServer;
-    delete send_heart_beat;
-    delete recv_heart_beat;
-}
+// Netboard::~Netboard()
+// {
+//     delete tcpServer;
+//     delete send_heart_beat;
+//     delete recv_heart_beat;
+// }
 
 void Netboard::slotNewConnection()
 {
