@@ -15,16 +15,16 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     qDebug() << "Netboard init " << ip;
     check(ip != "-1");
 
-    this->is_online = true;
+    is_online = true;
     random_prior[0] = -1, random_prior[1] = -1;
 
     tcpServer = nullptr;
     tcpSocket = nullptr;
     if(ip == "0") {
         local_player = 1;
-        this->initBoard();
-        this->displayAll();
-        this->win->log("Chessboard Initialized.");
+        initBoard();
+        displayAll();
+        win->log("Chessboard Initialized.");
 
         tcpServer = new QTcpServer(this);
         tcpServer->listen(QHostAddress::Any, PORT);
@@ -51,7 +51,7 @@ void Netboard::slotNewConnection()
 
     static const char Ctrl0[1] = {100};
     tcpSocket->write(Ctrl0, 1);
-    this->win->connectSuccessfully();
+    win->connectSuccessfully();
 
     sendBoard();
 }
@@ -66,7 +66,7 @@ void Netboard::slotRecv()
         err("Ctrl", ctrl);
         if(ctrl == 100) {
             check(tcpServer == nullptr);
-            this->win->connectSuccessfully();
+            win->connectSuccessfully();
         } else if(ctrl == 101) {
             syncBoard(arr.mid(i, 50 * 7));
             i += 50 * 7;
@@ -77,7 +77,7 @@ void Netboard::slotRecv()
             Chessboard::clickPos(click_row, click_col);
         } else if(ctrl == 105) {
             // TODO: cannot admit defeat as your opponent
-            // this->win->actionAdmitDefeat();
+            // win->actionAdmitDefeat();
         } else {
             err("Error Ctrl");
         }
@@ -96,13 +96,13 @@ void Netboard::localPressStart()
 {
     err("localPressStart");
     if(tcpSocket == nullptr) {
-        QMessageBox::warning(this->win,
+        QMessageBox::warning(win,
                              tr("Warning"),
                              tr("Client Not Connected."));
         return;
     }
 
-    this->win->log("You Pressed Start.");
+    win->log("You Pressed Start.");
     genRandomPrior();
 
     char Ctrl2[2] = {102, random_prior[0]};
@@ -113,7 +113,7 @@ void Netboard::localPressStart()
 
 void Netboard::netPressStart(char _random_prior)
 {
-    this->win->log("Opponent Pressed Start.");
+    win->log("Opponent Pressed Start.");
     random_prior[1] = _random_prior;
     checkStart();
 }
@@ -153,9 +153,9 @@ void Netboard::syncBoard(QByteArray chess_data)
         p[i].dead = chess_data[cnt++];
         p[i].type = Type(chess_data[cnt++]);
     }
-    this->win->log("Chessboard Synchronized.");
+    win->log("Chessboard Synchronized.");
 
-    this->displayAll();
+    displayAll();
 }
 
 void Netboard::genRandomPrior()
@@ -174,41 +174,41 @@ void Netboard::checkStart()
         err("Start Prior", random_prior[0], random_prior[1]);
         if(random_prior[0] >= random_prior[1]) {
             // self is the first, but need swap
-            this->current_player = this->getOpp(local_player);
+            current_player = getOpp(local_player);
         } else {
             // opponent is the first, but need swap
-            this->current_player = local_player;
+            current_player = local_player;
         }
-        this->win->log("Game Start!");
-        this->has_start = true;
-        this->nextTurn();
+        win->log("Game Start!");
+        has_start = true;
+        nextTurn();
     }
 }
 
 void Netboard::nextTurn()
 {
     err("nextTurn");
-    ++(this->num_turn);
-    this->win->endTimer();
+    ++(num_turn);
+    win->endTimer();
 
-    this->current_player = getOpp();
-    if(this->current_color != 0) {
-        this->current_color = (this->current_color == 1 ? 2 : 1);
+    current_player = getOpp();
+    if(current_color != 0) {
+        current_color = (current_color == 1 ? 2 : 1);
     }
-    this->select(-1);
+    select(-1);
     win->changeYouPlayer(current_player, current_color);
 
-    this->win->changeWhoseTurn(current_player);
+    win->changeWhoseTurn(current_player);
 
-    this->tryGameOver();
+    tryGameOver();
 
-    this->win->startTimer();
-    this->win->log(QString("Turn #%1").arg(num_turn));
+    win->startTimer();
+    win->log(QString("Turn #%1").arg(num_turn));
 }
 
 void Netboard::tryDetermineColor(int id)
 {
-    if(this->flip_color[current_player - 1] == this->p[id].color) {
+    if(flip_color[current_player - 1] == p[id].color) {
         current_color = p[id].color;
         win->log(QString("Color determined: Player %1 is %2").arg(current_player)
                  .arg(current_color == 1 ? "red" : "blue"));

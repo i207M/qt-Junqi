@@ -111,7 +111,7 @@ bool Piece::canMoveAround()
         static const int r[] = {-1, 0, 1, 0, -1, 1, 1, -1};
         static const int c[] = {0, 1, 0, -1, 1, 1, -1, -1};
         for(int i = 0; i < 8; ++i) {
-            int n_row = row + r[i], n_col = col + r[i];
+            int n_row = row + r[i], n_col = col + c[i];
             if(n_row >= 0 and n_row < 12 and n_col >= 0 and n_col <= 5) {
                 int n_id = board->getIdByPos(n_row, n_col);
                 if(n_id == -1) {
