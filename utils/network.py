@@ -11,11 +11,7 @@ if ctrl == 100:
     pass
 elif ctrl == 101:
     # 由server至client
-    # 同步棋盘，然后游戏开始
-    # 直接发送内存，然后memcpy，然后displayAll
-    # 注意static的初始化
-
-    # 先由client向server请求
+    # 同步棋盘
     pass
 elif ctrl == 102:
     # 点击start
