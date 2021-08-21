@@ -44,7 +44,7 @@ public:
     virtual void stopHeartBeat() {}
     void debugRandomlyKill();
 
-    static bool Railway[12][5];
+    static int Railway[12][5];
 
     PieceDisplay p[50];
 

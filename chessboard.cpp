@@ -6,7 +6,7 @@
 #include "ui_mainwindow.h"
 #include "m_debug.h"
 
-bool Chessboard::Railway[12][5] = {
+int Chessboard::Railway[12][5] = {
     0, 0, 0, 0, 0,
     1, 1, 1, 1, 1,
     1, 0, 0, 0, 1,
