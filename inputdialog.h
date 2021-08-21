@@ -21,6 +21,10 @@ private slots:
     void on_pushButton_cancel_clicked();
 
 private:
+    void clickButton(QChar c);
+    void clickButtonDel();
+    void connectButton();
+
     Ui::InputDialog *ui;
 
     QString *ip;
