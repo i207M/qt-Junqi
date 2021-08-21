@@ -11,4 +11,4 @@ Makefile
 *.Release
 *.pro.user
 .qmake.stash
-ui_mainwindow.h
+ui_*.h

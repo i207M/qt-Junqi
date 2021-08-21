@@ -11,6 +11,7 @@ CONFIG += c++11 Console
 SOURCES += \
     chessboard.cpp \
     clickablelabel.cpp \
+    createserverdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     netboard.cpp \
@@ -21,12 +22,14 @@ HEADERS += \
     Mdebug.h \
     chessboard.h \
     clickablelabel.h \
+    createserverdialog.h \
     mainwindow.h \
     netboard.h \
     piece.h \
     piecedisplay.h
 
 FORMS += \
+    createserverdialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.
