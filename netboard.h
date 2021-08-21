@@ -18,6 +18,8 @@ public:
     virtual void netPressStart(int _random_prior);
     virtual void clickPos(int row, int col) override;
 
+    virtual void stopHeartBeat() override;
+    
 private slots:
     void slotNewConnection();
     void slotRecv();

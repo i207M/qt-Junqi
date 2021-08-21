@@ -35,6 +35,7 @@ public:
     virtual bool showSelected(int id) const;
 
     // debug
+    virtual void stopHeartBeat() {}
     void debugRandomlyKill();
 
     static bool Railway[12][5];

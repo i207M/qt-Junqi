@@ -33,7 +33,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
         local_player = 2;
 
         tcpSocket = new QTcpSocket(this);
-        tcpSocket->connectToHost(QHostAddress(ip), PORT);
+        tcpSocket->connectToHost(ip, PORT);
         connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
     }
     win->changeYouPlayer(local_player, 0);
@@ -242,6 +242,13 @@ void Netboard::recvHeartBeat()
     recv_heart_beat = new QTimer(this);
     connect(recv_heart_beat, &QTimer::timeout, this, &Netboard::recvHeartBeat);
     recv_heart_beat->start(1000);
+}
+
+void Netboard::stopHeartBeat()
+{
+    err("stopHeartBeat");
+    send_heart_beat->stop();
+    recv_heart_beat->stop();
 }
 
 void Netboard::oppDisconnect()

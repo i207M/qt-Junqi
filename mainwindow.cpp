@@ -110,7 +110,7 @@ void MainWindow::startTimer()
 
     timeRemaining = Player_Time;
     ui->lcdNumber->display(timeRemaining);
-    
+
     delete timer;
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::oneSecond);
@@ -174,6 +174,11 @@ void MainWindow::log(QString str)
 void MainWindow::on_actionRandomly_Kill_triggered()
 {
     board->debugRandomlyKill();
+}
+
+void MainWindow::on_actionDisconnect_triggered()
+{
+    board->stopHeartBeat();
 }
 
 QString MainWindow::getIp()

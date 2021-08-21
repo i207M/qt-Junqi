@@ -63,6 +63,7 @@ private slots:
     void on_buttonLocal_clicked();
 
     void on_actionRandomly_Kill_triggered();
+    void on_actionDisconnect_triggered();
 
 private:
     QTimer *timer;
