@@ -292,7 +292,7 @@ void Netboard::sendHeartBeat()
 
 void Netboard::recvHeartBeat()
 {
-    if(time(0) - last_heart_beat > 1) {
+    if(time(0) - last_heart_beat > 5) {
         oppDisconnect();
     }
 
