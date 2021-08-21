@@ -15,7 +15,7 @@ public:
     explicit Netboard(MainWindow *_win, QString ip);
 
     virtual void localPressStart() override;
-    virtual void netPressStart(char _random_prior);
+    virtual void netPressStart(int _random_prior);
     virtual void clickPos(int row, int col) override;
 
 private slots:
@@ -31,12 +31,20 @@ private:
     void genRandomPrior();
     void checkStart();
 
+    void initHeartBeat();
+    void sendHeartBeat();
+    void recvHeartBeat();
+    void oppDisconnect();
+
     QTcpServer *tcpServer;
     QTcpSocket *tcpSocket;
+    QTimer *send_heart_beat;
+    QTimer *recv_heart_beat;
 
     int local_player;  // 1: server, 2: client
     int local_color;
-    char random_prior[2]; // 0: self, 1: opponent
+    int random_prior[2];  // 0: self, 1: opponent
+    int last_heart_beat;
 };
 
 #endif // NETBOARD_H

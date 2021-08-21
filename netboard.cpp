@@ -36,6 +36,10 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
         tcpSocket->connectToHost(QHostAddress(ip), PORT);
         connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
     }
+    win->changeYouPlayer(local_player, 0);
+
+    send_heart_beat = new QTimer(this);
+    recv_heart_beat = new QTimer(this);
 }
 
 void Netboard::slotNewConnection()
@@ -52,6 +56,7 @@ void Netboard::slotNewConnection()
     static const char Ctrl0[1] = {100};
     tcpSocket->write(Ctrl0, 1);
     win->connectSuccessfully();
+    initHeartBeat();
 
     sendBoard();
 }
@@ -67,11 +72,14 @@ void Netboard::slotRecv()
         if(ctrl == 100) {
             check(tcpServer == nullptr);
             win->connectSuccessfully();
+            initHeartBeat();
         } else if(ctrl == 101) {
             syncBoard(arr.mid(i, 50 * 7));
             i += 50 * 7;
         } else if(ctrl == 102) {
             netPressStart(arr[i++]);
+        } else if(ctrl == 103) {
+            last_heart_beat = time(0);
         } else if (ctrl == 104) {
             int click_row = arr[i++], click_col = arr[i++];
             Chessboard::clickPos(click_row, click_col);
@@ -86,7 +94,10 @@ void Netboard::slotRecv()
 
 void Netboard::clickPos(int row, int col)
 {
-    err("Netboard clickPos", row, col);
+    if(current_player != local_player) {
+        win->log("It is not your turn.");
+        return;
+    }
     Chessboard::clickPos(row, col);
     char Ctrl4[3] = {104, row, col};
     tcpSocket->write(Ctrl4, 3);
@@ -102,7 +113,7 @@ void Netboard::localPressStart()
         return;
     }
 
-    win->log("You Pressed Start.");
+    win->log("You pressed start.");
     genRandomPrior();
 
     char Ctrl2[2] = {102, random_prior[0]};
@@ -111,9 +122,9 @@ void Netboard::localPressStart()
     checkStart();
 }
 
-void Netboard::netPressStart(char _random_prior)
+void Netboard::netPressStart(int _random_prior)
 {
-    win->log("Opponent Pressed Start.");
+    win->log("Opponent pressed start.");
     random_prior[1] = _random_prior;
     checkStart();
 }
@@ -180,6 +191,7 @@ void Netboard::checkStart()
             current_player = local_player;
         }
         win->log("Game Start!");
+        win->log(QString("Player %1 moves first.").arg(getOpp(current_player)));
         has_start = true;
         nextTurn();
     }
@@ -197,7 +209,42 @@ void Netboard::tryDetermineColor(int id)
         } else {
             local_color = getOpp(current_color);
         }
-        win->changeYouPlayer(current_player, current_color);
+        win->changeYouPlayer(local_player, local_color);
     }
     flip_color[current_player - 1] = p[id].color;
+}
+
+void Netboard::initHeartBeat()
+{
+    last_heart_beat = time(0);
+    sendHeartBeat();
+    recvHeartBeat();
+}
+
+void Netboard::sendHeartBeat()
+{
+    static const char Ctrl3[1] = {103};
+    tcpSocket->write(Ctrl3, 1);
+
+    delete send_heart_beat;
+    send_heart_beat = new QTimer(this);
+    connect(send_heart_beat, &QTimer::timeout, this, &Netboard::sendHeartBeat);
+    send_heart_beat->start(500);
+}
+
+void Netboard::recvHeartBeat()
+{
+    if(time(0) - last_heart_beat > 1) {
+        oppDisconnect();
+    }
+
+    delete recv_heart_beat;
+    recv_heart_beat = new QTimer(this);
+    connect(recv_heart_beat, &QTimer::timeout, this, &Netboard::recvHeartBeat);
+    recv_heart_beat->start(1000);
+}
+
+void Netboard::oppDisconnect()
+{
+    win->gameOver("Opponent disconnected.");
 }

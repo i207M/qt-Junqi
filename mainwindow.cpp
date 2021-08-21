@@ -29,7 +29,7 @@ MainWindow::~MainWindow()
 void MainWindow::actionCreateServer()
 {
     game_mode = 2;
-    log(getIp());  // TODO
+    log("Your IP address is " + getIp()); // TODO
     ip = "0";
 
     board = new Netboard(this, ip);
@@ -110,6 +110,8 @@ void MainWindow::startTimer()
 
     timeRemaining = Player_Time;
     ui->lcdNumber->display(timeRemaining);
+    
+    delete timer;
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::oneSecond);
     timer->start(1000);

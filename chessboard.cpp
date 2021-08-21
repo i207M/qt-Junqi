@@ -106,7 +106,7 @@ void Chessboard::nextTurn()
     tryGameOver();
 
     win->startTimer();
-    win->log(QString("Turn #%1").arg(num_turn));
+    win->log(QString("Round #%1").arg(num_turn));
 }
 
 void Chessboard::timeOut()
