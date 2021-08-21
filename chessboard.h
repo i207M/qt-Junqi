@@ -20,7 +20,7 @@ public:
     void displayAll();
     void nextTurn();
     virtual void timeOut();
-    void tryAdmitDefeat();
+    virtual void tryAdmitDefeat();
     void tryGameOver();
     virtual void clickPos(int row, int col);
     void clickPiece(int id);

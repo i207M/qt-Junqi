@@ -132,7 +132,9 @@ void Chessboard::timeOut()
 
 void Chessboard::tryAdmitDefeat()
 {
-    if(num_turn >= 20) {
+    const int Admit_Defeat_Limit = 20;
+
+    if(num_turn >= Admit_Defeat_Limit) {
         win->gameOver(QString("Admit defeat!\nThe Winner is Player %1.").arg(getOpp()));
     } else {
         win->log("Failed to Admit Defeat. The number of rounds is less than 20.");

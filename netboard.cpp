@@ -91,8 +91,8 @@ void Netboard::slotRecv()
             int click_row = arr[i++], click_col = arr[i++];
             Chessboard::clickPos(click_row, click_col);
         } else if(ctrl == 105) {
-            // TODO: cannot admit defeat as your opponent
-            // win->actionAdmitDefeat();
+            // cannot admit defeat as your opponent
+            win->gameOver(QString("Admit defeat!\nThe Winner is Player %1.").arg(local_player));
         } else if(ctrl == 106) {
             err("Opponent timed out.");
         } else {
@@ -126,6 +126,19 @@ void Netboard::timeOut()
         win->log(QString("Player %1 timed out.").arg(current_player));
     }
     nextTurn();
+}
+
+void Netboard::tryAdmitDefeat()
+{
+    const int Admit_Defeat_Limit = 20;
+
+    if(num_turn >= Admit_Defeat_Limit) {
+        static const char Ctrl5[1] = {105};
+        tcpSocket->write(Ctrl5);
+        win->gameOver(QString("Admit defeat!\nThe Winner is Player %1.").arg(getOpp(local_player)));
+    } else {
+        win->log("Failed to Admit Defeat. The number of rounds is less than 20.");
+    }
 }
 
 void Netboard::localPressStart()
@@ -198,7 +211,7 @@ void Netboard::genRandomPrior()
 {
     if(random_prior[0] == -1) {
         srand(time(0));
-        random_prior[0] = rand() % 100;
+        random_prior[0] = 1; //rand() % 100;
     }
 }
 
@@ -208,7 +221,8 @@ void Netboard::checkStart()
         return;
     } else {
         err("Start Prior", random_prior[0], random_prior[1]);
-        if(random_prior[0] >= random_prior[1]) {
+        if(random_prior[0] > random_prior[1] or
+                (random_prior[0] == random_prior[1] and local_player == 1)) {
             // self is the first, but need swap
             current_player = getOpp(local_player);
         } else {
