@@ -1,6 +1,7 @@
 name: Android
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -31,6 +32,8 @@ jobs:
           python3 -m pip install aqtinstall==1.2.5
           python3 -m aqt install 5.15.2 linux android android -O /home/runner/work/summer-course-2021/Qt
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
@@ -40,5 +43,3 @@ jobs:
           export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle
           qmake
           make
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3

@@ -1,7 +1,6 @@
 name: Ubuntu
-# Qt官方没有linux平台的x86包
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   build:
