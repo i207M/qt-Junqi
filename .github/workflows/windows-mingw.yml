@@ -11,11 +11,11 @@ jobs:
         include:
           - qt_arch: win64_mingw81
             qt_ver: 5.15.2
-            qt_tools: "tools_mingw,8.1.0-1-202004170606,qt.tools.win64_mingw810"
+            qt_tools: "tools_mingw,qt.tools.win64_mingw810"
             qt_tools_mingw_install: mingw810_64
           - qt_arch: win64_mingw81
-            qt_ver: 6.0.0
-            qt_tools: "tools_mingw,8.1.0-1-202004170606,qt.tools.win64_mingw810"
+            qt_ver: 6.1.2
+            qt_tools: "tools_mingw,qt.tools.win64_mingw810"
             qt_tools_mingw_install: mingw810_64
     env:
       targetName: Junqi.exe
@@ -47,7 +47,7 @@ jobs:
         run: |
           Get-Command -Name 'qmake' | Format-List
           Get-Command -Name 'mingw32-make' | Format-List
-      - name: mingw-build
+      - name: Build on MinGW
         id: build
         shell: cmd
         run: |

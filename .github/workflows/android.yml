@@ -20,12 +20,12 @@ jobs:
           target: ${{ matrix.qt_target }}
           arch: ${{ matrix.qt_arch }}
           setup-python: "false"
-          tools: "tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.14.0-0,qt.tools.qtcreator"
+          tools: "tools_ifw,qt.tools.ifw.40,tools_qtcreator,4.14.0-0,qt.tools.qtcreator"
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: build android
+      - name: Build android
         run: |
           export ANDROID_SDK_ROOT=$ANDROID_HOME
           export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk-bundle

@@ -16,14 +16,14 @@ Write-Host "scriptDir" $scriptDir
 function Main() {
 
     New-Item -ItemType Directory $archiveName
-    # 拷贝exe
+    # 拷贝程序
     Copy-Item release\$targetName $archiveName\
     # 拷贝依赖
     windeployqt --qmldir . --plugindir $archiveName\plugins --no-translations --compiler-runtime $archiveName\$targetName
     # 删除不必要的文件
     $excludeList = @("*.qmlc", "*.ilk", "*.exp", "*.lib", "*.pdb")
     Remove-Item -Path $archiveName -Include $excludeList -Recurse -Force
-    # 打包zip
+    # 打包
     Compress-Archive -Path $archiveName $archiveName'.zip'
 }
 

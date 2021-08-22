@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: Build macOS
+      - name: Build on macOS
         run: |
           qmake
           make
