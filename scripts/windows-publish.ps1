@@ -26,7 +26,7 @@ Write-Host "scriptDir" $scriptDir
 function Main() {
 
     New-Item -ItemType Directory $archiveName
-    # 拷贝exe
+    # 拷贝程序
     Copy-Item bin\release\$targetName $archiveName\
     # 拷贝依赖
     windeployqt --qmldir . --plugindir $archiveName\plugins --no-translations --compiler-runtime $archiveName\$targetName
@@ -39,7 +39,7 @@ function Main() {
     # 拷贝WinSDK dll
     $sdkDll="{0}Redist\{1}ucrt\DLLs\{2}\*.dll" -f $env:winSdkDir.Trim(),$env:winSdkVer.Trim(),$env:msvcArch
     Copy-Item $sdkDll $archiveName\
-    # 打包zip
+    # 打包
     Compress-Archive -Path $archiveName $archiveName'.zip'
 }
 
