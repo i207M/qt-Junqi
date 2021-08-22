@@ -13,15 +13,23 @@ jobs:
         qt_target: [android]
         qt_arch: [android_armv7]
     steps:
+      # - name: Install Qt
+      #   uses: jurplel/install-qt-action@v2.10.0
+      #   with:
+      #     version: ${{ matrix.qt_ver }}
+      #     target: ${{ matrix.qt_target }}
+      #     arch: ${{ matrix.qt_arch }}
+      #     tools: "tools_ifw,qt.tools.ifw.40,tools_qtcreator,4.14.0-0,qt.tools.qtcreator"
+      #     setup-python: "false"
+      #     aqtversion: ==1.2.5
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.10.0
-        with:
-          version: ${{ matrix.qt_ver }}
-          target: ${{ matrix.qt_target }}
-          arch: ${{ matrix.qt_arch }}
-          tools: "tools_ifw,qt.tools.ifw.40,tools_qtcreator,4.14.0-0,qt.tools.qtcreator"
-          setup-python: "false"
-          aqtversion: ==1.2.5
+        run: |
+          sudo apt-get update
+          sudo apt-get install build-essential libgl1-mesa-dev libxkbcommon-x11-0 libpulse-dev -y
+          python3 -m pip install setuptools wheel
+          python3 -m pip install py7zr==0.10.1
+          python3 -m pip install aqtinstall==1.2.5
+          python3 -m aqt install 5.15.2 linux android android -O /home/runner/work/summer-course-2021/Qt
 
       - uses: actions/checkout@v2
         with:
