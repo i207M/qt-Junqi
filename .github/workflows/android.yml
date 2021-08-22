@@ -42,5 +42,8 @@ jobs:
           export PATH=$PATH:~/work/summer-course-2021/Qt/5.15.2/android/bin/
           qmake
           make
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+          make -j$(nproc) apk
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Junqi.apk
+          path: android-build//build/outputs/apk/debug/android-build-debug.apk
