@@ -30,6 +30,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::actionCreateServer()
 {
+    if(game_mode != 0) {
+        QMessageBox::warning(this,
+                             tr("Warning"),
+                             tr("You have selected game mode."));
+        return;
+    }
+
     CreateServerDialog dlg(this);
     QList<QHostAddress> list = QNetworkInterface::allAddresses();
     for(const auto &address : list) {
@@ -54,6 +61,12 @@ void MainWindow::actionCreateServer()
 
 void MainWindow::actionConnectServer()
 {
+    if(game_mode != 0) {
+        QMessageBox::warning(this,
+                             tr("Warning"),
+                             tr("You have selected game mode."));
+        return;
+    }
     InputDialog dlg(this, &ip);
     if(dlg.exec() != QDialog::Accepted) {
         return;
