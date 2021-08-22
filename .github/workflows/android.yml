@@ -1,6 +1,5 @@
 name: Android
 on:
-  push:
   workflow_dispatch:
 
 jobs:
