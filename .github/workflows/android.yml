@@ -19,8 +19,9 @@ jobs:
           version: ${{ matrix.qt_ver }}
           target: ${{ matrix.qt_target }}
           arch: ${{ matrix.qt_arch }}
-          setup-python: "false"
           tools: "tools_ifw,qt.tools.ifw.40,tools_qtcreator,4.14.0-0,qt.tools.qtcreator"
+          setup-python: "false"
+          aqtversion: ==1.2.5
 
       - uses: actions/checkout@v2
         with:
