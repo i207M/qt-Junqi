@@ -1,6 +1,5 @@
 name: Ubuntu
-on:
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 jobs:
   build:
@@ -26,3 +25,5 @@ jobs:
         run: |
           qmake
           make
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
