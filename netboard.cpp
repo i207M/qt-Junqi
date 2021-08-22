@@ -64,6 +64,7 @@ void Netboard::slotNewConnection()
     err("Got connection");
     if(tcpSocket != nullptr) {
         err("Reject multiple connection");
+        // TODO: close
         return;
     }
 
@@ -90,6 +91,7 @@ void Netboard::slotRecv()
             check(local_player == 2);
             initHeartBeat();
             win->connectSuccessfully();
+            // TODO: stop timer
         } else if(ctrl == 101) {
             syncBoard(arr.mid(i, 50 * 7));
             i += 50 * 7;

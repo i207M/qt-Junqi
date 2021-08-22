@@ -345,5 +345,6 @@ void Chessboard::debugRandomlyKill()
             p[i].kill();
         }
     }
+    // TODO
     nextTurn();
 }
