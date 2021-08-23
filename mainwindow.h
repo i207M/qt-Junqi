@@ -44,6 +44,7 @@ public:
     void connectSuccessfully();
 
     Ui::MainWindow *ui;
+    bool is_game_over;
 
 private slots:
     void on_actionCreate_a_server_triggered();

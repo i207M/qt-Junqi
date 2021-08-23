@@ -16,6 +16,8 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     is_online = true;
     random_prior[0] = -1, random_prior[1] = -1;
     connect_timer = new QTimer(this);
+    send_heart_beat = new QTimer(this);
+    recv_heart_beat = new QTimer(this);
 
     tcpServer = new QTcpServer(this);
     tcpSocket = new QTcpSocket(this);
@@ -27,19 +29,20 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
         win->log("Chessboard Initialized.");
         win->log("Waiting for Connection...");
 
-        tcpServer->listen(QHostAddress::Any, PORT);
         connect(tcpServer, &QTcpServer::newConnection, this, &Netboard::slotNewConnection);
+        tcpServer->listen(QHostAddress::Any, PORT);
     } else {
         local_player = 2;
-
         connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
         connect(tcpSocket, &QTcpSocket::disconnected, this, [ = ]() {
+            if(this->win->is_game_over) {
+                return;
+            }
             QMessageBox::warning(this->win,
                                  tr("Warning"),
                                  tr("Disconnected"));
             this->win->restart();
         });
-        // err("Trying connecting", ip.toStdString(), PORT);
         win->log("Waiting for Connection...");
         tcpSocket->connectToHost(ip, PORT);
 
@@ -52,9 +55,6 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
         connect_timer->start(5000);
     }
     win->changeYouPlayer(local_player, 0);
-
-    send_heart_beat = new QTimer(this);
-    recv_heart_beat = new QTimer(this);
 }
 
 Netboard::~Netboard()
@@ -69,7 +69,7 @@ void Netboard::slotNewConnection()
 {
     err("Got connection");
     if(is_connected) {
-        err("Reject multiple connection");
+        err("Reject multiple connections");
         return;
     }
 
@@ -78,11 +78,11 @@ void Netboard::slotNewConnection()
 
     static const char Ctrl0[1] = {100};
     tcpSocket->write(Ctrl0, 1);
+
     is_connected = true;
     sendBoard();
     initHeartBeat();
     win->connectSuccessfully();
-
 }
 
 void Netboard::slotRecv()
@@ -97,8 +97,8 @@ void Netboard::slotRecv()
             check(local_player == 2);
             is_connected = true;
             connect_timer->stop();
-            win->connectSuccessfully();
             initHeartBeat();
+            win->connectSuccessfully();
         } else if(ctrl == 101) {
             syncBoard(arr.mid(i, 50 * 7));
             i += 50 * 7;

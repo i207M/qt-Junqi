@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     board = nullptr;
     game_mode = 0;
     ip = "-1";
+    is_game_over = false;
 
     PieceDisplay::initDisplay(ui);
     log("Author: i207M");
@@ -120,6 +121,7 @@ void MainWindow::actionSetLocalGame()
 
 void MainWindow::gameOver(QString str)
 {
+    is_game_over = true;
     board->endTimer();
     board->stopHeartBeat();
     QMessageBox::information(this,
