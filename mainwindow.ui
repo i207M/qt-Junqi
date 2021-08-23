@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>军棋</string>
+   <string>QtJunqi</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="ClickableLabel" name="labelBackground">
