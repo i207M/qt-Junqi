@@ -9,9 +9,9 @@
 template<class T>
 void err(const T &x, const char c = '\n')
 {
-#ifdef M_DEBUG
+// #ifdef M_DEBUG
     std::cerr << x << c;
-#endif
+// #endif
 }
 
 template<class T, class ...Args>
