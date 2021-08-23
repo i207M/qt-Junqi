@@ -79,10 +79,10 @@ void Netboard::slotNewConnection()
     static const char Ctrl0[1] = {100};
     tcpSocket->write(Ctrl0, 1);
     is_connected = true;
-    win->connectSuccessfully();
-    initHeartBeat();
-
     sendBoard();
+    initHeartBeat();
+    win->connectSuccessfully();
+
 }
 
 void Netboard::slotRecv()
@@ -126,9 +126,9 @@ void Netboard::clickPos(int row, int col)
         win->log("It is not your turn.");
         return;
     }
-    Chessboard::clickPos(row, col);
     char Ctrl4[3] = {104, char(row), char(col)};
     tcpSocket->write(Ctrl4, 3);
+    Chessboard::clickPos(row, col);
 }
 
 void Netboard::timeOut()
@@ -318,4 +318,10 @@ void Netboard::stopHeartBeat()
     err("stopHeartBeat");
     send_heart_beat->stop();
     recv_heart_beat->stop();
+}
+
+void Netboard::debugRandomlyKill()
+{
+    Chessboard::debugRandomlyKill();
+    sendBoard();
 }

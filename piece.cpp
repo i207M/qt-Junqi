@@ -256,7 +256,7 @@ bool Piece::bfs(int s_row, int s_col, int t_row, int t_col) const
                 return true;
             }
 
-            if(n_row >= 0 and n_row < 12 and n_col >= 0 and n_col <= 5
+            if(n_row >= 0 and n_row < 12 and n_col >= 0 and n_col < 5
                     and Chessboard::Railway[n_row][n_col]
                     and board->isEmpty(n_row, n_col)
                     and not vis[n_row][n_col]) {

@@ -69,7 +69,7 @@ void Chessboard::initBoard()
         }
     }
 
-    int seed = time(0);
+    int seed = 1629722193; //time(0);
     err("Seed", seed);
     srand(seed);
     std::random_shuffle(p, p + 50);
@@ -148,8 +148,8 @@ void Chessboard::tryGameOver()
     }
 
     for(int i = 0; i < 50; ++i) {
-        if(p[i].color == current_color and p[i].type == Type::JunQi and p[i].dead) {
-            win->gameOver(QString("Flag Lost!\nThe Winner is Player %1.").arg(getOpp()));
+        if(p[i].type == Type::JunQi and p[i].dead) {
+            win->gameOver(QString("Flag Lost!\nThe Winner is Player %1.").arg(getOpp(p[i].color)));
             return;
         }
     }
@@ -345,6 +345,4 @@ void Chessboard::debugRandomlyKill()
             p[i].kill();
         }
     }
-    // TODO
-    nextTurn();
 }

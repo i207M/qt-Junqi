@@ -23,6 +23,7 @@ public:
     virtual bool showSelected(int id) const override;
 
     virtual void stopHeartBeat() override;
+    virtual void debugRandomlyKill() override;
 
 private slots:
     void slotNewConnection();

@@ -42,7 +42,7 @@ public:
 
     // debug
     virtual void stopHeartBeat() {}
-    void debugRandomlyKill();
+    virtual void debugRandomlyKill();
 
     static int Railway[12][5];
 

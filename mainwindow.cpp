@@ -175,7 +175,7 @@ void MainWindow::on_actionRandomly_Kill_triggered()
     board->debugRandomlyKill();
 }
 
-void MainWindow::on_actionDisconnect_triggered()  // TODO
+void MainWindow::on_actionDisconnect_triggered()
 {
     board->stopHeartBeat();
 }
@@ -196,8 +196,8 @@ void MainWindow::connectSuccessfully()
 {
     log("Connection Established.");
     QMessageBox::information(this,
-                          tr("Connection Established"),
-                          tr("You can press start."));
+                             tr("Connection Established"),
+                             tr("You can press start."));
 }
 
 #pragma region
