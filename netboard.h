@@ -52,6 +52,7 @@ private:
     int local_color;
     int random_prior[2];  // 0: self, 1: opponent
     int last_heart_beat;
+    bool is_connected;
 };
 
 #endif // NETBOARD_H

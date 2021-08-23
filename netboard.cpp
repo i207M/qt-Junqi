@@ -19,12 +19,13 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 
     tcpServer = new QTcpServer(this);
     tcpSocket = nullptr;
+    is_connected = false;
     if(ip == "0") {
         local_player = 1;
         initBoard();
         displayAll();
         win->log("Chessboard Initialized.");
-        win->log("Waiting for Client...");
+        win->log("Waiting for Connection...");
 
         tcpServer->listen(QHostAddress::Any, PORT);
         connect(tcpServer, &QTcpServer::newConnection, this, &Netboard::slotNewConnection);
@@ -39,7 +40,8 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
                                  tr("Disconnected"));
             this->win->restart();
         });
-        err("Trying connecting", ip.toStdString(), PORT);
+        // err("Trying connecting", ip.toStdString(), PORT);
+        win->log("Waiting for Connection...");
         tcpSocket->connectToHost(ip, PORT);
 
         connect(connect_timer, &QTimer::timeout, this, [ = ]() {
@@ -66,7 +68,7 @@ Netboard::~Netboard()
 void Netboard::slotNewConnection()
 {
     err("Got connection");
-    if(tcpSocket != nullptr) {
+    if(is_connected) {
         err("Reject multiple connection");
         return;
     }
@@ -76,8 +78,9 @@ void Netboard::slotNewConnection()
 
     static const char Ctrl0[1] = {100};
     tcpSocket->write(Ctrl0, 1);
-    win->connectSuccessfully();
+    is_connected = true;
     initHeartBeat();
+    win->connectSuccessfully();
 
     sendBoard();
 }
@@ -92,6 +95,7 @@ void Netboard::slotRecv()
         err("Ctrl", ctrl);
         if(ctrl == 100) {
             check(local_player == 2);
+            is_connected = true;
             initHeartBeat();
             connect_timer->stop();
             win->connectSuccessfully();
@@ -168,10 +172,10 @@ bool Netboard::showSelected(int id) const
 void Netboard::localPressStart()
 {
     err("localPressStart");
-    if(tcpSocket == nullptr) {  // TODO
+    if(not is_connected) {
         QMessageBox::warning(win,
                              tr("Warning"),
-                             tr("Client Not Connected"));
+                             tr("Not Connected"));
         return;
     }
 
