@@ -110,9 +110,10 @@ bool Piece::canMoveAround()
     } else {
         static const int r[] = {-1, 0, 1, 0, -1, 1, 1, -1};
         static const int c[] = {0, 1, 0, -1, 1, 1, -1, -1};
-        for(int i = 0; i < 8; ++i) {
+        int i_max = (board->isCamp(row, col) ? 8 : 4);
+        for(int i = 0; i < i_max; ++i) {
             int n_row = row + r[i], n_col = col + c[i];
-            if(n_row >= 0 and n_row < 12 and n_col >= 0 and n_col <= 5) {
+            if(n_row >= 0 and n_row < 12 and n_col >= 0 and n_col < 5) {
                 int n_id = board->getIdByPos(n_row, n_col);
                 if(n_id == -1) {
                     if(canMove(n_row, n_col)) {
