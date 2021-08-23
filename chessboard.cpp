@@ -69,7 +69,7 @@ void Chessboard::initBoard()
         }
     }
 
-    int seed = 1629722193; //time(0);
+    int seed = time(0);
     err("Seed", seed);
     srand(seed);
     std::random_shuffle(p, p + 50);
