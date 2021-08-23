@@ -133,7 +133,6 @@ void Netboard::clickPos(int row, int col)
 
 void Netboard::timeOut()
 {
-    int t = num_time_out[current_player - 1] + 1;
     if(current_player == local_player) {
         static const char Ctrl6[1] = {106};
         tcpSocket->write(Ctrl6);
