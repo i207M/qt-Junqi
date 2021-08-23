@@ -1002,7 +1002,7 @@
      <x>0</x>
      <y>0</y>
      <width>775</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -1025,6 +1025,7 @@
     </property>
     <addaction name="actionDisconnect"/>
     <addaction name="actionRandomly_Kill"/>
+    <addaction name="actionRestart"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuPlay"/>
@@ -1058,7 +1059,12 @@
   </action>
   <action name="actionDisconnect">
    <property name="text">
-    <string>Disconnect</string>
+    <string>Stop Heartbeat</string>
+   </property>
+  </action>
+  <action name="actionRestart">
+   <property name="text">
+    <string>Restart</string>
    </property>
   </action>
  </widget>

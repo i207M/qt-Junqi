@@ -18,7 +18,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     connect_timer = new QTimer(this);
 
     tcpServer = new QTcpServer(this);
-    tcpSocket = nullptr;
+    tcpSocket = new QTcpSocket(this);
     is_connected = false;
     if(ip == "0") {
         local_player = 1;
@@ -32,7 +32,6 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     } else {
         local_player = 2;
 
-        tcpSocket = new QTcpSocket(this);
         connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
         connect(tcpSocket, &QTcpSocket::disconnected, this, [ = ]() {
             QMessageBox::warning(this->win,
@@ -61,6 +60,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 Netboard::~Netboard()
 {
     delete tcpServer;
+    // delete tcpSocket;
     // delete send_heart_beat;
     // delete recv_heart_beat;
 }
@@ -79,8 +79,8 @@ void Netboard::slotNewConnection()
     static const char Ctrl0[1] = {100};
     tcpSocket->write(Ctrl0, 1);
     is_connected = true;
-    initHeartBeat();
     win->connectSuccessfully();
+    initHeartBeat();
 
     sendBoard();
 }
@@ -96,9 +96,9 @@ void Netboard::slotRecv()
         if(ctrl == 100) {
             check(local_player == 2);
             is_connected = true;
-            initHeartBeat();
             connect_timer->stop();
             win->connectSuccessfully();
+            initHeartBeat();
         } else if(ctrl == 101) {
             syncBoard(arr.mid(i, 50 * 7));
             i += 50 * 7;
