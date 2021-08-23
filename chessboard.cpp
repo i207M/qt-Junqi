@@ -143,6 +143,7 @@ void Chessboard::tryAdmitDefeat()
 
 void Chessboard::tryGameOver()
 {
+    err("tryGameOver");
     if(current_color == 0) {
         return;
     }
@@ -156,9 +157,10 @@ void Chessboard::tryGameOver()
 
     for(int i = 0; i < 50; ++i) {
         if(p[i].color == current_color and not p[i].dead and p[i].canMoveAround()) {
+            err("possibleMove", p[i].row, p[i].col);
             return;
         }
-        if(p[i].known == false) {
+        if(not p[i].dead and p[i].known == false) {
             return;
         }
     }
