@@ -133,12 +133,19 @@ void Netboard::clickPos(int row, int col)
 
 void Netboard::timeOut()
 {
+    int t = ++num_time_out[current_player - 1];
     if(current_player == local_player) {
         static const char Ctrl6[1] = {106};
         tcpSocket->write(Ctrl6);
     }
 
-    Chessboard::timeOut();
+    // Chessboard::timeOut();
+    if(t >= 3) {
+        win->gameOver(QString("Time out!\nThe Winner is Player %1.").arg(getOpp()));
+    } else {
+        win->log(QString("Player %1 timed out.").arg(current_player));
+    }
+    nextTurn();
 }
 
 void Netboard::tryAdmitDefeat()
