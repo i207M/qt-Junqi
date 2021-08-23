@@ -107,6 +107,7 @@ void Chessboard::nextTurn()
 
     startTimer();
     win->log(QString("Round #%1").arg(num_turn));
+    err("__nextTurn");
 }
 
 void Chessboard::localPressStart()
@@ -121,8 +122,9 @@ void Chessboard::localPressStart()
 
 void Chessboard::timeOut()
 {
+    const int Time_Out_Limit = 3;
     int t = ++num_time_out[current_player - 1];
-    if(t >= 3) {
+    if(t >= Time_Out_Limit) {
         win->gameOver(QString("Time out!\nThe Winner is Player %1.").arg(getOpp()));
     } else {
         win->log(QString("Player %1 timed out.").arg(current_player));

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cassert>
 
-// #define M_DEBUG
+#define M_DEBUG
 
 template<class T>
 void err(const T &x, const char c = '\n')

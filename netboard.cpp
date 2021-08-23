@@ -115,8 +115,10 @@ void Netboard::slotRecv()
         } else if(ctrl == 106) {
             err("Opponent timed out.");
         } else {
+            check(false);
             err("Error Ctrl");
         }
+        check(i <= arr.size());
     }
 }
 
@@ -133,19 +135,12 @@ void Netboard::clickPos(int row, int col)
 
 void Netboard::timeOut()
 {
-    int t = ++num_time_out[current_player - 1];
     if(current_player == local_player) {
         static const char Ctrl6[1] = {106};
-        tcpSocket->write(Ctrl6);
+        tcpSocket->write(Ctrl6, 1);
     }
 
-    // Chessboard::timeOut();
-    if(t >= 3) {
-        win->gameOver(QString("Time out!\nThe Winner is Player %1.").arg(getOpp()));
-    } else {
-        win->log(QString("Player %1 timed out.").arg(current_player));
-    }
-    nextTurn();
+    Chessboard::timeOut();
 }
 
 void Netboard::tryAdmitDefeat()
@@ -154,7 +149,7 @@ void Netboard::tryAdmitDefeat()
 
     if(num_turn >= Admit_Defeat_Limit) {
         static const char Ctrl5[1] = {105};
-        tcpSocket->write(Ctrl5);
+        tcpSocket->write(Ctrl5, 1);
         win->gameOver(QString("Admit defeat!\nThe Winner is Player %1.").arg(getOpp(local_player)));
     } else {
         win->log("Failed to Admit Defeat. The number of rounds is less than 20.");
