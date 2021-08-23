@@ -16,7 +16,7 @@ public:
     virtual ~Netboard();
 
     virtual void localPressStart() override;
-    virtual void netPressStart(int _random_prior);
+    void netPressStart(int _random_prior);
     virtual void clickPos(int row, int col) override;
     virtual void timeOut() override;
     virtual void tryAdmitDefeat() override;

@@ -5,7 +5,6 @@
 #include <QTime>
 #include <QTimer>
 #include <QMainWindow>
-#include <QNetworkInterface>
 
 #include "chessboard.h"
 #include "netboard.h"

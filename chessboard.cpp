@@ -144,13 +144,13 @@ void Chessboard::tryAdmitDefeat()
 void Chessboard::tryGameOver()
 {
     err("tryGameOver");
-    if(current_color == 0) {
-        return;
-    }
+    // if(current_color == 0) {
+    //     return;
+    // }
 
     for(int i = 0; i < 50; ++i) {
-        if(p[i].type == Type::JunQi and p[i].dead) {
-            win->gameOver(QString("Flag Lost!\nThe Winner is Player %1.").arg(getOpp(p[i].color)));
+        if(p[i].color == current_color and p[i].type == Type::JunQi and p[i].dead) {
+            win->gameOver(QString("Flag Lost!\nThe Winner is Player %1.").arg(getOpp()));
             return;
         }
     }

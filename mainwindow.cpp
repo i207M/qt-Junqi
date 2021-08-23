@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
 #include <QMessageBox>
-#include <QProcess>
+#include <QNetworkInterface>
 
 #include "ui_mainwindow.h"
 #include "createserverdialog.h"
