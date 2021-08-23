@@ -28,8 +28,8 @@ public:
     void kill();
     void move(int _row, int _col);
 
-    static bool goVerticalRailway(int row, int col, int n_col);
-    static bool goHorizontalRailway(int col, int row, int n_row);
+    static bool goHorizontalRailway(int row, int col, int n_col);
+    static bool goVerticalRailway(int col, int row, int n_row);
     bool canMove(int n_row, int n_col) const;
     bool canMoveAround();
     bool isIn4Direction(int n_row, int n_col) const;

@@ -46,7 +46,7 @@ void Piece::move(int _row, int _col)
     display();
 }
 
-bool Piece::goVerticalRailway(int row, int col, int n_col)
+bool Piece::goHorizontalRailway(int row, int col, int n_col)
 {
     int st = min(col, n_col), ed = max(col, n_col);
     for(int i = st + 1; i < ed; ++i) {
@@ -57,7 +57,7 @@ bool Piece::goVerticalRailway(int row, int col, int n_col)
     return true;
 }
 
-bool Piece::goHorizontalRailway(int col, int row, int n_row)
+bool Piece::goVerticalRailway(int col, int row, int n_row)
 {
     int st = min(row, n_row), ed = max(row, n_row);
     for(int i = st + 1; i < ed; ++i) {
@@ -94,9 +94,9 @@ bool Piece::canMove(int n_row, int n_col) const
             return bfs(row, col, n_row, n_col);
         } else {
             if(row == n_row) {
-                return goVerticalRailway(row, col, n_col);
+                return goHorizontalRailway(row, col, n_col);
             } else if(col == n_col) {
-                return goHorizontalRailway(col, row, n_row);
+                return goVerticalRailway(col, row, n_row);
             }
         }
     }
