@@ -195,9 +195,9 @@ void MainWindow::on_actionDisconnect_triggered()
 void MainWindow::connectSuccessfully()
 {
     log("Connection Established.");
-    QMessageBox::information(this,
-                             tr("Connection Established"),
-                             tr("You can press start."));
+    // QMessageBox::information(this,
+    //                          tr("Connection Established"),
+    //                          tr("You can press start."));
 }
 
 #pragma region
