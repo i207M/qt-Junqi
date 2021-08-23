@@ -133,8 +133,7 @@ void MainWindow::gameOver(QString str)
 
 void MainWindow::restart()
 {
-    QProcess::startDetached(qApp->applicationFilePath(), QStringList());
-    qApp->quit();
+    qApp->exit(207);
 }
 
 void MainWindow::changeYouPlayer(int id, int color)
