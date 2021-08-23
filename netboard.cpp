@@ -8,7 +8,7 @@
 
 Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
 {
-    const int PORT = 12077;
+    const int PORT = 2077;
 
     err("Netboard init", ip.toStdString());
     check(ip != "-1");
@@ -32,10 +32,14 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
         local_player = 2;
 
         tcpSocket = new QTcpSocket(this);
-        connect(tcpSocket, &QTcpSocket::connected, this, [ = ]() {
-            this->connect_timer->stop();
-        });
         connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
+        connect(tcpSocket, &QTcpSocket::disconnected, this, [ = ]() {
+            QMessageBox::warning(this->win,
+                                 tr("Warning"),
+                                 tr("Disconnected"));
+            this->win->restart();
+        });
+        err("Trying connecting", ip.toStdString(), PORT);
         tcpSocket->connectToHost(ip, PORT);
 
         connect(connect_timer, &QTimer::timeout, this, [ = ]() {
@@ -44,7 +48,7 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
                                  tr("Connection Timeout"));
             this->win->restart();
         });
-        connect_timer->start(2000);
+        connect_timer->start(5000);
     }
     win->changeYouPlayer(local_player, 0);
 
@@ -52,19 +56,18 @@ Netboard::Netboard(MainWindow *_win, QString ip): Chessboard(_win)
     recv_heart_beat = new QTimer(this);
 }
 
-// Netboard::~Netboard()
-// {
-//     delete tcpServer;
-//     delete send_heart_beat;
-//     delete recv_heart_beat;
-// }
+Netboard::~Netboard()
+{
+    delete tcpServer;
+    // delete send_heart_beat;
+    // delete recv_heart_beat;
+}
 
 void Netboard::slotNewConnection()
 {
     err("Got connection");
     if(tcpSocket != nullptr) {
         err("Reject multiple connection");
-        // TODO: close
         return;
     }
 
@@ -90,8 +93,8 @@ void Netboard::slotRecv()
         if(ctrl == 100) {
             check(local_player == 2);
             initHeartBeat();
+            connect_timer->stop();
             win->connectSuccessfully();
-            // TODO: stop timer
         } else if(ctrl == 101) {
             syncBoard(arr.mid(i, 50 * 7));
             i += 50 * 7;
@@ -103,7 +106,7 @@ void Netboard::slotRecv()
             int click_row = arr[i++], click_col = arr[i++];
             Chessboard::clickPos(click_row, click_col);
         } else if(ctrl == 105) {
-            // cannot admit defeat as your opponent
+            // assert: cannot admit defeat as your opponent
             win->gameOver(QString("Admit defeat!\nThe Winner is Player %1.").arg(local_player));
         } else if(ctrl == 106) {
             err("Opponent timed out.");
@@ -165,7 +168,7 @@ bool Netboard::showSelected(int id) const
 void Netboard::localPressStart()
 {
     err("localPressStart");
-    if(tcpSocket == nullptr) {
+    if(tcpSocket == nullptr) {  // TODO
         QMessageBox::warning(win,
                              tr("Warning"),
                              tr("Client Not Connected"));
@@ -179,6 +182,8 @@ void Netboard::localPressStart()
     tcpSocket->write(Ctrl2, 2);
 
     checkStart();
+    win->ui->buttonStart->setDisabled(true);
+    win->ui->buttonDefeat->setEnabled(true);
 }
 
 void Netboard::netPressStart(int _random_prior)
@@ -232,7 +237,7 @@ void Netboard::genRandomPrior()
 {
     if(random_prior[0] == -1) {
         srand(time(0));
-        random_prior[0] = 1; //rand() % 100;
+        random_prior[0] = rand() % 100;
     }
 }
 
@@ -294,8 +299,8 @@ void Netboard::sendHeartBeat()
 
 void Netboard::recvHeartBeat()
 {
-    if(time(0) - last_heart_beat > 5) {
-        oppDisconnect();
+    if(time(0) - last_heart_beat > 2) {
+        win->log("Cannot receive heartbeat packet.");
     }
 
     delete recv_heart_beat;
@@ -309,9 +314,4 @@ void Netboard::stopHeartBeat()
     err("stopHeartBeat");
     send_heart_beat->stop();
     recv_heart_beat->stop();
-}
-
-void Netboard::oppDisconnect()
-{
-    win->gameOver("Opponent disconnected.");
 }

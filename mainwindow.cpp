@@ -94,14 +94,13 @@ void MainWindow::actionStart()
     if(game_mode == 1) {
         board = new Chessboard(this);
         board->localPressStart();
+        ui->buttonStart->setDisabled(true);
+        ui->buttonDefeat->setEnabled(true);
     } else if (game_mode == 2 or game_mode == 3) {
         board->localPressStart();
     } else {
         err("Error Gamemode");
     }
-
-    ui->buttonStart->setDisabled(true);
-    ui->buttonDefeat->setEnabled(true);
 }
 
 void MainWindow::actionAdmitDefeat()
@@ -177,7 +176,7 @@ void MainWindow::on_actionRandomly_Kill_triggered()
     board->debugRandomlyKill();
 }
 
-void MainWindow::on_actionDisconnect_triggered()
+void MainWindow::on_actionDisconnect_triggered()  // TODO
 {
     board->stopHeartBeat();
 }
