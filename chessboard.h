@@ -15,10 +15,10 @@ public:
     // virtual ~Chessboard();
 
     // logic
-    virtual void localPressStart();
     void initBoard();
     void displayAll();
     void nextTurn();
+    virtual void localPressStart();
     virtual void timeOut();
     virtual void tryAdmitDefeat();
     void tryGameOver();
@@ -38,6 +38,7 @@ public:
     // timer related
     void startTimer();
     void endTimer();
+    void newOneSecond();
     void oneSecond();
 
     // debug
@@ -45,7 +46,6 @@ public:
     virtual void debugRandomlyKill();
 
     static int Railway[12][5];
-
     PieceDisplay p[50];
 
 protected:
@@ -65,7 +65,6 @@ protected:
 
 private:
     QTimer *timer;
-
     int timeRemaining;
 };
 

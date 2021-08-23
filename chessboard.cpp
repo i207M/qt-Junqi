@@ -45,16 +45,6 @@ Chessboard::Chessboard(MainWindow *_win): QObject(_win), win(_win)
 //     delete timer;
 // }
 
-void Chessboard::localPressStart()
-{
-    initBoard();
-    displayAll();
-
-    current_player = 2;  // WARNING
-    has_start = true;
-    nextTurn();
-}
-
 void Chessboard::initBoard()
 {
     static const int Initial_Count[] = {3, 3, 3, 2, 2, 2, 2, 1, 1, 2, 3, 1};
@@ -117,6 +107,16 @@ void Chessboard::nextTurn()
 
     startTimer();
     win->log(QString("Round #%1").arg(num_turn));
+}
+
+void Chessboard::localPressStart()
+{
+    initBoard();
+    displayAll();
+
+    current_player = 2;  // WARNING
+    has_start = true;
+    nextTurn();
 }
 
 void Chessboard::timeOut()
@@ -314,15 +314,20 @@ void Chessboard::startTimer()
     timeRemaining = Player_Time;
     win->ui->lcdNumber->display(timeRemaining);
 
-    delete timer;
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &Chessboard::oneSecond);
-    timer->start(1000);
+    newOneSecond();
 }
 
 void Chessboard::endTimer()
 {
     timer->stop();
+}
+
+void Chessboard::newOneSecond()
+{
+    delete timer;
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Chessboard::oneSecond);
+    timer->start(1000);
 }
 
 void Chessboard::oneSecond()
@@ -333,10 +338,7 @@ void Chessboard::oneSecond()
     if(timeRemaining <= 0) {
         timeOut();
     } else {
-        delete timer;
-        timer = new QTimer(this);
-        connect(timer, &QTimer::timeout, this, &Chessboard::oneSecond);
-        timer->start(1000);
+        newOneSecond();
     }
 }
 
