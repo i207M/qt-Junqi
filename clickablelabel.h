@@ -14,7 +14,6 @@ public:
     explicit ClickableLabel(QWidget *parent = 0);
 
     static Chessboard *board;
-
     int row, col;
 
 protected:
