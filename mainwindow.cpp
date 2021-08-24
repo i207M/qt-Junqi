@@ -6,6 +6,8 @@
 #include "ui_mainwindow.h"
 #include "createserverdialog.h"
 #include "inputdialog.h"
+#include "clickablelabel.h"
+#include "piece.h"
 #include "m_debug.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -19,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent)
     game_mode = 0;
     ip = "-1";
     is_game_over = false;
+
+    ClickableLabel::board = nullptr;
+    Piece::board = nullptr;
 
     PieceDisplay::initDisplay(ui);
     log("Author: i207M");
