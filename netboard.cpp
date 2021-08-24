@@ -76,7 +76,7 @@ void Netboard::slotNewConnection()
     tcpSocket = tcpServer->nextPendingConnection();
     connect(tcpSocket, &QTcpSocket::readyRead, this, &Netboard::slotRecv);
 
-    static const char Ctrl0[1] = {100};
+    static const char Ctrl0[] = {100};
     tcpSocket->write(Ctrl0, 1);
 
     is_connected = true;
@@ -128,7 +128,7 @@ void Netboard::clickPos(int row, int col)
         win->log("It is not your turn.");
         return;
     }
-    char Ctrl4[3] = {104, char(row), char(col)};
+    char Ctrl4[] = {104, char(row), char(col)};
     tcpSocket->write(Ctrl4, 3);
     Chessboard::clickPos(row, col);
 }
@@ -136,7 +136,7 @@ void Netboard::clickPos(int row, int col)
 void Netboard::timeOut()
 {
     if(current_player == local_player) {
-        static const char Ctrl6[1] = {106};
+        static const char Ctrl6[] = {106};
         tcpSocket->write(Ctrl6, 1);
     }
 
@@ -148,7 +148,7 @@ void Netboard::tryAdmitDefeat()
     const int Admit_Defeat_Limit = 20;
 
     if(num_turn >= Admit_Defeat_Limit) {
-        static const char Ctrl5[1] = {105};
+        static const char Ctrl5[] = {105};
         tcpSocket->write(Ctrl5, 1);
         win->gameOver(QString("Admit defeat!\nThe Winner is Player %1.").arg(getOpp(local_player)));
     } else {
@@ -178,7 +178,7 @@ void Netboard::localPressStart()
     win->log("You pressed start.");
     genRandomPrior();
 
-    char Ctrl2[2] = {102, char(random_prior[0])};
+    char Ctrl2[] = {102, char(random_prior[0])};
     tcpSocket->write(Ctrl2, 2);
 
     checkStart();
@@ -288,7 +288,7 @@ void Netboard::initHeartBeat()
 
 void Netboard::sendHeartBeat()
 {
-    static const char Ctrl3[1] = {103};
+    static const char Ctrl3[] = {103};
     tcpSocket->write(Ctrl3, 1);
 
     delete send_heart_beat;
