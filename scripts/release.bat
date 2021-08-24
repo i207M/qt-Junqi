@@ -1,4 +1,5 @@
 @echo off
+cd ..
 qmake || echo ERROR && exit /b
 make || echo ERROR && exit /b
 cd release
