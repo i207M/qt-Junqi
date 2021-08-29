@@ -16,7 +16,7 @@
         "ostream": "cpp",
         "utility": "cpp"
     },
-    "python.pythonPath": "D:\\Dev\\Program\\Python\\Python38\\python.exe",
+    "python.pythonPath": "D:\\Dev\\Program\\Python\\Python39\\python.exe",
     "c-cpp-flylint.cppcheck.includePaths": [
         "D:/Dev/Program/Qt/6.1.2/mingw81_64/include/"
     ]
